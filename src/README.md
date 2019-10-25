@@ -1,6 +1,6 @@
 # Time-Code Manager Project
 
-This dev is merely started but it already taught precious things amidst wich...
+This dev is barely started but it already taught precious things amidst wich...
 
 - install a ```zip``` instead of a ```oxt```, it eases manipulation.
 
