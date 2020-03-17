@@ -3,8 +3,9 @@
                     xmlns:oor="http://openoffice.org/2001/registry"
                     xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <node oor:name="AddonUI">
+
         <node oor:name="OfficeMenuBar">
-            <node oor:name="com.rdt.openoffice.TimeCodeCorrector" oor:op="replace">
+            <node oor:name="com.rdt.comp.Utils" oor:op="replace">
                 <prop oor:name="Title" oor:type="xs:string">
                     <value xml:lang="fr">RDT</value>
                 </prop>
@@ -14,35 +15,80 @@
                 <prop oor:name="ImageIdentifier" oor:type="xs:string">
                     <value/>
                 </prop>
+
                 <node oor:name="Submenu">
                     <node oor:name="N001" oor:op="replace">
-                        <prop oor:name="Context" oor:type="xs:string">
-                            <value>com.sun.star.text.TextDocument</value>
-                        </prop>
                         <prop oor:name="Title" oor:type="xs:string">
-                            <value xml:lang="fr">Time-Code Manager</value>
+                            <value>Boîte à outils</value>
                         </prop>
-                        <prop oor:name="Target" oor:type="xs:string">
-                            <value>_self</value>
-                        </prop>
-                        <prop oor:name="URL" oor:type="xs:string">
-                            <value>service:com.rdt.openoffice.TimeCodeCorrector?execute</value>
-                        </prop>
+
+
+                        <node oor:name="Submenu">
+                            <node oor:name="N002" oor:op="replace">
+                                <prop oor:name="Context" oor:type="xs:string">
+                                    <value></value>
+                                </prop>
+                                <prop oor:name="Title" oor:type="xs:string">
+                                    <value xml:lang="fr">Time-Code Cleaner</value>
+                                </prop>
+                                <prop oor:name="Target" oor:type="xs:string">
+                                    <value>_self</value>
+                                </prop>
+                                <prop oor:name="URL" oor:type="xs:string">
+                                    <value>vnd.sun.star.script:rdt_utils-0.0.2.oxt|python|rdt_utils.py$timecode_cleaner?language=Python&amp;location=user:uno_packages</value>
+                                </prop>
+                            </node>
+                        </node>
+
+                        <node oor:name="Submenu">
+                            <node oor:name="N003" oor:op="replace">
+                                <prop oor:name="Context" oor:type="xs:string">
+                                    <value></value>
+                                </prop>
+                                <prop oor:name="Title" oor:type="xs:string">
+                                    <value xml:lang="fr">Numérote les questions</value>
+                                </prop>
+                                <prop oor:name="Target" oor:type="xs:string">
+                                    <value>_self</value>
+                                </prop>
+                                <prop oor:name="URL" oor:type="xs:string">
+                                    <value>vnd.sun.star.script:rdt_utils-0.0.2.oxt|python|rdt_utils.py$order_question?language=Python&amp;location=user:uno_packages</value>
+                                </prop>
+                            </node>
+                        </node>
+                        <node oor:name="Submenu">
+                            <node oor:name="N004" oor:op="replace">
+                                <prop oor:name="Context" oor:type="xs:string">
+                                    <value></value>
+                                </prop>
+                                <prop oor:name="Title" oor:type="xs:string">
+                                    <value xml:lang="fr">Les questions en majuscules</value>
+                                </prop>
+                                <prop oor:name="Target" oor:type="xs:string">
+                                    <value>_self</value>
+                                </prop>
+                                <prop oor:name="URL" oor:type="xs:string">
+                                    <value>vnd.sun.star.script:rdt_utils-0.0.2.oxt|python|rdt_utils.py$uppercase_question?language=Python&amp;location=user:uno_packages</value>
+                                </prop>
+                            </node>
+                        </node>
+
                     </node>
                 </node>
+
             </node>
         </node>
         <node oor:name="OfficeToolBar">
-            <node oor:name="com.rdt.openoffice.TimeCodeCorrector" oor:op="replace">
+            <node oor:name="com.rdt.comp.Utils" oor:op="replace">
                 <node oor:name="N001" oor:op="replace">
                     <prop oor:name="URL" oor:type="xs:string">
-                        <value>service:com.rdt.openoffice.TimeCodeCorrector?execute</value>
+                        <value>vnd.sun.star.script:rdt_utils-0.0.2.oxt|python|rdt_utils.py$timecode_cleaner?language=Python&amp;location=user:uno_packages</value>
                     </prop>
                     <prop oor:name="ImageIdentifier" oor:type="xs:string">
                         <value/>
                     </prop>
                     <prop oor:name="Title" oor:type="xs:string">
-                        <value xml:lang="fr">Time-Code Corrector</value>
+                        <value xml:lang="fr">Time-Code Cleaner</value>
                     </prop>
                     <prop oor:name="Target" oor:type="xs:string">
                         <value>_self</value>
@@ -54,9 +100,9 @@
             </node>
         </node>
         <node oor:name="Images">
-            <node oor:name="com.rdt.openoffice.TimeCodeCorrector.image1" oor:op="replace">
+            <node oor:name="com.rdt.comp.Utils.image1" oor:op="replace">
                 <prop oor:name="URL">
-                    <value>service:com.rdt.openoffice.TimeCodeCorrector?execute</value>
+                    <value>vnd.sun.star.script:rdt_utils-0.0.2.oxt|python|rdt_utils.py$timecode_cleaner?language=Python&amp;location=user:uno_packages</value>
                 </prop>
                 <node oor:name="UserDefinedImages">
                     <prop oor:name="ImageSmallURL" oor:type="xs:string">

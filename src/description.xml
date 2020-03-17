@@ -1,5 +1,5 @@
 <ns0:description xmlns:ns0="http://openoffice.org/extensions/description/2006" xmlns:ns1="http://www.w3.org/1999/xlink" xmlns:ns2="http://libreoffice.org/extensions/description/2011">
-   <ns0:identifier value="com.rdt.openoffice.TimeCodeCorrector" />
+   <ns0:identifier value="com.rdt.comp.Utils" />
    <ns0:version value="0.0.2" />
    <ns0:extension-description>
       <ns0:src lang="fr" ns1:href="description/descr-fr.txt" />
@@ -16,10 +16,10 @@
       <ns2:LibreOffice-minimal-version value="3.5" ns0:name="LibreOffice 3.5 minimum, or more recent" />
    </ns0:dependencies>
    <ns0:display-name>
-      <ns0:name lang="fr">PalaceDev - TimeCode Corrector</ns0:name>
+      <ns0:name lang="fr">RDT - Utils</ns0:name>
    </ns0:display-name>
    <ns0:publisher>
-      <ns0:name lang="fr" ns1:href="https://yourwebsite.com /">PalaceDev</ns0:name>
+      <ns0:name lang="fr" ns1:href="https://palaceweb.com /">PalaceDev</ns0:name>
    </ns0:publisher>
    <ns0:release-notes>
       <ns0:src lang="fr" ns1:href="" />

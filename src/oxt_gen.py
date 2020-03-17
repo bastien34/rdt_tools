@@ -17,7 +17,7 @@ import xml.etree.ElementTree as ET
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('post_gen_project')
 VERSION = "0.0.2"
-EXTENSION_NAME= "tcm"
+EXTENSION_NAME= "rdt_utils"
 OUTPUT = 'extension'
 
 
@@ -60,7 +60,7 @@ def zip_files():
         src = os.path.join(tmpdirname, 'src')
         create_tmp_src(src)
         make_archive(extension_path, 'zip', src)
-        # os.rename(extension_path + '.zip', extension_path)
+        os.rename(extension_path + '.zip', extension_path)
     return 1
 
 
