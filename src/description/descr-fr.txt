@@ -1,2 +1,2 @@
-Une super extension en préparation!
-Copyright (c) 2009 Bastien
+Ensemble d'outils pour nettoyer une mission.
+Copyright (c) 2021 PalaceWebDev

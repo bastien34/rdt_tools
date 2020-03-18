@@ -1,2 +1,2 @@
-A fantastic extension that does everything.
-Copyright (c) 2009 Bastien
+RDT utils extension to clean up a document.
+Copyright (c) 2021 PalaceWebDev

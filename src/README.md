@@ -1,18 +1,27 @@
-# Time-Code Manager Project
+# RDT Utils
 
-This dev is barely started but it already taught precious things amidst wich...
+Provides tools to clean up a mission document.
 
 - install a ```zip``` instead of a ```oxt```, it eases manipulation.
 
 - Discover of the **Addon.xcu** pitfall. In image section, write ```<prop oor:name="URL">``` 
 instead of ```<prop oor:name="URL" oor:type="xs:string">```. It will spare you time!
 
-- See how you can start, test your macro straight away from code without installing
- the extension, in ```if __name__ == "__main__":``` of main python file.
+## Tools
+
+A special class **Mission** has cleanup function in its ```__init__()``` which does:
+
+- Apply special style for question (Inter Q)
+- Remove blank char at the end of the line
+
+Tools available in submenu **RDT/Toolbox**
+
+- Timecode cleanup
+- Upperise / lowerise questions 
+- Remove blank lines
+- Order questions
  
 ## Ideas for future dev
 
 - remove and install new extension in one command ```compile & install```
-
-- implement a dialog box
 
