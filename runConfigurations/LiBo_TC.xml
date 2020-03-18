@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="LiBo-TC" type="BashConfigurationType" factoryName="Bash">
+    <module name="time_code" />
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="INTERPRETER_PATH" value="/bin/sh" />
+    <option name="PROJECT_INTERPRETER" value="false" />
+    <option name="WORKING_DIRECTORY" value="" />
+    <option name="PARENT_ENVS" value="true" />
+    <option name="SCRIPT_NAME" value="/usr/bin/libreoffice" />
+    <option name="PARAMETERS" value="--writer --norestore -o $USER_HOME$/Bureau/tc_test.odt" />
+    <envs>
+      <env name="PYSCRIPT_LOG_LEVEL" value="ERROR" />
+      <env name="PYSCRIPT_LOG_STDOUT" value="1" />
+    </envs>
+    <method v="2" />
+  </configuration>
+</component>
