@@ -2,135 +2,107 @@ import logging
 import uno
 import unohelper
 from com.sun.star.task import XJobExecutor
+from com.sun.star.awt import FontWeight
 
 # debug
 from IPython.core.debugger import Pdb
 ipdb = Pdb()
-from utils import mri
+from debug import mri
 
 
 logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger('tcm')
+logger = logging.getLogger('doc_cleaner')
 
 
-ctx = XSCRIPTCONTEXT
+class Mission:
 
+    def __init__(self):
+        self.ctx = XSCRIPTCONTEXT.getComponentContext()
+        self.smgr = self.ctx.ServiceManager
+        self.desktop = self.smgr.createInstanceWithContext("com.sun.star.frame.Desktop", self.ctx )
+        self.doc = self.desktop.getCurrentComponent()
+        self._remove_blank_space_at_the_end_of_lines()
+        logger.debug('Mission instanciated!')
 
-class TimeCodeCleaner(unohelper.Base, XJobExecutor):
+    def _remove_blank_space_at_the_end_of_lines(self):
+        rd = self.doc.createReplaceDescriptor()
+        rd.SearchRegularExpression = True
+        rd.SearchString = '\s*$'
+        rd.ReplaceString = ""
+        self.doc.replaceAll(rd)
 
-    def __init__(self, ctx):
-        self.ctx = ctx
+    def clean_timecode(self):
+        logger.debug('Clean timecode')
 
-    def trigger(self, args):
-        logger.debug("Logger says Launcher's been called.")
-        desktop = self.ctx.ServiceManager.createInstanceWithContext(
-            "com.sun.star.frame.Desktop", self.ctx )
-        doc = desktop.getCurrentComponent()
+        # Create Regex descriptor
+        rd = self.doc.createReplaceDescriptor()
+        rd.SearchRegularExpression = True
 
-        try:
-            search = doc.createSearchDescriptor()
-            search.SearchRegularExpression = True
-            search.SearchString = "orking"
+        # Replace . or blank char with ':'
+        rd.SearchString = '(\d{1,2})\s?[:|.](\d{2})\s?[:|.](\d{2})'
+        rd.ReplaceString = "$1:$2:$3"
+        self.doc.replaceAll(rd)
 
-            found = doc.findFirst( search )
-            while found:
-                found.String = found.String.replace( "o", u"\xa0" )
-                logger.debug('something has been done.')
-                found = doc.findNext( found.End, search)
-        except:
-            logger.debug('Something has not been done!!!')
+        # Replace () or [] with blank char
+        rd.SearchString = '[\(|\[](\d{1,2})\s?[:|.](\d{2})\s?[:|.](\d{2})[\)|\]]'
+        rd.ReplaceString = "$1:$2:$3"
+        self.doc.replaceAll(rd)
 
+        # Be sure hours is made of 2 chars
+        rd.SearchString = '\<(\d{1}):(\d{2}):(\d{2})'
+        rd.ReplaceString = "0$1:$2:$3"
+        self.doc.replaceAll(rd)
 
-def get_current_doc():
-    ctx = XSCRIPTCONTEXT.getComponentContext()
-    smgr = ctx.ServiceManager
-    desktop = smgr.createInstanceWithContext("com.sun.star.frame.Desktop", ctx )
-    logger.debug('Getting current doc!')
-    return desktop.getCurrentComponent()
+        # Place the brackets
+        rd.SearchString = '(\d{2}):(\d{2}):(\d{2})'
+        rd.ReplaceString = "[$1:$2:$3]"
+        self.doc.replaceAll(rd)
 
+    def upperise_question(self):
+        vtext = self.doc.Text
+        text_enum = vtext.createEnumeration()
 
-def timecode_cleaner_(*args):
-    logger.debug('Launching timecode cleaner')
-    doc = get_current_doc()
-
-    # Create Regex descriptor
-    rd = doc.createReplaceDescriptor()
-    rd.SearchRegularExpression = True
-
-    # Replace . or blank char with ':'
-    rd.SearchString = '(\d{1,2})\s?[:|.](\d{2})\s?[:|.](\d{2})'
-    rd.ReplaceString = "$1:$2:$3"
-    doc.replaceAll(rd)
-
-    # Replace () or [] with blank char
-    rd.SearchString = '[\(|\[](\d{1,2})\s?[:|.](\d{2})\s?[:|.](\d{2})[\)|\]]'
-    rd.ReplaceString = "$1:$2:$3"
-    doc.replaceAll(rd)
-
-    # Be sure hours is made of 2 chars
-    rd.SearchString = '\<(\d{1}):(\d{2}):(\d{2})'
-    rd.ReplaceString = "0$1:$2:$3"
-    doc.replaceAll(rd)
-
-    # Place the brackets
-    rd.SearchString = '(\d{2}):(\d{2}):(\d{2})'
-    rd.ReplaceString = "[$1:$2:$3]"
-    doc.replaceAll(rd)
-
-
-# def order_question(*args):
-def timecode_cleaner(*args):
-    from com.sun.star.beans import PropertyValue
-    from com.sun.star.awt import FontWeight
-
-    doc = get_current_doc()
-
-    # Remove blank char at the end of lines
-    rd = doc.createReplaceDescriptor()
-    rd.SearchRegularExpression = True
-    rd.SearchString = '\s$'
-    rd.ReplaceString = ""
-    doc.replaceAll(rd)
-
-    vtext = doc.Text
-    text_enum = vtext.createEnumeration()
-
-    styles = doc.StyleFamilies.getByName("ParagraphStyles")
-    interQ = styles.getByName("Inter Q")
-
-    while text_enum.hasMoreElements():
-        element = text_enum.nextElement()
-        if element.supportsService("com.sun.star.text.Paragraph"):
-            if element.CharWeight in (FontWeight.BOLD,):
-                logger.debug("bold detected")
-                element.String = element.String.upper()
-
-            else:
-                logger.debug(element.ParaStyleName)
-                if element.String.startswith("Ça ne"):
-                    mri(element)
+        while text_enum.hasMoreElements():
+            element = text_enum.nextElement()
+            if element.supportsService("com.sun.star.text.Paragraph"):
+                # element.CharWeight is not reliable. We check first & last letter
+                # to determine if **element** is a question
+                if element.getStart().CharWeight == FontWeight.BOLD \
+                        or element.getEnd().CharWeight == FontWeight.BOLD:
                     element.ParaStyleName = "Inter Q"
+                    element.String = element.String.upper()
 
-    # todo: a solution is to select first word, see if it's bold and
-    # todo: apply interq style there, then upperise()
-
-    # Create Regex descriptor
-    # rd = doc.createReplaceDescriptor()
-    # rd.SearchStyles = True
-    # rd.SearchAll = True
-    # search_attr = PropertyValue()
-    # search_attr.Name = "CharWeight"
-    # search_attr.Value = FontWeight.BOLD
-    #
-    # mri(rd)
-    # repl_attr = PropertyValue()
-    # repl_attr.Name = "CharWeight"
-    # repl_attr.Value = FontWeight.NORMAL
-    #
-    # rd.SetSearchAttributes((search_attr,))
-    # rd.SetReplaceAttributes((repl_attr,))
-    #
-    # doc.replaceAll(rd)
+    def remove_blank_line(self):
+        rd = self.doc.createReplaceDescriptor()
+        rd.SearchRegularExpression = True
+        rd.SearchString = '^\s*$'
+        rd.ReplaceString = ""
+        self.doc.replaceAll(rd)
 
 
-g_exportedScripts = timecode_cleaner,
+def timecode_cleaner(*args):
+    doc = Mission()
+    doc.clean_timecode()
+
+
+def order_question(*args):
+    doc = Mission()
+    doc.upperise_question()
+
+
+def upperise_question(*args):
+    doc = Mission()
+    doc.upperise_question()
+
+
+def remove_blank_line(*args):
+    doc = Mission()
+    doc.remove_blank_line()
+
+
+g_exportedScripts = (
+    timecode_cleaner,
+    order_question,
+    upperise_question,
+    remove_blank_line,
+)

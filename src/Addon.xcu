@@ -56,6 +56,7 @@
                                 </prop>
                             </node>
                         </node>
+
                         <node oor:name="Submenu">
                             <node oor:name="N004" oor:op="replace">
                                 <prop oor:name="Context" oor:type="xs:string">
@@ -68,7 +69,24 @@
                                     <value>_self</value>
                                 </prop>
                                 <prop oor:name="URL" oor:type="xs:string">
-                                    <value>vnd.sun.star.script:rdt_utils-0.0.2.oxt|python|rdt_utils.py$uppercase_question?language=Python&amp;location=user:uno_packages</value>
+                                    <value>vnd.sun.star.script:rdt_utils-0.0.2.oxt|python|rdt_utils.py$upperise_question?language=Python&amp;location=user:uno_packages</value>
+                                </prop>
+                            </node>
+                        </node>
+
+                        <node oor:name="Submenu">
+                            <node oor:name="N005" oor:op="replace">
+                                <prop oor:name="Context" oor:type="xs:string">
+                                    <value></value>
+                                </prop>
+                                <prop oor:name="Title" oor:type="xs:string">
+                                    <value xml:lang="fr">Enlever les lignes vides</value>
+                                </prop>
+                                <prop oor:name="Target" oor:type="xs:string">
+                                    <value>_self</value>
+                                </prop>
+                                <prop oor:name="URL" oor:type="xs:string">
+                                    <value>vnd.sun.star.script:rdt_utils-0.0.2.oxt|python|rdt_utils.py$remove_blank_line?language=Python&amp;location=user:uno_packages</value>
                                 </prop>
                             </node>
                         </node>
