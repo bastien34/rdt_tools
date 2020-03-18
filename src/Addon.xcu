@@ -46,7 +46,7 @@
                                     <value></value>
                                 </prop>
                                 <prop oor:name="Title" oor:type="xs:string">
-                                    <value xml:lang="fr">Numérote les questions</value>
+                                    <value xml:lang="fr">Numéroter les questions</value>
                                 </prop>
                                 <prop oor:name="Target" oor:type="xs:string">
                                     <value>_self</value>
@@ -62,6 +62,20 @@
                                 <prop oor:name="Context" oor:type="xs:string">
                                     <value></value>
                                 </prop>
+                                <prop oor:name="Target" oor:type="xs:string">
+                                    <value>_self</value>
+                                </prop>
+                                <prop oor:name="URL" oor:type="xs:string">
+                                    <value>private:separator</value>
+                                </prop>
+                            </node>
+                        </node>
+
+                        <node oor:name="Submenu">
+                            <node oor:name="N005" oor:op="replace">
+                                <prop oor:name="Context" oor:type="xs:string">
+                                    <value></value>
+                                </prop>
                                 <prop oor:name="Title" oor:type="xs:string">
                                     <value xml:lang="fr">Les questions en majuscules</value>
                                 </prop>
@@ -69,13 +83,44 @@
                                     <value>_self</value>
                                 </prop>
                                 <prop oor:name="URL" oor:type="xs:string">
-                                    <value>vnd.sun.star.script:rdt_utils-0.0.2.oxt|python|rdt_utils.py$upperise_question?language=Python&amp;location=user:uno_packages</value>
+                                    <value>vnd.sun.star.script:rdt_utils-0.0.2.oxt|python|rdt_utils.py$question_upper?language=Python&amp;location=user:uno_packages</value>
                                 </prop>
                             </node>
                         </node>
 
                         <node oor:name="Submenu">
-                            <node oor:name="N005" oor:op="replace">
+                            <node oor:name="N006" oor:op="replace">
+                                <prop oor:name="Context" oor:type="xs:string">
+                                    <value></value>
+                                </prop>
+                                <prop oor:name="Title" oor:type="xs:string">
+                                    <value xml:lang="fr">Les questions en minuscules</value>
+                                </prop>
+                                <prop oor:name="Target" oor:type="xs:string">
+                                    <value>_self</value>
+                                </prop>
+                                <prop oor:name="URL" oor:type="xs:string">
+                                    <value>vnd.sun.star.script:rdt_utils-0.0.2.oxt|python|rdt_utils.py$question_lower?language=Python&amp;location=user:uno_packages</value>
+                                </prop>
+                            </node>
+                        </node>
+
+                        <node oor:name="Submenu">
+                            <node oor:name="N007" oor:op="replace">
+                                <prop oor:name="Context" oor:type="xs:string">
+                                    <value></value>
+                                </prop>
+                                <prop oor:name="Target" oor:type="xs:string">
+                                    <value>_self</value>
+                                </prop>
+                                <prop oor:name="URL" oor:type="xs:string">
+                                    <value>private:separator</value>
+                                </prop>
+                            </node>
+                        </node>
+
+                        <node oor:name="Submenu">
+                            <node oor:name="N008" oor:op="replace">
                                 <prop oor:name="Context" oor:type="xs:string">
                                     <value></value>
                                 </prop>
