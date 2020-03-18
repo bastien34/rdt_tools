@@ -1,7 +1,4 @@
 import logging
-import uno
-import unohelper
-from com.sun.star.task import XJobExecutor
 from com.sun.star.awt import FontWeight
 
 # debug
