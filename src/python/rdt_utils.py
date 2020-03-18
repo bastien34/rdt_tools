@@ -5,9 +5,9 @@ from com.sun.star.task import XJobExecutor
 from com.sun.star.awt import FontWeight
 
 # debug
-from IPython.core.debugger import Pdb
-ipdb = Pdb()
-from debug import mri
+# from IPython.core.debugger import Pdb
+# ipdb = Pdb()
+# from debug import mri
 
 
 logging.basicConfig(level=logging.DEBUG)
@@ -38,8 +38,13 @@ class Mission:
 
     def _apply_question_style(self):
         logger.debug('  - clean: apply style Inter Q')
-        text_enum = self.text.createEnumeration()
 
+        # check if document has INTERQ style
+        styles = self.doc.getStyleFamilies().getByName("ParagraphStyles")
+        if not styles.hasByName(QUESTION_CSS):
+            return
+
+        text_enum = self.text.createEnumeration()
         while text_enum.hasMoreElements():
             element = text_enum.nextElement()
             if element.supportsService("com.sun.star.text.Paragraph"):

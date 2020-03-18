@@ -16,7 +16,8 @@
       <ns2:LibreOffice-minimal-version value="3.5" ns0:name="LibreOffice 3.5 minimum, or more recent" />
    </ns0:dependencies>
    <ns0:display-name>
-      <ns0:name lang="fr">RDT - Utils</ns0:name>
+      <ns0:name lang="fr">RDT - Outils pour nettoyer un livrable</ns0:name>
+      <ns0:name lang="en">RDT - Document Cleaner</ns0:name>
    </ns0:display-name>
    <ns0:publisher>
       <ns0:name lang="fr" ns1:href="https://palaceweb.com /">PalaceDev</ns0:name>

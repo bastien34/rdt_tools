@@ -23,7 +23,7 @@ OUTPUT = 'extension'
 
 def update_version():
     update_description_version()
-    # update_addon_ui()
+    update_addon_ui()
 
 
 def update_description_version():
@@ -36,7 +36,7 @@ def update_description_version():
 
 
 def update_addon_ui():
-    addon_ui = 'src/AddonUI.xcu'
+    addon_ui = 'src/Addon.xcu'
     with open(addon_ui, 'r') as f:
         content = f.read()
     content = re.sub(f"{EXTENSION_NAME}-[\d.]+", f"{EXTENSION_NAME}-{VERSION}.", content)
