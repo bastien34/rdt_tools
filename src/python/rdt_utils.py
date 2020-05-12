@@ -10,7 +10,8 @@ from com.sun.star.awt import FontWeight
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('doc_cleaner')
 
-QUESTION_CSS = "Inter Q"
+QUESTION_STYLE = "Inter Q"
+ANSWER_STYLE = "Inter R"
 
 
 class Mission:
@@ -38,7 +39,7 @@ class Mission:
 
         # check if document has INTERQ style
         styles = self.doc.getStyleFamilies().getByName("ParagraphStyles")
-        if not styles.hasByName(QUESTION_CSS):
+        if not styles.hasByName(QUESTION_STYLE):
             return
 
         text_enum = self.text.createEnumeration()
@@ -49,7 +50,9 @@ class Mission:
                 # to determine if **element** is a question
                 if element.getStart().CharWeight == FontWeight.BOLD \
                         or element.getEnd().CharWeight == FontWeight.BOLD:
-                    element.ParaStyleName = "Inter Q"
+                    element.ParaStyleName = QUESTION_STYLE
+                else:
+                    element.ParaStyleName = ANSWER_STYLE
 
     def clean_timecode(self):
         logger.debug('Clean timecode')
@@ -85,7 +88,7 @@ class Mission:
         while text_enum.hasMoreElements():
             element = text_enum.nextElement()
             if element.supportsService("com.sun.star.text.Paragraph"):
-                if element.ParaStyleName == QUESTION_CSS:
+                if element.ParaStyleName == QUESTION_STYLE:
                     element.String = element.String.upper()
 
     def question_lower(self):
@@ -95,7 +98,7 @@ class Mission:
         while text_enum.hasMoreElements():
             element = text_enum.nextElement()
             if element.supportsService("com.sun.star.text.Paragraph"):
-                if element.ParaStyleName == QUESTION_CSS and element.String:
+                if element.ParaStyleName == QUESTION_STYLE and element.String:
                     q = f"{element.String[0:1].upper()}{element.String[1:].lower()}"
                     element.String = q
 
@@ -115,7 +118,7 @@ class Mission:
         while text_enum.hasMoreElements():
             element = text_enum.nextElement()
             if element.supportsService("com.sun.star.text.Paragraph"):
-                if element.ParaStyleName == QUESTION_CSS:
+                if element.ParaStyleName == QUESTION_STYLE:
                     element.String = f"{i} - {element.String}"
                     i += 1
 
