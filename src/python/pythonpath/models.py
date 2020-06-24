@@ -9,7 +9,8 @@ class Mission:
     def __init__(self, ctx):
         self.ctx = ctx
         self.smgr = self.ctx.ServiceManager
-        self.desktop = self.smgr.createInstanceWithContext("com.sun.star.frame.Desktop", self.ctx )
+        self.desktop = self.smgr.createInstanceWithContext(
+            "com.sun.star.frame.Desktop", self.ctx)
         self.doc = self.desktop.getCurrentComponent()
         self.text = self.doc.Text
         self._remove_blank_space_at_the_end_of_lines()
@@ -57,7 +58,6 @@ class Mission:
         if string and not string.startswith('['):
             element.String = prefix + " : " + string
 
-
     def clean_text(self):
         # Create Regex descriptor
         rd = self.doc.createReplaceDescriptor()
@@ -69,7 +69,8 @@ class Mission:
         self.doc.replaceAll(rd)
 
         # Replace () or [] with blank char
-        rd.SearchString = '[\(|\[](\d{1,2})\s?[:|.](\d{2})\s?[:|.](\d{2})[\)|\]]'
+        # Format can be [HH:MM:SS] or [HH:MM:SS,ss]
+        rd.SearchString = '[\(|\[](\d{1,2})\s?[:|.](\d{2})\s?[:|.]([\d{2}|\d{2},\d{2}])[\)|\]]'
         rd.ReplaceString = "$1:$2:$3"
         self.doc.replaceAll(rd)
 
@@ -79,7 +80,7 @@ class Mission:
         self.doc.replaceAll(rd)
 
         # Place the brackets
-        rd.SearchString = '(\d{2}):(\d{2}):(\d{2})'
+        rd.SearchString = '(\d{2}):(\d{2}):[(\d{2})|(\d{2},\d{2})])'
         rd.ReplaceString = "[$1:$2:$3]"
         self.doc.replaceAll(rd)
 
