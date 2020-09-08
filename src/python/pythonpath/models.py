@@ -70,7 +70,7 @@ class Mission:
 
         # Replace () or [] with blank char
         # Format can be [HH:MM:SS] or [HH:MM:SS,ss]
-        rd.SearchString = '[\(|\[](\d{1,2})\s?[:|.](\d{2})\s?[:|.]([\d{2}|\d{2},\d{2}])[\)|\]]'
+        rd.SearchString = '[\(|\[](\d{1,2})\s?[:|.](\d{2})\s?[:|.](\d{2}),\d{2}[\)|\]]'
         rd.ReplaceString = "$1:$2:$3"
         self.doc.replaceAll(rd)
 
@@ -80,7 +80,7 @@ class Mission:
         self.doc.replaceAll(rd)
 
         # Place the brackets
-        rd.SearchString = '(\d{2}):(\d{2}):[(\d{2})|(\d{2},\d{2})])'
+        rd.SearchString = '(\d{2}):(\d{2}):(\d{2})'
         rd.ReplaceString = "[$1:$2:$3]"
         self.doc.replaceAll(rd)
 
