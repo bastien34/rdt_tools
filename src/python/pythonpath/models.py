@@ -1,4 +1,6 @@
 from com.sun.star.awt import FontWeight
+from com.sun.star.beans import PropertyValue
+from com.sun.star.awt.FontSlant import ITALIC
 from debug import mri
 
 QUESTION_STYLE = "Inter Q"
@@ -48,7 +50,6 @@ class Mission:
             if element.supportsService("com.sun.star.text.Paragraph"):
                 if element.getStart().CharWeight == FontWeight.BOLD \
                         or element.getEnd().CharWeight == FontWeight.BOLD:
-
                     self._prefix_str(p_question, element)
                 else:
                     self._prefix_str(p_answer, element)
@@ -63,26 +64,28 @@ class Mission:
         rd = self.doc.createReplaceDescriptor()
         rd.SearchRegularExpression = True
 
-        # Replace . or blank char with ':'
-        rd.SearchString = '(\d{1,2})\s?[:|.](\d{2})\s?[:|.](\d{2})'
-        rd.ReplaceString = "$1:$2:$3"
+        # Remove if any, milliseconds
+        rd.SearchString = '(\d{2}),\d{2}\]'
+        rd.ReplaceString = "$1]"
         self.doc.replaceAll(rd)
 
-        # Replace () or [] with blank char
-        # Format can be [HH:MM:SS] or [HH:MM:SS,ss]
-        rd.SearchString = '[\(|\[](\d{1,2})\s?[:|.](\d{2})\s?[:|.](\d{2}),\d{2}[\)|\]]'
-        rd.ReplaceString = "$1:$2:$3"
+        # Replace . or blank char with ':'
+        rd.SearchString = '[\(|\[]\s?(\d{1,2})\s?[:|.]\s?(\d{2})\s?[:|.]\s?(\d{2})\s?[\)|\]]'
+        rd.ReplaceString = "[$1:$2:$3]"
         self.doc.replaceAll(rd)
 
         # Be sure hours is made of 2 chars
-        rd.SearchString = '\<(\d{1}):(\d{2}):(\d{2})'
-        rd.ReplaceString = "0$1:$2:$3"
+        rd.SearchString = '\[(\d{1}):'
+        rd.ReplaceString = "[0$1:"
         self.doc.replaceAll(rd)
 
-        # Place the brackets
-        rd.SearchString = '(\d{2}):(\d{2}):(\d{2})'
-        rd.ReplaceString = "[$1:$2:$3]"
+        rd.SearchString = '^\s?(\[\d{2}:\d{2}:\d{2}\])\s?$'
+        rd.ReplaceString = "$1"
         self.doc.replaceAll(rd)
+
+        # apply style to tc
+        self.apply_style_to_orphan_timecode()
+        self.remove_mission_ref_as_title()
 
     def question_upper(self):
         text_enum = self.text.createEnumeration()
@@ -110,7 +113,34 @@ class Mission:
         rd.ReplaceString = ""
         self.doc.replaceAll(rd)
 
+    def remove_mission_ref_as_title(self):
+        rd = self.doc.createReplaceDescriptor()
+        rd.SearchRegularExpression = True
+        rd.SearchString = '^M\d{4}$'
+        rd.ReplaceString = ""
+        self.doc.replaceAll(rd)
+
+    def apply_style_to_orphan_timecode(self):
+        text_enum = self.text.createEnumeration()
+        while text_enum.hasMoreElements():
+            element = text_enum.nextElement()
+            if element.supportsService("com.sun.star.text.Paragraph"):
+                if element.String:
+                    if element.String[0] == '[' and element.String[-1] == ']':
+                        element.setPropertyValue("CharWeight", FontWeight.BOLD)
+                        element.CharColor = 6710932
+
+        # method by regex, not working
+        # bold = PropertyValue('CharWeight', 0, FontWeight.BOLD, 0)
+        # rd = self.doc.createReplaceDescriptor()
+        # rd.SearchRegularExpression = True
+        # rd.SearchString = '^\s?(\[\d{2}:\d{2}:\d{2}\])\s?$'
+        # rd.setPropertyValue( "CharColor", 6710932)
+        # rd.ReplaceString = "$1"
+        # self.doc.replaceAll(rd)
+
     def order_question(self):
+        """Place a incremental number before each question"""
         text_enum = self.text.createEnumeration()
 
         i = 0
