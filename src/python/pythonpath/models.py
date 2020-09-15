@@ -121,23 +121,15 @@ class Mission:
         self.doc.replaceAll(rd)
 
     def apply_style_to_orphan_timecode(self):
-        text_enum = self.text.createEnumeration()
-        while text_enum.hasMoreElements():
-            element = text_enum.nextElement()
-            if element.supportsService("com.sun.star.text.Paragraph"):
-                if element.String:
-                    if element.String[0] == '[' and element.String[-1] == ']':
-                        element.setPropertyValue("CharWeight", FontWeight.BOLD)
-                        element.CharColor = 6710932
-
-        # method by regex, not working
-        # bold = PropertyValue('CharWeight', 0, FontWeight.BOLD, 0)
-        # rd = self.doc.createReplaceDescriptor()
-        # rd.SearchRegularExpression = True
-        # rd.SearchString = '^\s?(\[\d{2}:\d{2}:\d{2}\])\s?$'
-        # rd.setPropertyValue( "CharColor", 6710932)
-        # rd.ReplaceString = "$1"
-        # self.doc.replaceAll(rd)
+        # method by regex
+        bold = PropertyValue('CharWeight', 0, FontWeight.BOLD, 0)
+        color = PropertyValue('CharColor', 0, 6710932, 0)
+        rd = self.doc.createReplaceDescriptor()
+        rd.SearchRegularExpression = True
+        rd.SearchString = '^\s?(\[\d{2}:\d{2}:\d{2}\])\s?$'
+        rd.setReplaceAttributes((bold, color))
+        rd.ReplaceString = "$1"
+        self.doc.replaceAll(rd)
 
     def order_question(self):
         """Place a incremental number before each question"""

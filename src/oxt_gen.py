@@ -16,7 +16,7 @@ import xml.etree.ElementTree as ET
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('post_gen_project')
-VERSION = "0.1.4"
+VERSION = "0.1.5"
 EXTENSION_NAME= "rdt_utils"
 OUTPUT = 'extension'
 
@@ -30,7 +30,7 @@ def update_description_version():
     description_file = 'src/description.xml'
     tree = ET.parse(description_file)
     root = tree.getroot()
-    # we suppose posisiton of version node won't change
+    # we suppose position of version node won't change
     root[1].attrib['value'] = VERSION
     tree.write(description_file)
 
