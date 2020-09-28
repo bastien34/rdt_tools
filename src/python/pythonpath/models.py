@@ -70,7 +70,7 @@ class Mission:
         self.doc.replaceAll(rd)
 
         # Replace . or blank char with ':'
-        rd.SearchString = '[\(|\[]\s?(\d{1,2})\s?[:|.]\s?(\d{2})\s?[:|.]\s?(\d{2})\s?[\)|\]]'
+        rd.SearchString = '[\(|\[]?(\d{1,2})\s?[:|.]\s?(\d{2})\s?[:|.]\s?(\d{2})[\)|\]]?'
         rd.ReplaceString = "[$1:$2:$3]"
         self.doc.replaceAll(rd)
 
@@ -80,6 +80,11 @@ class Mission:
         self.doc.replaceAll(rd)
 
         rd.SearchString = '^\s?(\[\d{2}:\d{2}:\d{2}\])\s?$'
+        rd.ReplaceString = "$1"
+        self.doc.replaceAll(rd)
+
+        # Remove double open bracket (ie. [INAUDIBLE [33:29:11])
+        rd.SearchString = "(\[[^\]]+)\["
         rd.ReplaceString = "$1"
         self.doc.replaceAll(rd)
 
