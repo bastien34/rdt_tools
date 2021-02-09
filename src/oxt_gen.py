@@ -16,7 +16,7 @@ import xml.etree.ElementTree as ET
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('post_gen_project')
-VERSION = "0.1.6"
+VERSION = "0.1.7"
 EXTENSION_NAME= "rdt_utils"
 OUTPUT = 'extension'
 

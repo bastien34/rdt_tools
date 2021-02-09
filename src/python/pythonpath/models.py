@@ -2,6 +2,8 @@ from com.sun.star.awt import FontWeight
 from com.sun.star.beans import PropertyValue
 from com.sun.star.awt.FontSlant import ITALIC
 from debug import mri
+from reg_strings import CLEAN_REPLACING_STR
+
 
 QUESTION_STYLE = "Inter Q"
 ANSWER_STYLE = "Inter R"
@@ -64,29 +66,9 @@ class Mission:
         rd = self.doc.createReplaceDescriptor()
         rd.SearchRegularExpression = True
 
-        # Remove if any, milliseconds
-        rd.SearchString = '(\d{2}),\d{2}\]'
-        rd.ReplaceString = "$1]"
-        self.doc.replaceAll(rd)
-
-        # Replace . or blank char with ':'
-        rd.SearchString = '[\(|\[]?(\d{1,2})\s?[:|.]\s?(\d{2})\s?[:|.]\s?(\d{2})[\)|\]]?'
-        rd.ReplaceString = "[$1:$2:$3]"
-        self.doc.replaceAll(rd)
-
-        # Be sure hours is made of 2 chars
-        rd.SearchString = '\[(\d{1}):'
-        rd.ReplaceString = "[0$1:"
-        self.doc.replaceAll(rd)
-
-        rd.SearchString = '^\s?(\[\d{2}:\d{2}:\d{2}\])\s?$'
-        rd.ReplaceString = "$1"
-        self.doc.replaceAll(rd)
-
-        # Remove double open bracket (ie. [INAUDIBLE [33:29:11])
-        rd.SearchString = "(\[[^\]]+)\["
-        rd.ReplaceString = "$1"
-        self.doc.replaceAll(rd)
+        for replacing in CLEAN_REPLACING_STR:
+            rd.SearchString, rd.ReplaceString = replacing
+            self.doc.replaceAll(rd)
 
         # apply style to tc
         self.apply_style_to_orphan_timecode()
