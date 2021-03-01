@@ -8,7 +8,8 @@ CLEAN_REPLACING_STR = [
     # Be sure hours is made of 2 chars
     ("\[(\d{1}):", '[0$1:'),
 
-    # ('^\s?(\[\d{2}:\d{2}:\d{2}\])\s?$', '$1'),
+    # if milliseconds, use . as decimal
+    ("(\d{2}),(\d+\])", '$1.$2'),
 
     # Remove double open bracket (ie. [INAUDIBLE [33:29:11])
     ('(\[[^\]]+)\[', '$1'),
