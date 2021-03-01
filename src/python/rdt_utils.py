@@ -23,7 +23,7 @@ def prefix_questions_and_answers(*args):
     doc.prefix_questions_and_answers(p_question, p_answer)
 
 
-def timecode_cleaner(*args):
+def clean_text(*args):
     doc = Mission(ctx)
     doc.clean_text()
 
@@ -48,11 +48,17 @@ def remove_blank_line(*args):
     doc.remove_blank_line()
 
 
+def remove_milliseconds_from_tc(*args):
+    doc = Mission(ctx)
+    doc.remove_milliseconds_from_tc()
+
+
 g_exportedScripts = (
-    timecode_cleaner,
+    clean_text,
     order_question,
     question_upper,
     question_lower,
     remove_blank_line,
     prefix_questions_and_answers,
+    remove_milliseconds_from_tc
 )

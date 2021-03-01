@@ -74,6 +74,13 @@ class Mission:
         self.apply_style_to_orphan_timecode()
         self.remove_mission_ref_as_title()
 
+    def remove_milliseconds_from_tc(self):
+        rd = self.doc.createReplaceDescriptor()
+        rd.SearchRegularExpression = True
+        rd.SearchString = '(\d{2}),\d{2}\]'
+        rd.ReplaceString = "$1]"
+        self.doc.replaceAll(rd)
+
     def question_upper(self):
         text_enum = self.text.createEnumeration()
 
