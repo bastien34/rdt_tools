@@ -120,7 +120,7 @@ class Mission:
         color = PropertyValue('CharColor', 0, 6710932, 0)
         rd = self.doc.createReplaceDescriptor()
         rd.SearchRegularExpression = True
-        rd.SearchString = '^\s?(\[\d{2}:\d{2}:\d{2}\])\s?$'
+        rd.SearchString = '^\s?(\[\d{2}:\d{2}:\d{2}(.\d+)?\])\s?$'
         rd.setReplaceAttributes((bold, color))
         rd.ReplaceString = "$1"
         self.doc.replaceAll(rd)
