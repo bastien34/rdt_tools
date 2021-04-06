@@ -173,7 +173,21 @@ class Mission:
 
     def get_selected_timecode(self) -> int:
         selected = self.get_selection()
-        pattern = "\[\d\d:\d\d:\d\d(?:\.\d+)?\]"
+        pattern = "\d\d:\d\d:\d\d"
         match = re.search(pattern, selected)
         if match:
             return convert_tc_to_seconds(selected)
+
+    def insert_timecode(self, timecode: str):
+        controller = self.doc.getCurrentController()
+        controller.getSelection().getByIndex(0).String = timecode
+
+    def apply_style(self, style):
+        controller = self.doc.getCurrentController()
+        controller.ViewCursor.ParaStyleName = style
+
+    def apply_question_style(self):
+        self.apply_style(QUESTION_STYLE)
+
+    def apply_answer_style(self):
+        self.apply_style(ANSWER_STYLE)

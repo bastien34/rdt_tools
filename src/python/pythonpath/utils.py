@@ -38,7 +38,8 @@ def convert_milliseconds_to_tc_format(value: int) -> str:
 
 
 def convert_tc_to_seconds(tc: str) -> int:
-    tc = tc[1:-1].split(':')
+    tc = tc.split(':')
     h, m, s = tuple(tc)
+    print(tc)
     seconds = int(h) * 3600 + int(m) * 60 + int(s)
     return int(seconds)

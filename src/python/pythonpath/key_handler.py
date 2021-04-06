@@ -1,18 +1,20 @@
 import unohelper
 from com.sun.star.awt import XKeyHandler
-from audio_controls import forward, rewind, get_position, play_pause
+from audio_controls import forward, rewind, get_timecode, play_pause
 
 
-retour = 768  # F1
-avance = 770
-playPause = 769
-position = 771
-lireTC = 772
-nVivo = 779  # F12
-question = 778
-standard = 777
-correctTimecodeKey = 778
+REWIND = 768  # F1
+FORWARD = 770
+PLAYPAUSE = 769
+PUSH_TIMECODE = 771
+
+NVIVO = 779  # F12
+QUESTION = 778
+STANDARD = 777
+
 B = 513
+Q = 528
+R = 529
 
 CNTRL = 2
 
@@ -25,18 +27,37 @@ class KeyHandler(unohelper.Base, XKeyHandler):
         pass
 
     def keyPressed(self, ev):
-        print(ev.KeyCode)
+        key_pressed = True
+
+        # Editing
 
         if ev.Modifiers == CNTRL and ev.KeyCode == B:
             self.mission.wrap_last_word_into_brackets()
-            print('into brackets')
 
-        if ev.KeyCode == playPause:
-            print('play - pause')
-            playPause(self.mission.get_selected_timecode())
-            return True
+        elif ev.Modifiers == CNTRL and ev.KeyCode == Q:
+            self.mission.apply_question_style()
 
-        return False
+        elif ev.Modifiers == CNTRL and ev.KeyCode == R:
+            self.mission.apply_answer_style()
+
+        # Audio controls
+
+        elif ev.KeyCode == PLAYPAUSE:
+            play_pause(self.mission.get_selected_timecode())
+
+        elif ev.KeyCode == REWIND:
+            rewind()
+
+        elif ev.KeyCode == FORWARD:
+            forward()
+
+        elif ev.KeyCode == PUSH_TIMECODE:
+            self.mission.insert_timecode(get_timecode())
+
+        else:
+            key_pressed = False
+
+        return key_pressed
 
     def keyReleased(self, ev):
         return False

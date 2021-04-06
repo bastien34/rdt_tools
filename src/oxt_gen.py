@@ -15,8 +15,9 @@ import xml.etree.ElementTree as ET
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('post_gen_project')
+# implement audio controls + current styles
 # wrap last word into brackets
-VERSION = "0.1.12"
+VERSION = "0.2"
 EXTENSION_NAME= "rdt_utils"
 OUTPUT = 'extension'
 
