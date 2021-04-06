@@ -1,8 +1,12 @@
+import re
+
 from com.sun.star.awt import FontWeight
 from com.sun.star.beans import PropertyValue
 from com.sun.star.awt.FontSlant import ITALIC
-from debug import mri
+# from debug import mri
 from reg_strings import CLEAN_REPLACING_STR
+from key_handler import KeyHandler
+from utils import convert_tc_to_seconds
 
 
 QUESTION_STYLE = "Inter Q"
@@ -20,12 +24,16 @@ class Mission:
         self._remove_blank_space_at_the_end_of_lines()
         self._apply_question_style()
 
+    def get_selection(self):
+        controller = self.doc.getCurrentController()
+        return controller.getSelection().getByIndex(0).String
+
     def _remove_blank_space_at_the_end_of_lines(self):
-        rd = self.doc.createReplaceDescriptor()
-        rd.SearchRegularExpression = True
-        rd.SearchString = '\s*$'
-        rd.ReplaceString = ""
-        self.doc.replaceAll(rd)
+            rd = self.doc.createReplaceDescriptor()
+            rd.SearchRegularExpression = True
+            rd.SearchString = '\s*$'
+            rd.ReplaceString = ""
+            self.doc.replaceAll(rd)
 
     def _apply_question_style(self):
         # check if document has INTERQ style
@@ -83,7 +91,7 @@ class Mission:
 
     def wrap_last_word_into_brackets(self):
         controller = self.doc.getCurrentController()
-        selected = controller.getSelection().getByIndex(0).String
+        selected = self.get_selection()
         if selected:
             ns = self._wrap_word_into_brackets(selected)
             controller.getSelection().getByIndex(0).String = ns
@@ -103,6 +111,9 @@ class Mission:
         expression = expression.strip()
         return "[" + expression + "]"
 
+    def attach_key_handler(self):
+        controller = self.doc.getCurrentController()
+        controller.addKeyHandler(KeyHandler(self))
 
     def question_upper(self):
         text_enum = self.text.createEnumeration()
@@ -159,3 +170,10 @@ class Mission:
                 if element.ParaStyleName == QUESTION_STYLE:
                     element.String = f"{i} - {element.String}"
                     i += 1
+
+    def get_selected_timecode(self) -> int:
+        selected = self.get_selection()
+        pattern = "\[\d\d:\d\d:\d\d(?:\.\d+)?\]"
+        match = re.search(pattern, selected)
+        if match:
+            return convert_tc_to_seconds(selected)

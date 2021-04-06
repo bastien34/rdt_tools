@@ -1,5 +1,6 @@
 import logging
 
+
 # debug
 # from debug import mri
 
@@ -58,6 +59,10 @@ def wrap_last_word_into_brackets(*args):
     doc.wrap_last_word_into_brackets()
 
 
+def get_things_up(*args):
+    Mission(ctx).attach_key_handler()
+
+
 g_exportedScripts = (
     clean_text,
     order_question,
@@ -67,4 +72,5 @@ g_exportedScripts = (
     prefix_questions_and_answers,
     remove_milliseconds_from_tc,
     wrap_last_word_into_brackets,
+    get_things_up,
 )
