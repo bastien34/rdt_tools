@@ -193,4 +193,4 @@ class Mission:
 
     def insert_text(self, expression):
         controller = self.doc.getCurrentController()
-        controller.getSelection().getByIndex(0).String = expression
+        controller.getSelection().getByIndex(0).String = expression + ' '

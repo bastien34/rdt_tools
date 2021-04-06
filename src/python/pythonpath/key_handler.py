@@ -29,27 +29,27 @@ class KeyHandler(unohelper.Base, XKeyHandler):
         pass
 
     def keyPressed(self, ev):
-        key_pressed = True
-
-        # Editing
 
         if ev.Modifiers == CNTRL:
+
             if ev.KeyCode == B:
                 self.mission.wrap_last_word_into_brackets()
 
-            if ev.KeyCode == Q:
+            elif ev.KeyCode == Q:
                 self.mission.apply_question_style()
 
-            if ev.KeyCode == R:
+            elif ev.KeyCode == R:
                 self.mission.apply_answer_style()
 
-            if ev.KeyCode == K:
+            elif ev.KeyCode == K:
                 tc = get_timecode(milliseconds=False)
                 self.mission.insert_text(f"[{tc} inaudible]")
 
-            if ev.KeyCode == N:
+            elif ev.KeyCode == N:
                 tc = get_timecode(milliseconds=False)
                 self.mission.insert_text(f"[{tc} incompris]")
+            else:
+                return False
 
         # Audio controls
 
@@ -66,10 +66,9 @@ class KeyHandler(unohelper.Base, XKeyHandler):
             self.mission.insert_timecode(get_timecode())
 
         else:
-            key_pressed = False
+            return False
 
-        return key_pressed
+        return True
 
     def keyReleased(self, ev):
         return False
-

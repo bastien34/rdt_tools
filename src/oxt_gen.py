@@ -18,7 +18,7 @@ logger = logging.getLogger('post_gen_project')
 # automatic inaudible / incompris sequences
 # implement audio controls + current styles
 # wrap last word into brackets
-VERSION = "0.2.1"
+VERSION = "0.2.2"
 EXTENSION_NAME= "rdt_utils"
 OUTPUT = 'extension'
 
