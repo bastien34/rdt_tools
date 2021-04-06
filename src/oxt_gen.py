@@ -15,6 +15,7 @@ import xml.etree.ElementTree as ET
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('post_gen_project')
+
 # automatic inaudible / incompris sequences
 # implement audio controls + current styles
 # wrap last word into brackets
