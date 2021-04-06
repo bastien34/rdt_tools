@@ -53,6 +53,11 @@ def remove_milliseconds_from_tc(*args):
     doc.remove_milliseconds_from_tc()
 
 
+def wrap_last_word_into_brackets(*args):
+    doc = Mission(ctx)
+    doc.wrap_last_word_into_brackets()
+
+
 g_exportedScripts = (
     clean_text,
     order_question,
@@ -60,5 +65,6 @@ g_exportedScripts = (
     question_lower,
     remove_blank_line,
     prefix_questions_and_answers,
-    remove_milliseconds_from_tc
+    remove_milliseconds_from_tc,
+    wrap_last_word_into_brackets,
 )

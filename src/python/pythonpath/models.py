@@ -81,6 +81,29 @@ class Mission:
         rd.ReplaceString = "$1$3"
         self.doc.replaceAll(rd)
 
+    def wrap_last_word_into_brackets(self):
+        controller = self.doc.getCurrentController()
+        selected = controller.getSelection().getByIndex(0).String
+        if selected:
+            ns = self._wrap_word_into_brackets(selected)
+            controller.getSelection().getByIndex(0).String = ns
+        else:
+            viewCursor = controller.getViewCursor()
+            try:
+                textCursor = self.text.createTextCursorByRange(viewCursor)
+                textCursor.gotoPreviousWord(False)
+                textCursor.gotoNextWord(True)
+                expr = self._wrap_word_into_brackets(textCursor.String)
+                textCursor.String = expr + " "
+                viewCursor.goRight(0, False)
+            except:
+                pass
+
+    def _wrap_word_into_brackets(self, expression: str) -> str:
+        expression = expression.strip()
+        return "[" + expression + "]"
+
+
     def question_upper(self):
         text_enum = self.text.createEnumeration()
 
