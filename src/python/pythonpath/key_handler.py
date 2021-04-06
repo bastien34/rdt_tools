@@ -15,6 +15,8 @@ STANDARD = 777
 B = 513
 Q = 528
 R = 529
+K = 522  # inaudible
+N = 525  # incompris
 
 CNTRL = 2
 
@@ -31,14 +33,23 @@ class KeyHandler(unohelper.Base, XKeyHandler):
 
         # Editing
 
-        if ev.Modifiers == CNTRL and ev.KeyCode == B:
-            self.mission.wrap_last_word_into_brackets()
+        if ev.Modifiers == CNTRL:
+            if ev.KeyCode == B:
+                self.mission.wrap_last_word_into_brackets()
 
-        elif ev.Modifiers == CNTRL and ev.KeyCode == Q:
-            self.mission.apply_question_style()
+            if ev.KeyCode == Q:
+                self.mission.apply_question_style()
 
-        elif ev.Modifiers == CNTRL and ev.KeyCode == R:
-            self.mission.apply_answer_style()
+            if ev.KeyCode == R:
+                self.mission.apply_answer_style()
+
+            if ev.KeyCode == K:
+                tc = get_timecode(milliseconds=False)
+                self.mission.insert_text(f"[{tc} inaudible]")
+
+            if ev.KeyCode == N:
+                tc = get_timecode(milliseconds=False)
+                self.mission.insert_text(f"[{tc} incompris]")
 
         # Audio controls
 

@@ -19,7 +19,7 @@ def play_pause(position):
     subprocess.run(cmd)
 
 
-def get_timecode():
+def get_timecode(milliseconds=True):
     cmd = ["playerctl", "position"]
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
     position = process.communicate()[0].decode('utf-8')
@@ -27,4 +27,7 @@ def get_timecode():
     h, m = divmod(m, 60)
     seconds = int(ss)
     ms = int((ss - seconds) * 1000)
-    return f"[{int(h):02}:{int(m):02}:{seconds:02}.{ms}] "
+    if milliseconds:
+        return f"[{int(h):02}:{int(m):02}:{seconds:02}.{ms}] "
+    else:
+        return f"{int(h):02}:{int(m):02}:{seconds:02}"

@@ -35,7 +35,7 @@
                                     <value>_self</value>
                                 </prop>
                                 <prop oor:name="URL" oor:type="xs:string">
-                                    <value>vnd.sun.star.script:rdt_utils-0.2.oxt|python|rdt_utils.py$clean_text?language=Python&amp;location=user:uno_packages</value>
+                                    <value>vnd.sun.star.script:rdt_utils-0.2.1.oxt|python|rdt_utils.py$clean_text?language=Python&amp;location=user:uno_packages</value>
                                 </prop>
                             </node>
                         </node>
@@ -52,7 +52,7 @@
                                     <value>_self</value>
                                 </prop>
                                 <prop oor:name="URL" oor:type="xs:string">
-                                    <value>vnd.sun.star.script:rdt_utils-0.2.oxt|python|rdt_utils.py$order_question?language=Python&amp;location=user:uno_packages</value>
+                                    <value>vnd.sun.star.script:rdt_utils-0.2.1.oxt|python|rdt_utils.py$order_question?language=Python&amp;location=user:uno_packages</value>
                                 </prop>
                             </node>
                         </node>
@@ -83,7 +83,7 @@
                                     <value>_self</value>
                                 </prop>
                                 <prop oor:name="URL" oor:type="xs:string">
-                                    <value>vnd.sun.star.script:rdt_utils-0.2.oxt|python|rdt_utils.py$question_upper?language=Python&amp;location=user:uno_packages</value>
+                                    <value>vnd.sun.star.script:rdt_utils-0.2.1.oxt|python|rdt_utils.py$question_upper?language=Python&amp;location=user:uno_packages</value>
                                 </prop>
                             </node>
                         </node>
@@ -100,7 +100,7 @@
                                     <value>_self</value>
                                 </prop>
                                 <prop oor:name="URL" oor:type="xs:string">
-                                    <value>vnd.sun.star.script:rdt_utils-0.2.oxt|python|rdt_utils.py$question_lower?language=Python&amp;location=user:uno_packages</value>
+                                    <value>vnd.sun.star.script:rdt_utils-0.2.1.oxt|python|rdt_utils.py$question_lower?language=Python&amp;location=user:uno_packages</value>
                                 </prop>
                             </node>
                         </node>
@@ -131,7 +131,7 @@
                                     <value>_self</value>
                                 </prop>
                                 <prop oor:name="URL" oor:type="xs:string">
-                                    <value>vnd.sun.star.script:rdt_utils-0.2.oxt|python|rdt_utils.py$remove_blank_line?language=Python&amp;location=user:uno_packages</value>
+                                    <value>vnd.sun.star.script:rdt_utils-0.2.1.oxt|python|rdt_utils.py$remove_blank_line?language=Python&amp;location=user:uno_packages</value>
                                 </prop>
                             </node>
                         </node>
@@ -162,7 +162,24 @@
                                     <value>_self</value>
                                 </prop>
                                 <prop oor:name="URL" oor:type="xs:string">
-                                    <value>vnd.sun.star.script:rdt_utils-0.2.oxt|python|rdt_utils.py$prefix_questions_and_answers?language=Python&amp;location=user:uno_packages</value>
+                                    <value>vnd.sun.star.script:rdt_utils-0.2.1.oxt|python|rdt_utils.py$prefix_questions_and_answers?language=Python&amp;location=user:uno_packages</value>
+                                </prop>
+                            </node>
+                        </node>
+
+                        <node oor:name="Submenu">
+                            <node oor:name="N011" oor:op="replace">
+                                <prop oor:name="Context" oor:type="xs:string">
+                                    <value></value>
+                                </prop>
+                                <prop oor:name="Title" oor:type="xs:string">
+                                    <value xml:lang="fr">Supprimer les millisecondes des TC</value>
+                                </prop>
+                                <prop oor:name="Target" oor:type="xs:string">
+                                    <value>_self</value>
+                                </prop>
+                                <prop oor:name="URL" oor:type="xs:string">
+                                    <value>vnd.sun.star.script:rdt_utils-0.2.1.oxt|python|rdt_utils.py$remove_milliseconds_from_tc?language=Python&amp;location=user:uno_packages</value>
                                 </prop>
                             </node>
                         </node>
@@ -176,7 +193,7 @@
             <node oor:name="com.rdt.comp.Utils" oor:op="replace">
                 <node oor:name="N001" oor:op="replace">
                     <prop oor:name="URL" oor:type="xs:string">
-                        <value>vnd.sun.star.script:rdt_utils-0.2.oxt|python|rdt_utils.py$clean_text?language=Python&amp;location=user:uno_packages</value>
+                        <value>vnd.sun.star.script:rdt_utils-0.2.1.oxt|python|rdt_utils.py$clean_text?language=Python&amp;location=user:uno_packages</value>
                     </prop>
                     <prop oor:name="ImageIdentifier" oor:type="xs:string">
                         <value/>
@@ -196,7 +213,7 @@
         <node oor:name="Images">
             <node oor:name="com.rdt.comp.Utils.image1" oor:op="replace">
                 <prop oor:name="URL">
-                    <value>vnd.sun.star.script:rdt_utils-0.2.oxt|python|rdt_utils.py$clean_text?language=Python&amp;location=user:uno_packages</value>
+                    <value>vnd.sun.star.script:rdt_utils-0.2.1.oxt|python|rdt_utils.py$clean_text?language=Python&amp;location=user:uno_packages</value>
                 </prop>
                 <node oor:name="UserDefinedImages">
                     <prop oor:name="ImageSmallURL" oor:type="xs:string">

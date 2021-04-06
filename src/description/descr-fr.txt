@@ -1,2 +1,2 @@
-Ensemble d'outils pour nettoyer une mission.
+Ensemble d'outils pour réaliser une mission RDT.
 Copyright (c) 2021 PalaceWebDev
