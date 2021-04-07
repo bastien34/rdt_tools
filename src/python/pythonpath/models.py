@@ -179,7 +179,7 @@ class Mission:
             return convert_tc_to_seconds(selected)
 
     def insert_timecode(self, timecode: str):
-        self.insert_text(timecode)
+        self.insert_text('[' + timecode + ']')
 
     def apply_style(self, style):
         controller = self.doc.getCurrentController()

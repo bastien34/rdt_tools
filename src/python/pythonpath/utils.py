@@ -29,12 +29,12 @@ def get_package_location(ctx):
     return srv.getPackageLocation(IMPLEMENTATION_NAME)
 
 
-def convert_milliseconds_to_tc_format(value: int) -> str:
-    s = int(value / 1000)
-    m = int((value/1000 * 60)%60)
-    h = (value / (1000 * 60 * 60)) % 24
-    ms = value / 1000 - int(value / 1000)  # get decimal part
-    return f"[{h:02}:{m:02}:{s:02}:{ms:02}:"
+def seconds_to_timecode(value: float) -> str:
+    total_seconds = int(value)
+    ms = int((value - total_seconds) * 1000)
+    hours, seconds = total_seconds // 3600, total_seconds % 3600
+    minutes, seconds = seconds // 60, seconds % 60
+    return f"{hours:02}:{minutes:02}:{seconds:02}.{ms:02}"
 
 
 def convert_tc_to_seconds(tc: str) -> int:
