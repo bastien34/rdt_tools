@@ -27,21 +27,15 @@ CNTRL = 2
 class KeyHandler(unohelper.Base, XKeyHandler):
     def __init__(self, mission):
         self.mission = mission
-        self.player = self._init_player()
-
-    def _init_player(self):
-        try:
-            self.player = Player()
-        except:
-            return None
 
     def disposing(self, ev):
         pass
 
     def keyPressed(self, ev):
-        if not self.player:
-            if not self._init_player():
-                return False
+        try:
+            player = Player()
+        except:
+            return False
 
         if ev.Modifiers == CNTRL:
 
@@ -55,11 +49,11 @@ class KeyHandler(unohelper.Base, XKeyHandler):
                 self.mission.apply_answer_style()
 
             elif ev.KeyCode == K:
-                tc = self.player.get_timecode(milliseconds=False)
+                tc = player.get_timecode(milliseconds=False)
                 self.mission.insert_text(f"[{tc} inaudible]")
 
             elif ev.KeyCode == N:
-                tc = self.player.get_timecode(milliseconds=False)
+                tc = player.get_timecode(milliseconds=False)
                 self.mission.insert_text(f"[{tc} incompris]")
             else:
                 return False
@@ -67,25 +61,25 @@ class KeyHandler(unohelper.Base, XKeyHandler):
         # Audio controls
 
         elif ev.KeyCode == PLAYPAUSE:
-            self.player.play_pause(self.mission.get_selected_timecode())
+            player.play_pause(self.mission.get_selected_timecode())
 
         elif ev.KeyCode == REWIND:
-            self.player.rewind()
+            player.rewind()
 
         elif ev.KeyCode == FORWARD:
-            self.player.forward()
+            player.forward()
 
         elif ev.KeyCode == PUSH_TIMECODE:
-            self.mission.insert_timecode(self.player.get_timecode())
+            self.mission.insert_timecode(player.get_timecode())
 
         elif ev.KeyCode == DECREASE_RATE:
-            self.player.decrease_rate()
+            player.decrease_rate()
 
         elif ev.KeyCode == RESET_RATE:
-            self.player.reset_rate()
+            player.reset_rate()
 
         elif ev.KeyCode == INCREASE_RATE:
-            self.player.increase_rate()
+            player.increase_rate()
 
         else:
             return False

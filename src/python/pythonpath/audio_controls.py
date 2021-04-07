@@ -19,7 +19,6 @@ class Player:
 
     def play_pause(self, timecode=None):
         if timecode:
-            print(timecode)
             timecode = timecode * 1000000
             self.interface.SetPosition(self.trackid, timecode)
             self.interface.Play()
@@ -73,3 +72,5 @@ class Player:
     @property
     def trackid(self):
         return str(self.metadata['mpris:trackid'])
+
+

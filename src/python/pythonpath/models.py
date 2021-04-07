@@ -176,7 +176,7 @@ class Mission:
         pattern = "\d\d:\d\d:\d\d"
         match = re.search(pattern, selected)
         if match:
-            return convert_tc_to_seconds(selected)
+            return convert_tc_to_seconds(match.group())
 
     def insert_timecode(self, timecode: str):
         self.insert_text('[' + timecode + ']')
