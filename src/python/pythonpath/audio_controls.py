@@ -1,7 +1,5 @@
-import subprocess
 import dbus
 import decimal
-from utils import seconds_to_timecode
 
 
 BUS_NAME = 'org.mpris.MediaPlayer2'
@@ -9,9 +7,8 @@ VLC_BUS = BUS_NAME + '.vlc'
 PLAYER_BUS = BUS_NAME + '.Player'
 OBJECT_PATH = '/org/mpris/MediaPlayer2'
 
-REWIND_VALUE = 3000000
+REWIND_VALUE = 3000000  # time is in microseconds
 FORWARD_VALUE = 3000000
-
 
 
 class Player:
@@ -22,16 +19,18 @@ class Player:
 
     def play_pause(self, timecode=None):
         if timecode:
-            self.interface.Seek(timecode)
+            print(timecode)
+            timecode = timecode * 1000000
+            self.interface.SetPosition(self.trackid, timecode)
             self.interface.Play()
         else:
             self.interface.PlayPause()
 
     def forward(self, value=FORWARD_VALUE):
-        self.interface.Seek(self.position + value)
+        self.interface.Seek(value)
 
     def rewind(self, value=REWIND_VALUE):
-        self.interface.Seek(self.position - value)
+        self.interface.Seek(- value)
 
     @property
     def rate(self):
@@ -39,7 +38,7 @@ class Player:
 
     @rate.setter
     def rate(self, rate: decimal.Decimal):
-        if 0.5  < rate < 2:
+        if 0.5 < rate < 2:
             self.property.Set(PLAYER_BUS, 'Rate', rate)
 
     def increase_rate(self):
@@ -57,10 +56,6 @@ class Player:
         pos = self.property.Get(PLAYER_BUS, 'Position').as_integer_ratio()[0]
         return pos / 1000000
 
-    @position.setter
-    def position(self, position: decimal.Decimal):
-        self.property.Set(PLAYER_BUS, 'Position', position)
-
     def get_timecode(self, milliseconds=True):
         total_seconds = int(self.position)
         ms = int((self.position - total_seconds) * 1000)
@@ -71,17 +66,10 @@ class Player:
             return f"{tc}.{ms}"
         return tc
 
+    @property
+    def metadata(self):
+        return self.property.Get(PLAYER_BUS, 'Metadata')
 
-
-# def get_timecode(milliseconds=True):
-#     cmd = ["playerctl", "position"]
-#     process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-#     position = process.communicate()[0].decode('utf-8')
-#     m, ss = divmod(float(position), 60)
-#     h, m = divmod(m, 60)
-#     seconds = int(ss)
-#     ms = int((ss - seconds) * 1000)
-#     if milliseconds:
-#         return f"[{int(h):02}:{int(m):02}:{seconds:02}.{ms}] "
-#     else:
-#         return f"{int(h):02}:{int(m):02}:{seconds:02}"
+    @property
+    def trackid(self):
+        return str(self.metadata['mpris:trackid'])

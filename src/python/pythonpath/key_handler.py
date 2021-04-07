@@ -7,9 +7,9 @@ REWIND = 768  # F1
 PLAYPAUSE = 769
 FORWARD = 770
 PUSH_TIMECODE = 771
-INCREASE_RATE = 772
+DECREASE_RATE = 772
 RESET_RATE = 773
-DECREASE_RATE = 774
+INCREASE_RATE = 774
 
 NVIVO = 779  # F12
 QUESTION = 778
@@ -27,15 +27,21 @@ CNTRL = 2
 class KeyHandler(unohelper.Base, XKeyHandler):
     def __init__(self, mission):
         self.mission = mission
+        self.player = self._init_player()
+
+    def _init_player(self):
         try:
             self.player = Player()
         except:
-            raise()
+            return None
 
     def disposing(self, ev):
         pass
 
     def keyPressed(self, ev):
+        if not self.player:
+            if not self._init_player():
+                return False
 
         if ev.Modifiers == CNTRL:
 

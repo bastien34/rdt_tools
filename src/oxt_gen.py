@@ -16,11 +16,12 @@ import xml.etree.ElementTree as ET
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('post_gen_project')
 
+# Get rid of playctl - use full python dbus - implement -+ playing ratio
 # hit F2 from position starts playing even if paused
 # automatic inaudible / incompris sequences
 # implement audio controls + current styles
 # wrap last word into brackets
-VERSION = "0.2.3"
+VERSION = "0.3.0"
 EXTENSION_NAME= "rdt_utils"
 OUTPUT = 'extension'
 
