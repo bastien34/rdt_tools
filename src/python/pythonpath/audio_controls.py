@@ -13,10 +13,10 @@ def rewind():
 
 def play_pause(position):
     if position:
-        cmd = ["playerctl", "position", str(position)]
+        subprocess.run(["playerctl", "position", str(position)])
+        subprocess.run(["playerctl", "play"])
     else:
-        cmd = ["playerctl", "play-pause"]
-    subprocess.run(cmd)
+        subprocess.run(["playerctl", "play-pause"])
 
 
 def get_timecode(milliseconds=True):
