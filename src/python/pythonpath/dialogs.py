@@ -28,19 +28,20 @@ class ActionListener(unohelper.Base, XActionListener):
 
 class PrefixDialog(object):
 
-    def __init__(self, context_component):
-        self.component = context_component
-        self.service_manager = self.component.getServiceManager()
-        instance = self.service_manager.createInstanceWithContext(
-            "com.sun.star.awt.DialogProvider",
-            self.component
-        )
-        path = get_package_location(self.component)
-        self.dlg = instance.createDialog(path + PREFIX_DIALOG_LOCATION)
-        self._add_listener()
+    def __init__(self, ctx):
+        self.ctx = ctx
+        self.smgr = self.ctx.getServiceManager()
 
-    def _add_listener(self):
+    def create(self):
+        instance = self.smgr.createInstanceWithContext(
+            "com.sun.star.awt.DialogProvider", self.ctx)
+        path = get_package_location(self.ctx)
+        dlg = instance.createDialog(path + PREFIX_DIALOG_LOCATION)
+        self._add_listener(dlg)
+        return dlg
+
+    def _add_listener(self, dlg):
         listener = ActionListener()
-        btn = self.dlg.getControl("validButton")
+        btn = dlg.getControl("validButton")
         btn.ActionCommand = "send"
         btn.addActionListener(listener)

@@ -66,7 +66,9 @@ class Mission:
 
     def _prefix_str(self, prefix, element):
         string = element.String
-        if string and not string.startswith('['):
+        pattern = "^\[\d\d:\d\d:\d\d(?:[\.|\,](\d+))\]$"
+        match = re.search(pattern, string)
+        if string and not match:
             element.String = prefix + " : " + string
 
     def clean_text(self):

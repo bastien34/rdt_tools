@@ -16,13 +16,14 @@ ctx = XSCRIPTCONTEXT.getComponentContext()
 
 
 def prefix_questions_and_answers(*args):
-    dlg = PrefixDialog(context_component=ctx).dlg
-    dlg.execute()
-    p_question = dlg.getControl('p_question').Text
-    p_answer = dlg.getControl('p_answer').Text
-    dlg.dispose()
-    doc = Mission(ctx)
-    doc.prefix_questions_and_answers(p_question, p_answer)
+    PD = PrefixDialog(ctx=ctx)
+    dlg = PD.create()
+    if dlg.execute():
+        p_question = dlg.getControl('p_question').Text
+        p_answer = dlg.getControl('p_answer').Text
+        dlg.dispose()
+        doc = Mission(ctx)
+        doc.prefix_questions_and_answers(p_question, p_answer)
 
 
 def clean_text(*args):
