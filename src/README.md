@@ -33,6 +33,8 @@ Tools available in submenu **RDT/Toolbox**
 
 ## logs
 
+- 3.3.2 VLC launcher in toolbar
+
 - 3.3.1 Get rid of playctl - use full python dbus - implement -+ playing ratio
   
 - hit F2 from position starts playing even if paused

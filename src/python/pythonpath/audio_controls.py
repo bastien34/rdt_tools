@@ -1,6 +1,8 @@
 import dbus
 import decimal
+import subprocess
 
+from dbus import DBusException
 
 BUS_NAME = 'org.mpris.MediaPlayer2'
 VLC_BUS = BUS_NAME + '.vlc'
@@ -9,6 +11,13 @@ OBJECT_PATH = '/org/mpris/MediaPlayer2'
 
 REWIND_VALUE = 3000000  # time is in microseconds
 FORWARD_VALUE = 3000000
+
+
+def open_vlc():
+    try:
+        proxy = dbus.SessionBus().get_object(VLC_BUS, OBJECT_PATH)
+    except DBusException:
+        subprocess.Popen(['vlc'])
 
 
 class Player:

@@ -6,6 +6,7 @@ import logging
 
 from dialogs import PrefixDialog
 from models import Mission
+from audio_controls import open_vlc
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('doc_cleaner')
@@ -63,6 +64,11 @@ def get_things_up(*args):
     Mission(ctx).attach_key_handler()
 
 
+def vlc_launcher(*args):
+    open_vlc()
+    get_things_up(*args)
+
+
 g_exportedScripts = (
     clean_text,
     order_question,
@@ -73,4 +79,5 @@ g_exportedScripts = (
     remove_milliseconds_from_tc,
     wrap_last_word_into_brackets,
     get_things_up,
+    vlc_launcher,
 )
