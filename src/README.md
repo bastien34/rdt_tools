@@ -21,7 +21,32 @@ Tools available in submenu **RDT/Toolbox**
 - Remove blank lines
 - Order questions
  
+
+## todos
+
+- logs should automatically updated during new version extension generation
+
+- open VLC player from libreoffice / open media from there
+
+- tool to compile menu from simplier format to xml
+
+
+## logs
+
+- 3.3.1 Get rid of playctl - use full python dbus - implement -+ playing ratio
+  
+- hit F2 from position starts playing even if paused
+  
+- automatic inaudible / incompris sequences
+  
+- implement audio controls + current styles
+  
+- wrap last word into brackets
+
+
+
 ## Ideas for future dev
 
+- tool to create a new version (ex. using a flag -N to increment number of version)
 - remove and install new extension in one command ```compile & install```
 
