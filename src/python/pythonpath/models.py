@@ -85,7 +85,7 @@ class Mission:
     def remove_milliseconds_from_tc(self):
         rd = self.doc.createReplaceDescriptor()
         rd.SearchRegularExpression = True
-        rd.SearchString = '(\[\d{2}:\d{2}:\d{2})(?:[\.|\,](\d+))?(\])'
+        rd.SearchString = '(\d{2}:\d{2}:\d{2})(?:[\.|\,](\d+))'
         rd.ReplaceString = "$1$3"
         self.doc.replaceAll(rd)
 
