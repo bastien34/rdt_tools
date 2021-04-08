@@ -24,9 +24,10 @@ Tools available in submenu **RDT/Toolbox**
 
 ## todos
 
+- button 'start CQ' create a directory and load medias in it, open track
 - logs should automatically updated during new version extension generation
 
-- open VLC player from libreoffice / open media from there
+- open media in VLC using dbus loading track
 
 - tool to compile menu from simplier format to xml
 
