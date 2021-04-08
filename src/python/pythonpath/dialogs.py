@@ -9,8 +9,6 @@ PREFIX_DIALOG_LOCATION = "/dialogs/prefixDialog.xdl"
 
 
 class ActionListener(unohelper.Base, XActionListener):
-    # def __init__(self, data):
-    #     self.data = data
 
     def disposing(self, ev):
         pass
