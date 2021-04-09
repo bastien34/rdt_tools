@@ -31,6 +31,7 @@ Tools available in submenu **RDT/Toolbox**
 
 ## logs
 
+- 3.3.6 Compatible with Totem player
 - 3.3.5 VLC Load track from file picker
 - 3.3.4 Bind get_thinks_up to gui event 'load doc'
 - 3.3.3 prefix even when string starts with TC

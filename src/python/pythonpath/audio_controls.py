@@ -15,7 +15,13 @@ FORWARD_VALUE = 3000000
 
 class Player:
     def __init__(self):
-        proxy = dbus.SessionBus().get_object(VLC_BUS, OBJECT_PATH)
+        self.vlc = False
+        try:
+            proxy = dbus.SessionBus().get_object(VLC_BUS, OBJECT_PATH)
+            self.vlc = True
+        except:
+            proxy = dbus.SessionBus().get_object(BUS_NAME + '.totem', OBJECT_PATH)
+
         self.interface = dbus.Interface(proxy, dbus_interface=PLAYER_BUS)
         self.track_interface = dbus.Interface(proxy, dbus_interface=BUS_NAME + '.TrackList')
         self.property = dbus.Interface(proxy, dbus_interface='org.freedesktop.DBus.Properties')
@@ -26,7 +32,10 @@ class Player:
     def play_pause(self, timecode=None):
         if timecode:
             timecode = timecode * 1000000
-            self.interface.SetPosition(self.trackid, timecode)
+            if self.vlc:
+                self.interface.SetPosition(self.trackid, timecode)
+            else:
+                self.interface.SetPosition('/', timecode)
             self.interface.Play()
         else:
             self.interface.PlayPause()
@@ -39,7 +48,9 @@ class Player:
 
     @property
     def rate(self):
-        return self.property.Get(PLAYER_BUS, 'Rate')
+        if self.vlc:
+            return self.property.Get(PLAYER_BUS, 'Rate')
+        return 0
 
     @rate.setter
     def rate(self, rate: decimal.Decimal):
@@ -53,7 +64,8 @@ class Player:
         self.rate = self.rate - 0.1
 
     def reset_rate(self):
-        self.rate = 1.0
+        if self.vlc:
+            self.rate = 1.0
 
     @property
     def position(self):
