@@ -16,7 +16,7 @@ import xml.etree.ElementTree as ET
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('post_gen_project')
 
-VERSION = "0.3.3"
+VERSION = "0.3.4"
 EXTENSION_NAME= "rdt_utils"
 OUTPUT = 'extension'
 
@@ -39,7 +39,7 @@ def update_addon_ui():
     addon_ui = 'src/Addon.xcu'
     with open(addon_ui, 'r') as f:
         content = f.read()
-    content = re.sub(f"{EXTENSION_NAME}-[\d.]+", f"{EXTENSION_NAME}-{VERSION}.", content)
+    content = re.sub(f"{EXTENSION_NAME}-[\d.]+", f"{EXTENSION_NAME}.", content)
     with open(addon_ui, 'w') as f:
         f.write(content)
 
@@ -52,10 +52,10 @@ def create_tmp_src(temp_dir):
 
 
 def zip_files():
-    filename = f'{EXTENSION_NAME}-{VERSION}.oxt'
+    filename = f'{EXTENSION_NAME}.oxt'
     msg = f'Zipping files to {filename}'
     logger.info(msg)
-    extension_path = os.path.join(OUTPUT, filename)
+    extension_path = os.path.join(OUTPUT, VERSION, filename)
     with tempfile.TemporaryDirectory() as tmpdirname:
         src = os.path.join(tmpdirname, 'src')
         create_tmp_src(src)

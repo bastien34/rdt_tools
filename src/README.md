@@ -34,6 +34,7 @@ Tools available in submenu **RDT/Toolbox**
 
 ## logs
 
+- 3.3.4 Bind get_thinks_up to gui event 'load doc'
 - 3.3.3 prefix even when string starts with TC
 - 3.3.2 VLC launcher in toolbar
 

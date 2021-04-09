@@ -67,7 +67,6 @@ def get_things_up(*args):
 
 def vlc_launcher(*args):
     open_vlc()
-    get_things_up(*args)
 
 
 g_exportedScripts = (
