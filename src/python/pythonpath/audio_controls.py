@@ -9,7 +9,7 @@ VLC_BUS = BUS_NAME + '.vlc'
 PLAYER_BUS = BUS_NAME + '.Player'
 OBJECT_PATH = '/org/mpris/MediaPlayer2'
 
-REWIND_VALUE = 3000000  # time is in microseconds
+REWIND_VALUE = 1000000  # time is in microseconds
 FORWARD_VALUE = 3000000
 
 
