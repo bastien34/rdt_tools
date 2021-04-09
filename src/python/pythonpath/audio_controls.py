@@ -82,10 +82,12 @@ class Player:
 
 def open_vlc(file_path=None):
     try:
-        proxy = dbus.SessionBus().get_object(VLC_BUS, OBJECT_PATH)
+        dbus.SessionBus().get_object(VLC_BUS, OBJECT_PATH)
+        if file_path:
+            p = Player()
+            p.add_track(file_path)
     except DBusException:
-        subprocess.Popen(['vlc'])
-    p = Player()
-    p.add_track(file_path)
-
-
+        if file_path:
+            subprocess.Popen(['vlc', file_path])
+        else:
+            subprocess.Popen(['vlc'])

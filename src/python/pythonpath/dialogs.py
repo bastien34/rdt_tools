@@ -2,7 +2,7 @@ import unohelper
 from com.sun.star.awt import XActionListener
 from utils import get_package_location
 
-from debug import mri
+# from debug import mri
 
 
 PREFIX_DIALOG_LOCATION = "/dialogs/prefixDialog.xdl"
@@ -51,18 +51,13 @@ class FolderOpenDialog(object):
     def __init__(self, ctx):
         self.ctx = ctx
         self.smgr = self.ctx.getServiceManager()
-
-        try:
-            self.folder_picker_srv = "com.sun.star.ui.dialogs.FilePicker"
-        except:
-            traceback.print_exc()
+        self.file_picker_srv = "com.sun.star.ui.dialogs.FilePicker"
 
     def create(self):
         return self.smgr.createInstanceWithContext(
-            self.folder_picker_srv, self.ctx)
+            self.file_picker_srv, self.ctx)
 
     def execute(self):
         fp = self.create()
-        result = None
         if fp.execute():
             return fp.Files[0]
