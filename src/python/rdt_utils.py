@@ -3,10 +3,11 @@ import logging
 
 # debug
 # from debug import mri
-
-from dialogs import PrefixDialog
+import uno
+from dialogs import PrefixDialog, FolderOpenDialog
 from models import Mission
 from audio_controls import open_vlc
+from utils import path_to_url
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('doc_cleaner')
@@ -66,7 +67,9 @@ def get_things_up(*args):
 
 
 def vlc_launcher(*args):
-    open_vlc()
+    ctx = XSCRIPTCONTEXT.getComponentContext()
+    url = FolderOpenDialog(ctx).execute()
+    open_vlc(url)
 
 
 g_exportedScripts = (

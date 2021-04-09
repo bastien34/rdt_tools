@@ -24,16 +24,14 @@ Tools available in submenu **RDT/Toolbox**
 
 ## todos
 
-- button 'start CQ' create a directory and load medias in it, open track
 - logs should automatically updated during new version extension generation
-
-- open media in VLC using dbus loading track
 
 - tool to compile menu from simplier format to xml
 
 
 ## logs
 
+- 3.3.5 VLC Load track from file picker
 - 3.3.4 Bind get_thinks_up to gui event 'load doc'
 - 3.3.3 prefix even when string starts with TC
 - 3.3.2 VLC launcher in toolbar

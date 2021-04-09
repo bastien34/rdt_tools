@@ -16,15 +16,13 @@ import xml.etree.ElementTree as ET
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('post_gen_project')
 
-VERSION = "0.3.4"
+VERSION = "0.3.5"
 EXTENSION_NAME= "rdt_utils"
 OUTPUT = 'extension'
 
 
 def update_version():
     update_description_version()
-    update_addon_ui()
-
 
 def update_description_version():
     description_file = 'src/description.xml'
@@ -33,15 +31,6 @@ def update_description_version():
     # we suppose position of version node won't change
     root[1].attrib['value'] = VERSION
     tree.write(description_file)
-
-
-def update_addon_ui():
-    addon_ui = 'src/Addon.xcu'
-    with open(addon_ui, 'r') as f:
-        content = f.read()
-    content = re.sub(f"{EXTENSION_NAME}-[\d.]+", f"{EXTENSION_NAME}.", content)
-    with open(addon_ui, 'w') as f:
-        f.write(content)
 
 
 def create_tmp_src(temp_dir):

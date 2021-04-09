@@ -43,3 +43,26 @@ class PrefixDialog(object):
         btn = dlg.getControl("validButton")
         btn.ActionCommand = "send"
         btn.addActionListener(listener)
+
+
+class FolderOpenDialog(object):
+    """ To pick up a folder. """
+
+    def __init__(self, ctx):
+        self.ctx = ctx
+        self.smgr = self.ctx.getServiceManager()
+
+        try:
+            self.folder_picker_srv = "com.sun.star.ui.dialogs.FilePicker"
+        except:
+            traceback.print_exc()
+
+    def create(self):
+        return self.smgr.createInstanceWithContext(
+            self.folder_picker_srv, self.ctx)
+
+    def execute(self):
+        fp = self.create()
+        result = None
+        if fp.execute():
+            return fp.Files[0]

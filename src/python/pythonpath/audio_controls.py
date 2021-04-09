@@ -13,18 +13,15 @@ REWIND_VALUE = 1000000  # time is in microseconds
 FORWARD_VALUE = 3000000
 
 
-def open_vlc():
-    try:
-        proxy = dbus.SessionBus().get_object(VLC_BUS, OBJECT_PATH)
-    except DBusException:
-        subprocess.Popen(['vlc'])
-
-
 class Player:
     def __init__(self):
         proxy = dbus.SessionBus().get_object(VLC_BUS, OBJECT_PATH)
         self.interface = dbus.Interface(proxy, dbus_interface=PLAYER_BUS)
+        self.track_interface = dbus.Interface(proxy, dbus_interface=BUS_NAME + '.TrackList')
         self.property = dbus.Interface(proxy, dbus_interface='org.freedesktop.DBus.Properties')
+
+    def add_track(self, file_path):
+        self.track_interface.AddTrack(file_path, '/', True)
 
     def play_pause(self, timecode=None):
         if timecode:
@@ -81,5 +78,14 @@ class Player:
     @property
     def trackid(self):
         return str(self.metadata['mpris:trackid'])
+
+
+def open_vlc(file_path=None):
+    try:
+        proxy = dbus.SessionBus().get_object(VLC_BUS, OBJECT_PATH)
+    except DBusException:
+        subprocess.Popen(['vlc'])
+    p = Player()
+    p.add_track(file_path)
 
 
