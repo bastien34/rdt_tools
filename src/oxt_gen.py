@@ -2,13 +2,12 @@
 # -*- coding: utf-8 -*-
 
 """
-This will create a new extension.
+Module to build a new extension.
 """
 
 import os
 import logging
 import tempfile
-import re
 from shutil import copytree, ignore_patterns, make_archive
 import xml.etree.ElementTree as ET
 
