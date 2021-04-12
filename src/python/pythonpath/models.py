@@ -66,7 +66,7 @@ class Mission:
 
     def _prefix_str(self, prefix, element):
         string = element.String
-        pattern = "^\[\d\d:\d\d:\d\d(?:[\.|\,](\d+))\]$"
+        pattern = "^\[\d\d:\d\d:\d\d(.\d+)?\]$"
         match = re.search(pattern, string)
         if string and not match:
             element.String = prefix + " : " + string
