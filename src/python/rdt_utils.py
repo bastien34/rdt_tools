@@ -8,10 +8,12 @@ from dialogs import PrefixDialog, FolderOpenDialog
 from models import Mission
 from audio_controls import open_vlc
 from utils import path_to_url
+from key_handler import KeyHandler
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('doc_cleaner')
 
+TRUC = None
 
 ctx = XSCRIPTCONTEXT.getComponentContext()
 
@@ -63,11 +65,20 @@ def wrap_last_word_into_brackets(*args):
 
 
 def get_things_up(*args):
-    Mission(ctx).attach_key_handler()
+    smgr = ctx.ServiceManager
+    desktop = smgr.createInstanceWithContext("com.sun.star.frame.Desktop", ctx)
+    comp = desktop.getCurrentComponent()
+    if not comp in KeyHandler.components:
+        cc = comp.getCurrentController()
+        cc.addKeyHandler(KeyHandler(ctx, comp))
+
+
+def get_things_down(*args):
+    Mission(ctx).remove_key_handler(ctx)
 
 
 def vlc_launcher(*args):
-    ctx = XSCRIPTCONTEXT.getComponentContext()
+    get_things_up()
     url = FolderOpenDialog(ctx).execute()
     open_vlc(url)
 
@@ -82,5 +93,6 @@ g_exportedScripts = (
     remove_milliseconds_from_tc,
     wrap_last_word_into_brackets,
     get_things_up,
+    get_things_down,
     vlc_launcher,
 )

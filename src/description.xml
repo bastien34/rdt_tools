@@ -1,6 +1,6 @@
 <ns0:description xmlns:ns0="http://openoffice.org/extensions/description/2006" xmlns:ns1="http://www.w3.org/1999/xlink" xmlns:ns2="http://libreoffice.org/extensions/description/2011">
    <ns0:identifier value="com.rdt.comp.Utils" />
-   <ns0:version value="0.3.6" />
+   <ns0:version value="0.3.7" />
    <ns0:extension-description>
       <ns0:src lang="fr" ns1:href="description/descr-fr.txt" />
       <ns0:src lang="en" ns1:href="description/descr-en.txt" />

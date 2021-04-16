@@ -5,7 +5,6 @@ from com.sun.star.beans import PropertyValue
 from com.sun.star.awt.FontSlant import ITALIC
 # from debug import mri
 from reg_strings import CLEAN_REPLACING_STR
-from key_handler import KeyHandler
 from utils import convert_tc_to_seconds
 
 
@@ -112,10 +111,6 @@ class Mission:
     def _wrap_word_into_brackets(self, expression: str) -> str:
         expression = expression.strip()
         return "[" + expression + "]"
-
-    def attach_key_handler(self):
-        controller = self.doc.getCurrentController()
-        controller.addKeyHandler(KeyHandler(self))
 
     def question_upper(self):
         text_enum = self.text.createEnumeration()

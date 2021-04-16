@@ -1,7 +1,7 @@
 import unohelper
 from com.sun.star.awt import XKeyHandler
 from audio_controls import Player
-
+from models import Mission
 
 REWIND = 768  # F1
 PLAYPAUSE = 769
@@ -24,14 +24,35 @@ N = 525  # incompris
 CNTRL = 2
 
 
-class KeyHandler(unohelper.Base, XKeyHandler):
-    def __init__(self, mission):
-        self.mission = mission
+class Singleton(type):
+    _instances = {}
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            print('call not in instance')
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        print('already created')
+        return cls._instances[cls]
+
+    @property
+    def is_running(cls):
+        return bool(cls._instances)
+
+
+class KeyHandler(unohelper.Base, XKeyHandler, metaclass=Singleton):
+
+    components = set()
+
+    def __init__(self, ctx, component):
+        self.ctx = ctx
+        KeyHandler.components.add(component)
 
     def disposing(self, ev):
         pass
 
     def keyPressed(self, ev):
+
+        # mri(ev)
+
         try:
             player = Player()
         except:
@@ -85,6 +106,10 @@ class KeyHandler(unohelper.Base, XKeyHandler):
             return False
 
         return True
+
+    @property
+    def mission(self):
+        return Mission(self.ctx)
 
     def keyReleased(self, ev):
         return False
