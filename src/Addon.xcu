@@ -26,7 +26,7 @@
                         <node oor:name="Submenu">
                             <node oor:name="N002" oor:op="replace">
                                 <prop oor:name="Context" oor:type="xs:string">
-                                    <value></value>
+                                    <value/>
                                 </prop>
                                 <prop oor:name="Title" oor:type="xs:string">
                                     <value xml:lang="fr">Nettoyer le texte</value>
@@ -43,7 +43,7 @@
                         <node oor:name="Submenu">
                             <node oor:name="N003" oor:op="replace">
                                 <prop oor:name="Context" oor:type="xs:string">
-                                    <value></value>
+                                    <value/>
                                 </prop>
                                 <prop oor:name="Title" oor:type="xs:string">
                                     <value xml:lang="fr">Numéroter les questions</value>
@@ -60,7 +60,7 @@
                         <node oor:name="Submenu">
                             <node oor:name="N004" oor:op="replace">
                                 <prop oor:name="Context" oor:type="xs:string">
-                                    <value></value>
+                                    <value/>
                                 </prop>
                                 <prop oor:name="Target" oor:type="xs:string">
                                     <value>_self</value>
@@ -74,7 +74,7 @@
                         <node oor:name="Submenu">
                             <node oor:name="N005" oor:op="replace">
                                 <prop oor:name="Context" oor:type="xs:string">
-                                    <value></value>
+                                    <value/>
                                 </prop>
                                 <prop oor:name="Title" oor:type="xs:string">
                                     <value xml:lang="fr">Les questions en majuscules</value>
@@ -91,7 +91,7 @@
                         <node oor:name="Submenu">
                             <node oor:name="N006" oor:op="replace">
                                 <prop oor:name="Context" oor:type="xs:string">
-                                    <value></value>
+                                    <value/>
                                 </prop>
                                 <prop oor:name="Title" oor:type="xs:string">
                                     <value xml:lang="fr">Les questions en minuscules</value>
@@ -108,7 +108,7 @@
                         <node oor:name="Submenu">
                             <node oor:name="N007" oor:op="replace">
                                 <prop oor:name="Context" oor:type="xs:string">
-                                    <value></value>
+                                    <value/>
                                 </prop>
                                 <prop oor:name="Target" oor:type="xs:string">
                                     <value>_self</value>
@@ -189,6 +189,7 @@
 
             </node>
         </node>
+
         <node oor:name="OfficeToolBar">
             <node oor:name="com.rdt.comp.Utils" oor:op="replace">
                 <node oor:name="N001" oor:op="replace">
