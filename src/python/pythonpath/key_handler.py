@@ -2,6 +2,7 @@ import unohelper
 from com.sun.star.awt import XKeyHandler
 from audio_controls import Player
 from models import Mission
+# from debug import mri
 
 REWIND = 768  # F1
 PLAYPAUSE = 769
@@ -51,7 +52,7 @@ class KeyHandler(unohelper.Base, XKeyHandler, metaclass=Singleton):
 
     def keyPressed(self, ev):
 
-        # mri(ev)
+       # print(ev.KeyCode)
 
         try:
             player = Player()
@@ -82,6 +83,7 @@ class KeyHandler(unohelper.Base, XKeyHandler, metaclass=Singleton):
         # Audio controls
 
         elif ev.KeyCode == PLAYPAUSE:
+            # player.play_pause()
             player.play_pause(self.mission.get_selected_timecode())
 
         elif ev.KeyCode == REWIND:

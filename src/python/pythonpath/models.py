@@ -21,7 +21,7 @@ class Mission:
         self.doc = self.desktop.getCurrentComponent()
         self.text = self.doc.Text
         self._remove_blank_space_at_the_end_of_lines()
-        self._apply_question_style()
+        # self._apply_question_style()
 
     def get_selection(self):
         controller = self.doc.getCurrentController()
@@ -179,6 +179,7 @@ class Mission:
         self.insert_text('[' + timecode + ']')
 
     def apply_style(self, style):
+        # todo: this run all over the text & apply style for each line
         controller = self.doc.getCurrentController()
         controller.ViewCursor.ParaStyleName = style
 
