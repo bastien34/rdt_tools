@@ -72,11 +72,11 @@ class KeyHandler(unohelper.Base, XKeyHandler, metaclass=Singleton):
 
             elif ev.KeyCode == K:
                 tc = player.get_timecode(milliseconds=False)
-                self.mission.insert_text(f"[{tc} inaudible]")
+                self.mission.insert_text(f"inaudible [{tc}]")
 
             elif ev.KeyCode == N:
                 tc = player.get_timecode(milliseconds=False)
-                self.mission.insert_text(f"[{tc} incompris]")
+                self.mission.insert_text(f"incompris [{tc}]")
             else:
                 return False
 
