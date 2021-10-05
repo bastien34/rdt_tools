@@ -14,18 +14,49 @@ ANSWER_STYLE = "Inter R"
 
 class Mission:
     def __init__(self, ctx):
-        self.ctx = ctx
+        self.ctx = ctx.getComponentContext()
         self.smgr = self.ctx.ServiceManager
         self.desktop = self.smgr.createInstanceWithContext(
             "com.sun.star.frame.Desktop", self.ctx)
         self.doc = self.desktop.getCurrentComponent()
         self.text = self.doc.Text
-        self._remove_blank_space_at_the_end_of_lines()
+
+    def remove_ms(self):
+        """
+        Remove milliseconds.
+        """
+        print('remove milliseconds.')
+
+    def rm_empty_lines(self):
+        """
+        """
+        print('remove empty lines.')
+
+    def rm_double_space(self):
+        """
+        """
+        print('remove double space.')
+
+    def force_styling(self):
+        """
+        """
+        print('force styling.')
+
+    def force_breaklines(self):
+        """
+        """
+        print('force breaklines.')
+
+
+
+
+        # self._remove_blank_space_at_the_end_of_lines()
         # self._apply_question_style()
 
     def get_selection(self):
         controller = self.doc.getCurrentController()
         return controller.getSelection().getByIndex(0).String
+
 
     def _remove_blank_space_at_the_end_of_lines(self):
             rd = self.doc.createReplaceDescriptor()

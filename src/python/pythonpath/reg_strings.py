@@ -14,6 +14,7 @@ CLEAN_REPLACING_STR = [
     # Remove double open bracket (ie. [INAUDIBLE [33:29:11])
     ('(\[[^\]]+)\[', '$1'),
 
+    # Double space to simple
     ('^\s+', ('')),
     ('\s{2,}', (' ')),
     ('[ ]+', (' ')),
