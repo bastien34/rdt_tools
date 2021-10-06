@@ -10,18 +10,20 @@ import logging
 import tempfile
 from shutil import copytree, ignore_patterns, make_archive
 import xml.etree.ElementTree as ET
+from make.addon import AddonUi
 
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('post_gen_project')
 
-VERSION = "0.3.9"
+VERSION = "0.4"
 EXTENSION_NAME= "rdt_utils"
 OUTPUT = 'extension'
 
 
 def update_version():
     update_description_version()
+
 
 def update_description_version():
     description_file = 'src/description.xml'
@@ -34,9 +36,19 @@ def update_description_version():
 
 def create_tmp_src(temp_dir):
     copytree('src/', temp_dir, ignore=ignore_patterns(
-        '*.pyc', '*.py~', '__pycache__', '.idea',
-        'oxt_gen.py', 'README.md'
-    ))
+        '*.pyc', '*.py~', '__pycache__', '.idea',))
+
+
+def generate_addons():
+    """
+    Addons are generated from a conf file located in make/
+        - addon_ui.yml
+
+    :return:
+    """
+    addon = AddonUi()
+    with open("src/Addon.xcu", 'wb') as f:
+        f.write(addon.doc.toprettyxml(encoding='UTF-8'))
 
 
 def zip_files():
@@ -54,4 +66,5 @@ def zip_files():
 
 if __name__ == '__main__':
     update_version()
+    generate_addons()
     zip_files()

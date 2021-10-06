@@ -2,6 +2,16 @@
 CLEAN_REPLACING_STR = [
     # ('(\d{2}),\d{2}\]', "$1]"),  # remove milliseconds
 
+
+    # Double space to simple
+    ('^\s+', ('')),
+    ('\s{2,}', (' ')),
+    ('[ ]+', (' ')),
+
+]
+
+TIMECODE_FIX = [
+
     # Replace . or blank char with ':' Ex: [01 : 22 : 38.39] -> [01:22:39.59]
     ("(\d{1,2})\s?[:|.]\s?(\d{2})\s?[:|.]\s?(\d{2})(\.\d{2})?", "$1:$2:$3$4"),
 
@@ -13,10 +23,5 @@ CLEAN_REPLACING_STR = [
 
     # Remove double open bracket (ie. [INAUDIBLE [33:29:11])
     ('(\[[^\]]+)\[', '$1'),
-
-    # Double space to simple
-    ('^\s+', ('')),
-    ('\s{2,}', (' ')),
-    ('[ ]+', (' ')),
 
 ]

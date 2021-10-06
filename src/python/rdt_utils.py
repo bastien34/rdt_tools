@@ -5,10 +5,10 @@
 from debug import mri
 from prefix_dialogs import PrefixDialog, FolderOpenDialog
 from models import Mission
-# from audio_controls import open_vlc
-# from key_handler import KeyHandler
+from audio_controls import open_vlc
+from key_handler import KeyHandler
 from handlers.bal_handler import BalDlg
-
+from utils import msgbox
 
 
 context = XSCRIPTCONTEXT
@@ -28,6 +28,9 @@ def prefix_questions_and_answers(*args):
 def clean_text(*args):
     doc = context.getDocument()
     if not doc.getDocumentProperties().Title:
+        msgbox("Ce fichier n'est pas identifié comme une mission ",
+               title='Fichier non valide', boxtype='error')
+
         return
     dlg = BalDlg(context)
     if dlg.execute():
@@ -57,50 +60,44 @@ def question_lower(*args):
 
 
 def remove_blank_line(*args):
-    pass
-    # doc = Mission(context)
-    # doc.remove_blank_line()
+    doc = Mission(context)
+    doc.remove_blank_line()
 
 
 def remove_milliseconds_from_tc(*args):
-    pass
-    # doc = Mission(context)
-    # doc.remove_milliseconds_from_tc()
+    doc = Mission(context)
+    doc.remove_milliseconds_from_tc()
 
 
 def wrap_last_word_into_brackets(*args):
-    pass
-
-    # doc = Mission(context)
-    # doc.wrap_last_word_into_brackets()
+    doc = Mission(context)
+    doc.wrap_last_word_into_brackets()
 
 
 def get_things_up(*args):
-    pass
-    # smgr = context.ServiceManager
-    # desktop = smgr.createInstanceWithContext("com.sun.star.frame.Desktop",
-    #                                          context)
-    # comp = desktop.getCurrentComponent()
-    # if comp not in KeyHandler.components:
-    #     cc = comp.getCurrentController()
-    #     cc.addKeyHandler(KeyHandler(context, comp))
+    ctx = XSCRIPTCONTEXT.getComponentContext()
+    smgr = ctx.ServiceManager
+    desktop = smgr.createInstanceWithContext("com.sun.star.frame.Desktop", ctx)
+    comp = desktop.getCurrentComponent()
+    if comp not in KeyHandler.components:
+        cc = comp.getCurrentController()
+        cc.addKeyHandler(KeyHandler(context, comp))
 
 
 def get_things_down(*args):
-    pass
-    # Mission(context).remove_key_handler(context)
+    Mission(context.getComponentContext()).remove_key_handler(context)
 
 
 def vlc_launcher(*args):
-    pass
-    # get_things_up()
-    # url = FolderOpenDialog(context).execute()
-    # open_vlc(url)
+    get_things_up()
+    cmpctx = context.getComponentContext()
+    url = FolderOpenDialog(cmpctx).execute()
+    open_vlc(url)
 
 
 g_exportedScripts = (
     clean_text,
-    order_question,
+    # order_question,
     question_upper,
     question_lower,
     remove_blank_line,

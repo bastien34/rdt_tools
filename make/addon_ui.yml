@@ -1,0 +1,23 @@
+---
+OfficeMenuBar:
+
+  boite_a_outils:
+    title: Boîte à outils
+
+    submenu:
+
+      clean_text:
+        title: Nettoyer le texte
+
+
+OfficeToolBar:
+
+  vlc_launcher:
+    title: VLC Player
+    context: com.sun.star.text.TextDocument
+    icon: vlc_64.png
+
+  clean_text:
+    title: Nettoyer
+    context: com.sun.star.text.TextDocument
+    icon: vlc_6i4.png

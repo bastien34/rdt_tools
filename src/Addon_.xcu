@@ -1,0 +1,230 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<oor:component-data oor:name="Addons" oor:package="org.openoffice.Office"
+                    xmlns:oor="http://openoffice.org/2001/registry"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <node oor:name="AddonUI">
+
+        <node oor:name="OfficeMenuBar">
+            <node oor:name="com.rdt.comp.Utils" oor:op="replace">
+                <prop oor:name="Title" oor:type="xs:string">
+                    <value xml:lang="fr">RDT</value>
+                </prop>
+                <prop oor:name="Target" oor:type="xs:string">
+                    <value>_self</value>
+                </prop>
+                <prop oor:name="ImageIdentifier" oor:type="xs:string">
+                    <value/>
+                </prop>
+
+                <node oor:name="Submenu">
+                    <node oor:name="N001" oor:op="replace">
+                        <prop oor:name="Title" oor:type="xs:string">
+                            <value>Boîte à outils</value>
+                        </prop>
+
+
+                        <node oor:name="Submenu">
+                            <node oor:name="N002" oor:op="replace">
+                                <prop oor:name="Context" oor:type="xs:string">
+                                    <value/>
+                                </prop>
+                                <prop oor:name="Title" oor:type="xs:string">
+                                    <value xml:lang="fr">Nettoyer le texte</value>
+                                </prop>
+                                <prop oor:name="Target" oor:type="xs:string">
+                                    <value>_self</value>
+                                </prop>
+                                <prop oor:name="URL" oor:type="xs:string">
+                                    <value>vnd.sun.star.script:rdt_utils.oxt|python|rdt_utils.py$clean_text?language=Python&amp;location=user:uno_packages</value>
+                                </prop>
+                            </node>
+                        </node>
+
+                        <node oor:name="Submenu">
+                            <node oor:name="N003" oor:op="replace">
+                                <prop oor:name="Context" oor:type="xs:string">
+                                    <value/>
+                                </prop>
+                                <prop oor:name="Title" oor:type="xs:string">
+                                    <value xml:lang="fr">Numéroter les questions</value>
+                                </prop>
+                                <prop oor:name="Target" oor:type="xs:string">
+                                    <value>_self</value>
+                                </prop>
+                                <prop oor:name="URL" oor:type="xs:string">
+                                    <value>vnd.sun.star.script:rdt_utils.oxt|python|rdt_utils.py$order_question?language=Python&amp;location=user:uno_packages</value>
+                                </prop>
+                            </node>
+                        </node>
+
+                        <node oor:name="Submenu">
+                            <node oor:name="N004" oor:op="replace">
+                                <prop oor:name="Context" oor:type="xs:string">
+                                    <value/>
+                                </prop>
+                                <prop oor:name="Target" oor:type="xs:string">
+                                    <value>_self</value>
+                                </prop>
+                                <prop oor:name="URL" oor:type="xs:string">
+                                    <value>private:separator</value>
+                                </prop>
+                            </node>
+                        </node>
+
+                        <node oor:name="Submenu">
+                            <node oor:name="N005" oor:op="replace">
+                                <prop oor:name="Context" oor:type="xs:string">
+                                    <value/>
+                                </prop>
+                                <prop oor:name="Title" oor:type="xs:string">
+                                    <value xml:lang="fr">Les questions en majuscules</value>
+                                </prop>
+                                <prop oor:name="Target" oor:type="xs:string">
+                                    <value>_self</value>
+                                </prop>
+                                <prop oor:name="URL" oor:type="xs:string">
+                                    <value>vnd.sun.star.script:rdt_utils.oxt|python|rdt_utils.py$question_upper?language=Python&amp;location=user:uno_packages</value>
+                                </prop>
+                            </node>
+                        </node>
+
+                        <node oor:name="Submenu">
+                            <node oor:name="N006" oor:op="replace">
+                                <prop oor:name="Context" oor:type="xs:string">
+                                    <value/>
+                                </prop>
+                                <prop oor:name="Title" oor:type="xs:string">
+                                    <value xml:lang="fr">Les questions en minuscules</value>
+                                </prop>
+                                <prop oor:name="Target" oor:type="xs:string">
+                                    <value>_self</value>
+                                </prop>
+                                <prop oor:name="URL" oor:type="xs:string">
+                                    <value>vnd.sun.star.script:rdt_utils.oxt|python|rdt_utils.py$question_lower?language=Python&amp;location=user:uno_packages</value>
+                                </prop>
+                            </node>
+                        </node>
+
+                        <node oor:name="Submenu">
+                            <node oor:name="N007" oor:op="replace">
+                                <prop oor:name="Context" oor:type="xs:string">
+                                    <value/>
+                                </prop>
+                                <prop oor:name="Target" oor:type="xs:string">
+                                    <value>_self</value>
+                                </prop>
+                                <prop oor:name="URL" oor:type="xs:string">
+                                    <value>private:separator</value>
+                                </prop>
+                            </node>
+                        </node>
+
+                        <node oor:name="Submenu">
+                            <node oor:name="N008" oor:op="replace">
+                                <prop oor:name="Context" oor:type="xs:string">
+                                    <value></value>
+                                </prop>
+                                <prop oor:name="Title" oor:type="xs:string">
+                                    <value xml:lang="fr">Enlever les lignes vides</value>
+                                </prop>
+                                <prop oor:name="Target" oor:type="xs:string">
+                                    <value>_self</value>
+                                </prop>
+                                <prop oor:name="URL" oor:type="xs:string">
+                                    <value>vnd.sun.star.script:rdt_utils.oxt|python|rdt_utils.py$remove_blank_line?language=Python&amp;location=user:uno_packages</value>
+                                </prop>
+                            </node>
+                        </node>
+
+                        <node oor:name="Submenu">
+                            <node oor:name="N009" oor:op="replace">
+                                <prop oor:name="Context" oor:type="xs:string">
+                                    <value></value>
+                                </prop>
+                                <prop oor:name="Target" oor:type="xs:string">
+                                    <value>_self</value>
+                                </prop>
+                                <prop oor:name="URL" oor:type="xs:string">
+                                    <value>private:separator</value>
+                                </prop>
+                            </node>
+                        </node>
+
+                        <node oor:name="Submenu">
+                            <node oor:name="N010" oor:op="replace">
+                                <prop oor:name="Context" oor:type="xs:string">
+                                    <value></value>
+                                </prop>
+                                <prop oor:name="Title" oor:type="xs:string">
+                                    <value xml:lang="fr">Préfixer les questions et les réponses</value>
+                                </prop>
+                                <prop oor:name="Target" oor:type="xs:string">
+                                    <value>_self</value>
+                                </prop>
+                                <prop oor:name="URL" oor:type="xs:string">
+                                    <value>vnd.sun.star.script:rdt_utils.oxt|python|rdt_utils.py$prefix_questions_and_answers?language=Python&amp;location=user:uno_packages</value>
+                                </prop>
+                            </node>
+                        </node>
+
+                        <node oor:name="Submenu">
+                            <node oor:name="N011" oor:op="replace">
+                                <prop oor:name="Context" oor:type="xs:string">
+                                    <value></value>
+                                </prop>
+                                <prop oor:name="Title" oor:type="xs:string">
+                                    <value xml:lang="fr">Supprimer les millisecondes des TC</value>
+                                </prop>
+                                <prop oor:name="Target" oor:type="xs:string">
+                                    <value>_self</value>
+                                </prop>
+                                <prop oor:name="URL" oor:type="xs:string">
+                                    <value>vnd.sun.star.script:rdt_utils.oxt|python|rdt_utils.py$remove_milliseconds_from_tc?language=Python&amp;location=user:uno_packages</value>
+                                </prop>
+                            </node>
+                        </node>
+
+                    </node>
+                </node>
+
+            </node>
+        </node>
+
+        <node oor:name="OfficeToolBar">
+            <node oor:name="com.rdt.comp.Utils" oor:op="replace">
+                <node oor:name="N001" oor:op="replace">
+                    <prop oor:name="URL" oor:type="xs:string">
+                        <value>vnd.sun.star.script:rdt_utils.oxt|python|rdt_utils.py$vlc_launcher?language=Python&amp;location=user:uno_packages</value>
+                    </prop>
+                    <prop oor:name="ImageIdentifier" oor:type="xs:string">
+                        <value/>
+                    </prop>
+                    <prop oor:name="Title" oor:type="xs:string">
+                        <value xml:lang="fr">VLC Player</value>
+                    </prop>
+                    <prop oor:name="Target" oor:type="xs:string">
+                        <value>_self</value>
+                    </prop>
+                    <prop oor:name="Context" oor:type="xs:string">
+                        <value>com.sun.star.text.TextDocument</value>
+                    </prop>
+                </node>
+            </node>
+        </node>
+        <node oor:name="Images">
+            <node oor:name="com.rdt.comp.Utils.image1" oor:op="replace">
+                <prop oor:name="URL">
+                    <value>vnd.sun.star.script:rdt_utils.oxt|python|rdt_utils.py$vlc_launcher?language=Python&amp;location=user:uno_packages</value>
+                </prop>
+                <node oor:name="UserDefinedImages">
+                    <prop oor:name="ImageSmallURL" oor:type="xs:string">
+                        <value>%origin%/assets/vlc_32.png</value>
+                    </prop>
+                    <prop oor:name="ImageBigURL" oor:type="xs:string">
+                        <value>%origin%/assets/vlc_64.png</value>
+                    </prop>
+                </node>
+            </node>
+        </node>
+    </node>
+</oor:component-data>

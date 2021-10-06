@@ -60,6 +60,7 @@ class BalDlg(DialogBase):
     def get_data(self) -> dict:
         return {
             'remove_ms': self.dlg.getControl('remove_ms').State,
+            'fix_timecodes': self.dlg.getControl('fix_timecodes').State,
             'rm_empty_lines': self.dlg.getControl('rm_empty_lines').State,
             'rm_double_space': self.dlg.getControl('rm_double_space').State,
             'force_styling': self.dlg.getControl('force_styling').State,

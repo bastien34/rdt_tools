@@ -4,7 +4,7 @@ from com.sun.star.awt import FontWeight
 from com.sun.star.beans import PropertyValue
 from com.sun.star.awt.FontSlant import ITALIC
 # from debug import mri
-from reg_strings import CLEAN_REPLACING_STR
+from reg_strings import CLEAN_REPLACING_STR, TIMECODE_FIX
 from utils import convert_tc_to_seconds
 
 
@@ -25,7 +25,19 @@ class Mission:
         """
         Remove milliseconds.
         """
-        print('remove milliseconds.')
+        self.remove_milliseconds_from_tc()
+
+    def fix_timecodes(self):
+        """
+        Fix incorrect timecodes.
+        """
+        print('fix timecodes')
+        rd = self.doc.createReplaceDescriptor()
+        rd.SearchRegularExpression = True
+
+        for replacing in TIMECODE_FIX:
+            rd.SearchString, rd.ReplaceString = replacing
+            self.doc.replaceAll(rd)
 
     def rm_empty_lines(self):
         """
