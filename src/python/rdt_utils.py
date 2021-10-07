@@ -28,7 +28,7 @@ def prefix_questions_and_answers(*args):
 def clean_text(*args):
     doc = context.getDocument()
     if not doc.getDocumentProperties().Title:
-        msgbox("Ce fichier n'est pas identifié comme une mission ",
+        msgbox("Ce fichier ne semble pas être une mission.",
                title='Fichier non valide', boxtype='error')
         return
     dlg = BalDlg(context)
