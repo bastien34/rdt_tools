@@ -2,7 +2,7 @@
 
 
 # debug
-from debug import mri
+# from debug import mri
 from prefix_dialogs import PrefixDialog, FolderOpenDialog
 from models import Mission
 from audio_controls import open_vlc
@@ -34,7 +34,7 @@ def clean_text(*args):
     dlg = BalDlg(context)
     if dlg.execute():
         methods = dlg.get_data()
-        mission = Mission(context)
+        mission = Mission(context.getComponentContext())
         for method in methods.keys():
             if hasattr(mission, method) and methods.get(method):
                 getattr(mission, method)()
@@ -71,17 +71,18 @@ def wrap_last_word_into_brackets(*args):
 
 
 def get_things_up(*args):
-    ctx = XSCRIPTCONTEXT.getComponentContext()
+    ctx = context.getComponentContext()
     smgr = ctx.ServiceManager
     desktop = smgr.createInstanceWithContext("com.sun.star.frame.Desktop", ctx)
     comp = desktop.getCurrentComponent()
     if comp not in KeyHandler.components:
         cc = comp.getCurrentController()
-        cc.addKeyHandler(KeyHandler(context, comp))
+        cc.addKeyHandler(KeyHandler(ctx, comp))
 
 
 def get_things_down(*args):
-    Mission(context.getComponentContext()).remove_key_handler(context)
+    ctx = context.getComponentContext()
+    Mission(ctx).remove_key_handler(ctx)
 
 
 def vlc_launcher(*args):
@@ -93,7 +94,7 @@ def vlc_launcher(*args):
 
 g_exportedScripts = (
     clean_text,
-    # order_question,
+    order_question,
     question_upper,
     question_lower,
     remove_blank_line,

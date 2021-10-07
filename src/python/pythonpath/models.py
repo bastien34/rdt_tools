@@ -14,7 +14,7 @@ ANSWER_STYLE = "Inter R"
 
 class Mission:
     def __init__(self, ctx):
-        self.ctx = ctx.getComponentContext()
+        self.ctx = ctx
         self.smgr = self.ctx.ServiceManager
         self.desktop = self.smgr.createInstanceWithContext(
             "com.sun.star.frame.Desktop", self.ctx)
