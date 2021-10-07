@@ -1,7 +1,5 @@
 # (string to be replaced, new string)
 CLEAN_REPLACING_STR = [
-    # ('(\d{2}),\d{2}\]', "$1]"),  # remove milliseconds
-
 
     # Double space to simple
     ('^\s+', ('')),

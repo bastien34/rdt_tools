@@ -58,11 +58,17 @@ class BalDlg(DialogBase):
         btn.addActionListener(listener)
 
     def get_data(self) -> dict:
+        """
+        Order of triggering might be important.
+        """
         return {
+            # timecodes
+            'clean_title': self.dlg.getControl('clean_title').State,
             'remove_ms': self.dlg.getControl('remove_ms').State,
             'fix_timecodes': self.dlg.getControl('fix_timecodes').State,
-            'rm_empty_lines': self.dlg.getControl('rm_empty_lines').State,
+            'style_tc': self.dlg.getControl('style_tc').State,
             'rm_double_space': self.dlg.getControl('rm_double_space').State,
+            'rm_empty_lines': self.dlg.getControl('rm_empty_lines').State,
             'force_styling': self.dlg.getControl('force_styling').State,
             'force_breaklines': self.dlg.getControl('force_breaklines').State,
         }

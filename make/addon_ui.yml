@@ -9,6 +9,18 @@ OfficeMenuBar:
       clean_text:
         title: Nettoyer le texte
 
+      order_question:
+        title: Numéroter les questions
+
+      question_upper:
+        title: Écrire les questions en majuscules
+
+      question_lower:
+        title: Écrire les questions en minuscules
+
+      prefix_questions_and_answers:
+        title: Préfixer les questions et les réponses
+
 
 OfficeToolBar:
 

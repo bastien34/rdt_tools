@@ -34,6 +34,70 @@
 								</prop>
 							</node>
 						</node>
+						<node oor:name="Submenu">
+							<node oor:op="replace" oor:name="N002">
+								<prop oor:type="xs:string" oor:name="Context">
+									<value></value>
+								</prop>
+								<prop oor:type="xs:string" oor:name="Title">
+									<value xml:lang="fr">Numéroter les questions</value>
+								</prop>
+								<prop oor:type="xs:string" oor:name="URL">
+									<value>vnd.sun.star.script:rdt_utils.oxt|python|rdt_utils.py$order_question?language=Python&amp;location=user:uno_packages</value>
+								</prop>
+								<prop oor:type="xs:string" oor:name="Target">
+									<value>_self</value>
+								</prop>
+							</node>
+						</node>
+						<node oor:name="Submenu">
+							<node oor:op="replace" oor:name="N003">
+								<prop oor:type="xs:string" oor:name="Context">
+									<value></value>
+								</prop>
+								<prop oor:type="xs:string" oor:name="Title">
+									<value xml:lang="fr">Écrire les questions en majuscules</value>
+								</prop>
+								<prop oor:type="xs:string" oor:name="URL">
+									<value>vnd.sun.star.script:rdt_utils.oxt|python|rdt_utils.py$question_upper?language=Python&amp;location=user:uno_packages</value>
+								</prop>
+								<prop oor:type="xs:string" oor:name="Target">
+									<value>_self</value>
+								</prop>
+							</node>
+						</node>
+						<node oor:name="Submenu">
+							<node oor:op="replace" oor:name="N004">
+								<prop oor:type="xs:string" oor:name="Context">
+									<value></value>
+								</prop>
+								<prop oor:type="xs:string" oor:name="Title">
+									<value xml:lang="fr">Écrire les questions en minuscules</value>
+								</prop>
+								<prop oor:type="xs:string" oor:name="URL">
+									<value>vnd.sun.star.script:rdt_utils.oxt|python|rdt_utils.py$question_lower?language=Python&amp;location=user:uno_packages</value>
+								</prop>
+								<prop oor:type="xs:string" oor:name="Target">
+									<value>_self</value>
+								</prop>
+							</node>
+						</node>
+						<node oor:name="Submenu">
+							<node oor:op="replace" oor:name="N005">
+								<prop oor:type="xs:string" oor:name="Context">
+									<value></value>
+								</prop>
+								<prop oor:type="xs:string" oor:name="Title">
+									<value xml:lang="fr">Préfixer les questions et les réponses</value>
+								</prop>
+								<prop oor:type="xs:string" oor:name="URL">
+									<value>vnd.sun.star.script:rdt_utils.oxt|python|rdt_utils.py$prefix_questions_and_answers?language=Python&amp;location=user:uno_packages</value>
+								</prop>
+								<prop oor:type="xs:string" oor:name="Target">
+									<value>_self</value>
+								</prop>
+							</node>
+						</node>
 					</node>
 				</node>
 			</node>
@@ -87,7 +151,7 @@
 				</prop>
 				<node oor:name="UserDefinedImages">
 					<prop oor:type="xs:string" oor:name="ImageSmallURL">
-						<value>%origin%/assets/tcm_6E4.png</value>
+						<value>%origin%/assets/vlc_6i4.png</value>
 					</prop>
 				</node>
 			</node>

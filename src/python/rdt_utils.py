@@ -30,7 +30,6 @@ def clean_text(*args):
     if not doc.getDocumentProperties().Title:
         msgbox("Ce fichier n'est pas identifié comme une mission ",
                title='Fichier non valide', boxtype='error')
-
         return
     dlg = BalDlg(context)
     if dlg.execute():
@@ -42,21 +41,18 @@ def clean_text(*args):
 
 
 def order_question(*args):
-    pass
-    # doc = Mission(context)
-    # doc.order_question()
+    doc = Mission(context.getComponentContext())
+    doc.order_question()
 
 
 def question_upper(*args):
-    pass
-    # doc = Mission(context)
-    # doc.question_upper()
+    doc = Mission(context.getComponentContext())
+    doc.question_upper()
 
 
 def question_lower(*args):
-    pass
-    # doc = Mission(context)
-    # doc.question_lower()
+    doc = Mission(context.getComponentContext())
+    doc.question_lower()
 
 
 def remove_blank_line(*args):
