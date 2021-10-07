@@ -14,17 +14,6 @@ from utils import msgbox
 context = XSCRIPTCONTEXT
 
 
-def prefix_questions_and_answers(*args):
-    pd = PrefixDialog(ctx=context)
-    dlg = pd.create()
-    if dlg.execute():
-        p_question = dlg.getControl('p_question').Text
-        p_answer = dlg.getControl('p_answer').Text
-        dlg.dispose()
-        doc = Mission(context)
-        doc.prefix_questions_and_answers(p_question, p_answer)
-
-
 def clean_text(*args):
     doc = context.getDocument()
     if not doc.getDocumentProperties().Title:
@@ -38,6 +27,17 @@ def clean_text(*args):
         for method in methods.keys():
             if hasattr(mission, method) and methods.get(method):
                 getattr(mission, method)()
+
+
+def prefix_questions_and_answers(*args):
+    pd = PrefixDialog(ctx=context)
+    dlg = pd.create()
+    if dlg.execute():
+        p_question = dlg.getControl('p_question').Text
+        p_answer = dlg.getControl('p_answer').Text
+        dlg.dispose()
+        doc = Mission(context)
+        doc.prefix_questions_and_answers(p_question, p_answer)
 
 
 def order_question(*args):

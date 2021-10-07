@@ -24,9 +24,6 @@ class Mission:
     def remove_ms(self):
         self.remove_milliseconds_from_tc()
 
-    def clean_title(self):
-        self.remove_first_line()
-
     def fix_timecodes(self):
         for str_to_replace in TIMECODE_FIX:
             self._replace_string(*str_to_replace)
@@ -121,7 +118,7 @@ class Mission:
 
     def remove_first_line(self):
         """
-        Remove title
+        Let here as example but not used any more.
         """
         text_enum = self.text.createEnumeration()
         while text_enum.hasMoreElements():

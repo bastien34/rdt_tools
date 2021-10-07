@@ -63,7 +63,6 @@ class BalDlg(DialogBase):
         """
         return {
             # timecodes
-            'clean_title': self.dlg.getControl('clean_title').State,
             'remove_ms': self.dlg.getControl('remove_ms').State,
             'fix_timecodes': self.dlg.getControl('fix_timecodes').State,
             'style_tc': self.dlg.getControl('style_tc').State,

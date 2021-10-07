@@ -17,6 +17,5 @@
   <dlg:titledbox dlg:id="FrameControl2" dlg:tab-index="10" dlg:left="165" dlg:top="8" dlg:width="150" dlg:height="75">
    <dlg:title dlg:value="Styles"/>
   </dlg:titledbox>
-  <dlg:checkbox dlg:id="clean_title" dlg:tab-index="11" dlg:left="176" dlg:top="120" dlg:width="131" dlg:height="14" dlg:value="Supprimer le titre" dlg:checked="false"/>
  </dlg:bulletinboard>
 </dlg:window>
