@@ -3,7 +3,7 @@ import re
 from com.sun.star.awt import FontWeight
 from com.sun.star.beans import PropertyValue
 from com.sun.star.awt.FontSlant import ITALIC
-# from debug import mri
+from debug import mri
 from reg_strings import CLEAN_REPLACING_STR, TIMECODE_FIX
 from utils import convert_tc_to_seconds
 
@@ -27,6 +27,7 @@ class Mission:
     def fix_timecodes(self):
         for str_to_replace in TIMECODE_FIX:
             self._replace_string(*str_to_replace)
+        self.parse_text(self._add_brackets_to_timecode)
 
     def style_tc(self):
         self.apply_style_to_orphan_timecode()
@@ -108,7 +109,7 @@ class Mission:
         controller = self.doc.getCurrentController()
         controller.ViewCursor.ParaStyleName = style
 
-    def apply_question_style_(self):
+    def apply_question_style(self):
         """Access direct from libo config."""
         self._apply_style(QUESTION_STYLE)
 
@@ -133,6 +134,14 @@ class Mission:
         match = re.search(pattern, string)
         if string and not match:
             element.String = prefix + " : " + string
+
+    def _add_brackets_to_timecode(self, element):
+        # replace parenthesis into brackets
+        element.String = re.sub(r'[\[|(]?\b(\d{2}:\d{2}:\d{2}(?:\.\d+)?)\b[]|)]?',
+                                r'[\1]', element.String)
+        # avoid [bla bla [HH:MM:SS] (remove the double opening bracket)
+        element.String = re.sub(r'(\[[^\[]*)\[', r'\1', element.String)
+
 
     def remove_double_space(self):
         for str_to_replace in CLEAN_REPLACING_STR:
