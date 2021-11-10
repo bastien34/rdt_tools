@@ -30,14 +30,15 @@ def clean_text(*args):
 
 
 def prefix_questions_and_answers(*args):
-    pd = PrefixDialog(ctx=context)
+    pd = PrefixDialog(ctx=context.getComponentContext())
     dlg = pd.create()
     if dlg.execute():
         p_question = dlg.getControl('p_question').Text
         p_answer = dlg.getControl('p_answer').Text
+        count = dlg.getControl('count').State
         dlg.dispose()
-        doc = Mission(context)
-        doc.prefix_questions_and_answers(p_question, p_answer)
+        doc = Mission(context.getComponentContext())
+        doc.prefix_questions_and_answers(p_question, p_answer, count)
 
 
 def order_question(*args):

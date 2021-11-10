@@ -73,7 +73,6 @@ def convert_tc_to_seconds(tc: str) -> int:
     return int(seconds)
 
 
-
 def createUnoService(service, ctx=None, args=None):
     if not ctx:
         ctx = uno.getComponentContext()

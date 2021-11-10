@@ -75,15 +75,35 @@ class Mission:
             return
         self.parse_text(self._apply_document_style)
 
-    def prefix_questions_and_answers(self, p_question, p_answer):
+    def prefix_questions_and_answers(self, p_question, p_answer, must_count=False):
         text_enum = self.text.createEnumeration()
+        i = 0
+
+        def get_prefix_to_place(element):
+            if self.is_bold_element(element):
+                return p_question
+            return p_answer
+
         while text_enum.hasMoreElements():
             element = text_enum.nextElement()
             if element.supportsService("com.sun.star.text.Paragraph"):
-                if self.is_bold_element(element):
-                    self._prefix_str(p_question, element)
-                else:
-                    self._prefix_str(p_answer, element)
+                string = self.get_prefixable_string(element)
+                print(element.ParaStyleName)
+                if string:
+                    i += 1
+                    count = str(i) if must_count else ''
+                    prefix = get_prefix_to_place(element)
+                    element.String = prefix + count + " : " + string
+
+    def get_prefixable_string(self, element):
+        """
+        Style name containing 'title' are excluded (document title & subtile).
+        """
+        string = element.String
+        pattern = "^\[\d\d:\d\d:\d\d(.\d+)?\]$"
+        match = re.search(pattern, string)
+        if not match and 'title' not in element.ParaStyleName.lower():
+            return string
 
     def _apply_document_style(self, element):
         is_title = 'title' in element.ParaStyleName.lower()
@@ -128,20 +148,13 @@ class Mission:
                 element.dispose()
                 break
 
-    def _prefix_str(self, prefix, element):
-        string = element.String
-        pattern = "^\[\d\d:\d\d:\d\d(.\d+)?\]$"
-        match = re.search(pattern, string)
-        if string and not match:
-            element.String = prefix + " : " + string
-
     def _add_brackets_to_timecode(self, element):
         # replace parenthesis into brackets
-        element.String = re.sub(r'[\[|(]?\b(\d{2}:\d{2}:\d{2}(?:\.\d+)?)\b[]|)]?',
-                                r'[\1]', element.String)
+        self.sub = re.sub(r'[\[|(]?\b(\d{2}:\d{2}:\d{2}(?:\.\d+)?)\b[]|)]?',
+                          r'[\1]', element.String)
+        element.String = self.sub
         # avoid [bla bla [HH:MM:SS] (remove the double opening bracket)
         element.String = re.sub(r'(\[[^\[]*)\[', r'\1', element.String)
-
 
     def remove_double_space(self):
         for str_to_replace in CLEAN_REPLACING_STR:
@@ -225,7 +238,6 @@ class Mission:
 
     def insert_timecode(self, timecode: str):
         self.insert_text('[' + timecode + ']')
-
 
     def insert_text(self, expression):
         controller = self.doc.getCurrentController()
