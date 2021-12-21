@@ -211,6 +211,7 @@ class Mission:
         vCursor = self.doc.getCurrentController().getViewCursor()
         vCursor.gotoStartOfLine(False)
         vCursor.gotoEndOfLine(True)
+        vCursor.goRight(1, True)
         vCursor.setString('')
 
     def apply_style_to_orphan_timecode(self):
