@@ -207,6 +207,12 @@ class Mission:
     def remove_blank_line(self):
         self._replace_string('^$', '')
 
+    def remove_line(self):
+        vCursor = self.doc.getCurrentController().getViewCursor()
+        vCursor.gotoStartOfLine(False)
+        vCursor.gotoEndOfLine(True)
+        vCursor.setString('')
+
     def apply_style_to_orphan_timecode(self):
         bold = PropertyValue('CharWeight', 0, FontWeight.BOLD, 0)
         color = PropertyValue('CharColor', 0, 6710932, 0)

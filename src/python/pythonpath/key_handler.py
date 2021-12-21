@@ -21,6 +21,8 @@ Q = 528
 R = 529
 K = 522  # inaudible
 N = 525  # incompris
+Y = 536  # incompris
+
 
 CNTRL = 2
 
@@ -53,7 +55,7 @@ class KeyHandler(unohelper.Base, XKeyHandler, metaclass=Singleton):
 
     def keyPressed(self, ev):
 
-       # print(ev.KeyCode)
+        print(ev.KeyCode)
 
         try:
             player = Player()
@@ -74,6 +76,9 @@ class KeyHandler(unohelper.Base, XKeyHandler, metaclass=Singleton):
             elif ev.KeyCode == K:
                 tc = player.get_timecode(milliseconds=False)
                 self.mission.insert_text(f"[inaudible {tc}]")
+
+            elif ev.KeyCode == Y:
+                self.mission.remove_line()
 
             elif ev.KeyCode == N:
                 tc = player.get_timecode(milliseconds=False)
