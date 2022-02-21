@@ -225,23 +225,49 @@ class Mission:
         self.doc.replaceAll(rd)
 
     def order_question(self):
-        """Place a incremental number before each question"""
+        """
+        Place an incremental number before each alinea.
+
+            B1: je pose une question et je veux une réponse.
+            A2: première réponse
+            A3: deuxième
+
+        """
         text_enum = self.text.createEnumeration()
 
-        i = 0
+        i = 1
         while text_enum.hasMoreElements():
             element = text_enum.nextElement()
             if element.supportsService("com.sun.star.text.Paragraph"):
-                if element.ParaStyleName == QUESTION_STYLE:
-                    element.String = f"{i} - {element.String}"
-                    i += 1
+                if not self.is_orphan_timecode(element.String):
+                    i = self._prefix(element, i)
 
-    def get_selected_timecode(self) -> int:
+    def _prefix(self, element, i):
+        if element.ParaStyleName == QUESTION_STYLE:
+            element.String = f"B{i} : {element.String}"
+            i += 1
+        elif element.ParaStyleName == ANSWER_STYLE:
+            element.String = f"A{i} : {element.String}"
+            i += 1
+        return i
+
+    def get_selected_timecode(self):
         selected = self.get_selection()
+        match = self.is_timecode(selected)
+        if match:
+            return convert_tc_to_seconds(match.group())
+
+    def is_timecode(self, selected: str):
         pattern = "\d\d:\d\d:\d\d"
         match = re.search(pattern, selected)
         if match:
-            return convert_tc_to_seconds(match.group())
+            return match.group()
+
+    def is_orphan_timecode(self, selected: str):
+        pattern = "^\d\d:\d\d:\d\d$"
+        match = re.search(pattern, selected)
+        if match:
+            return match.group()
 
     def insert_timecode(self, timecode: str):
         self.insert_text('[' + timecode + ']')

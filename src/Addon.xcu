@@ -40,7 +40,7 @@
 									<value></value>
 								</prop>
 								<prop oor:type="xs:string" oor:name="Title">
-									<value xml:lang="fr">Numéroter les questions</value>
+									<value xml:lang="fr">Numérotation des alineas</value>
 								</prop>
 								<prop oor:type="xs:string" oor:name="URL">
 									<value>vnd.sun.star.script:rdt_utils.oxt|python|rdt_utils.py$order_question?language=Python&amp;location=user:uno_packages</value>

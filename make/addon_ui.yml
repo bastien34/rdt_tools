@@ -10,7 +10,7 @@ OfficeMenuBar:
         title: Nettoyer le texte
 
       order_question:
-        title: Numéroter les questions
+        title: Numérotation des alineas
 
       question_upper:
         title: Écrire les questions en majuscules
