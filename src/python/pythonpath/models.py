@@ -149,12 +149,13 @@ class Mission:
                 break
 
     def _add_brackets_to_timecode(self, element):
-        # replace parenthesis into brackets
+        # replace parenthesis with brackets
         self.sub = re.sub(r'[\[|(]?\b(\d{2}:\d{2}:\d{2}(?:\.\d+)?)\b[]|)]?',
                           r'[\1]', element.String)
         element.String = self.sub
         # avoid [bla bla [HH:MM:SS] (remove the double opening bracket)
-        element.String = re.sub(r'(\[[^\[]*)\[', r'\1', element.String)
+        element.String = re.sub(r'(\[[^\]]*)\[', r'\1', element.String)
+        element.String = re.sub(r'\]([^\[]*\])', r'\1', element.String)
 
     def remove_double_space(self):
         for str_to_replace in CLEAN_REPLACING_STR:
