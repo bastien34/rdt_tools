@@ -10,6 +10,7 @@ from utils import convert_tc_to_seconds
 
 QUESTION_STYLE = "Inter Q"
 ANSWER_STYLE = "Inter R"
+TIMECODE_STYLE = 'Timecode'
 
 
 class Mission:
@@ -95,6 +96,11 @@ class Mission:
                     prefix = get_prefix_to_place(element)
                     element.String = prefix + count + " : " + string
 
+    def _apply_style(self, style):
+        # todo: this run all over the text & apply style for each line
+        controller = self.doc.getCurrentController()
+        controller.ViewCursor.ParaStyleName = style
+
     def get_prefixable_string(self, element):
         """
         Style name containing 'title' are excluded (document title & subtile).
@@ -106,13 +112,19 @@ class Mission:
             return string
 
     def _apply_document_style(self, element):
+        self.create_styles()
+
         is_title = 'title' in element.ParaStyleName.lower()
-        if self.is_time_code(element) or is_title:
+
+        if is_title:
             return
         if self.is_bold_element(element):
             element.ParaStyleName = QUESTION_STYLE
         else:
             element.ParaStyleName = ANSWER_STYLE
+
+        if self.is_time_code(element):
+            element.ParaStyleName = TIMECODE_STYLE
 
     def is_bold_element(self, element):
         start_str = element.getStart()
@@ -123,11 +135,6 @@ class Mission:
         string = el.String
         pattern = "^\[\d\d:\d\d:\d\d(.\d+)?\]$"
         return re.search(pattern, string)
-
-    def _apply_style(self, style):
-        # todo: this run all over the text & apply style for each line
-        controller = self.doc.getCurrentController()
-        controller.ViewCursor.ParaStyleName = style
 
     def apply_question_style(self):
         """Access direct from libo config."""
@@ -216,15 +223,32 @@ class Mission:
         vCursor.setString('')
 
     def apply_style_to_orphan_timecode(self):
+        pass
 
-        bold = PropertyValue('CharWeight', 0, FontWeight.BOLD, 0)
-        color = PropertyValue('CharColor', 0, 6710932, 0)
-        rd = self.doc.createReplaceDescriptor()
-        rd.SearchRegularExpression = True
-        rd.SearchString = '^\s?(\[\d{2}:\d{2}:\d{2}(.\d+)?\])\s?$'
-        rd.setReplaceAttributes((bold, color))
-        rd.ReplaceString = "$1"
-        self.doc.replaceAll(rd)
+    def create_styles(self):
+        """
+        If styles are not found, create them. Used only for timecode
+        style, for now.
+        :return:
+        """
+        new_style = self.doc.createInstance('com.sun.star.style.ParagraphStyle')
+        par_styles = self.doc.getStyleFamilies()['ParagraphStyles']
+        if not par_styles.hasByName(TIMECODE_STYLE):
+            par_styles.insertByName(TIMECODE_STYLE, new_style)
+            new_style.ParentStyle = QUESTION_STYLE
+            new_style.CharColor = 6710932
+            new_style.CharWeight = FontWeight.BOLD
+            new_style.CharHeight = 12
+
+        # bold = PropertyValue('CharWeight', 0, FontWeight.BOLD, 0)
+        # color = PropertyValue('CharColor', 0, 6710932, 0)
+        # rd = self.doc.createReplaceDescriptor()
+        # rd.SearchRegularExpression = True
+        # rd.SearchString = '^\s?(\[\d{2}:\d{2}:\d{2}(.\d+)?\])\s?$'
+        # rd.setReplaceAttributes((bold, color))
+        # rd.ReplaceString = "$1"
+        # mri(rd)
+        # self.doc.replaceAll(rd)
 
     def order_question(self):
         """

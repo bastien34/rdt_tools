@@ -16,7 +16,7 @@ from make.addon import AddonUi
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('post_gen_project')
 
-VERSION = "0.4.4"
+VERSION = "0.4.6"
 EXTENSION_NAME= "rdt_utils"
 OUTPUT = 'extension'
 
