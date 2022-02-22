@@ -216,6 +216,7 @@ class Mission:
         vCursor.setString('')
 
     def apply_style_to_orphan_timecode(self):
+
         bold = PropertyValue('CharWeight', 0, FontWeight.BOLD, 0)
         color = PropertyValue('CharColor', 0, 6710932, 0)
         rd = self.doc.createReplaceDescriptor()
@@ -256,7 +257,7 @@ class Mission:
         selected = self.get_selection()
         match = self.is_timecode(selected)
         if match:
-            return convert_tc_to_seconds(match.group())
+            return convert_tc_to_seconds(match)
 
     def is_timecode(self, selected: str):
         pattern = "\d\d:\d\d:\d\d"
