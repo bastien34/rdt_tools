@@ -3,10 +3,8 @@
 
 # debug
 # from debug import mri
-from prefix_dialogs import PrefixDialog, FolderOpenDialog
+from prefix_dialogs import PrefixDialog
 from models import Mission
-from audio_controls import open_vlc
-from key_handler import KeyHandler
 from handlers.bal_handler import BalDlg
 from utils import msgbox
 
@@ -71,28 +69,6 @@ def wrap_last_word_into_brackets(*args):
     doc.wrap_last_word_into_brackets()
 
 
-def get_things_up(*args):
-    ctx = context.getComponentContext()
-    smgr = ctx.ServiceManager
-    desktop = smgr.createInstanceWithContext("com.sun.star.frame.Desktop", ctx)
-    comp = desktop.getCurrentComponent()
-    if comp not in KeyHandler.components:
-        cc = comp.getCurrentController()
-        cc.addKeyHandler(KeyHandler(ctx, comp))
-
-
-def get_things_down(*args):
-    ctx = context.getComponentContext()
-    Mission(ctx).remove_key_handler(ctx)
-
-
-def vlc_launcher(*args):
-    get_things_up()
-    cmpctx = context.getComponentContext()
-    url = FolderOpenDialog(cmpctx).execute()
-    open_vlc(url)
-
-
 g_exportedScripts = (
     clean_text,
     order_question,
@@ -102,7 +78,4 @@ g_exportedScripts = (
     prefix_questions_and_answers,
     remove_milliseconds_from_tc,
     wrap_last_word_into_brackets,
-    get_things_up,
-    get_things_down,
-    vlc_launcher,
 )

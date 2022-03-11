@@ -1,35 +1,30 @@
 ---
 OfficeMenuBar:
 
-  boite_a_outils:
-    title: Boîte à outils
+  clean_text:
+    title: Nettoyer le texte
 
-    submenu:
+#    submenu:
+#
+#      clean_text:
+#        title: Nettoyer le texte
 
-      clean_text:
-        title: Nettoyer le texte
-
-      order_question:
-        title: Numérotation des alineas
-
-      question_upper:
-        title: Écrire les questions en majuscules
-
-      question_lower:
-        title: Écrire les questions en minuscules
-
-      prefix_questions_and_answers:
-        title: Préfixer les questions et les réponses
+#      order_question:
+#        title: Numérotation des alineas
+#
+#      question_upper:
+#        title: Écrire les questions en majuscules
+#
+#      question_lower:
+#        title: Écrire les questions en minuscules
+#
+#      prefix_questions_and_answers:
+#        title: Préfixer les questions et les réponses
 
 
 OfficeToolBar:
 
-  vlc_launcher:
-    title: VLC Player
-    context: com.sun.star.text.TextDocument
-    icon: vlc_64.png
-
   clean_text:
     title: Nettoyer
     context: com.sun.star.text.TextDocument
-    icon: vlc_6i4.png
+    icon: logo.png

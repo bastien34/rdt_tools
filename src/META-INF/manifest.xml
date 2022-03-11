@@ -3,5 +3,4 @@
 <manifest:manifest xmlns:manifest="http://openoffice.org/2001/manifest">
    <manifest:file-entry manifest:media-type="application/vnd.sun.star.framework-script" manifest:full-path="python/" />
    <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data" manifest:full-path="Addon.xcu" />
-   <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data" manifest:full-path="Events.xcu"/>
 </manifest:manifest>
