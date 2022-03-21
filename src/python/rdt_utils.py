@@ -10,7 +10,6 @@ from key_handler import KeyHandler
 from handlers.bal_handler import BalDlg
 from utils import msgbox
 
-
 context = XSCRIPTCONTEXT
 
 
