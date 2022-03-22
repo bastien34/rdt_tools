@@ -1,5 +1,5 @@
 import unohelper
-import os
+import os, pyuno
 from com.sun.star.awt import XActionListener
 
 
@@ -30,13 +30,19 @@ class DialogBase:
         """
         self.component_context = ctx.getComponentContext()
         self.smgr = self.component_context.getServiceManager()
-        self.path = self.get_dlg_path(dlg_name)
+        path = self.get_dlg_path(dlg_name)
 
         instance= self.smgr.createInstanceWithContext(
             "com.sun.star.awt.DialogProvider",
             self.component_context
         )
-        self.dlg = instance.createDialog(self.path)
+        try:
+            path = pyuno.fileUrlToSystemPath(path)
+        except:
+            pass
+        path = pyuno.systemPathToFileUrl(path)
+        self.dlg = instance.createDialog(path)
+        self.dlg = instance.createDialog(path)
 
     def execute(self):
         return self.dlg.execute()

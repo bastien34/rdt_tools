@@ -10,8 +10,7 @@
   <dlg:button dlg:id="cancel" dlg:tab-index="7" dlg:left="28" dlg:top="178" dlg:width="44" dlg:height="14" dlg:value="ANNULER" dlg:button-type="cancel"/>
   <dlg:button dlg:id="valid" dlg:tab-index="2" dlg:left="88" dlg:top="177" dlg:width="44" dlg:height="14" dlg:default="true" dlg:value="OK" dlg:button-type="ok"/>
   <dlg:checkbox dlg:id="fix_timecodes" dlg:tab-index="8" dlg:left="14" dlg:top="40" dlg:width="131" dlg:height="12" dlg:value="Corrige les timecodes" dlg:checked="true"/>
-  <dlg:checkbox dlg:id="style_tc" dlg:tab-
-                index="9" dlg:left="14" dlg:top="78" dlg:width="131" dlg:height="12" dlg:value="Applique le style aux timecodes" dlg:checked="true"/>
+  <dlg:checkbox dlg:id="style_tc" dlg:tab-index="9" dlg:left="14" dlg:top="78" dlg:width="131" dlg:height="12" dlg:value="Applique le style aux timecodes" dlg:checked="true"/>
   <dlg:titledbox dlg:id="FrameControl1" dlg:tab-index="1" dlg:left="8" dlg:top="8" dlg:width="150" dlg:height="50">
    <dlg:title dlg:value="Horodatage"/>
   </dlg:titledbox>
