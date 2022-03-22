@@ -61,13 +61,18 @@ def get_package_location(ctx):
 
 
 def milliseconds_to_timecode(ms: int) -> str:
+    """Return a timestamps like HH:MM:SS.ms"""
     h, m, s = str(timedelta(milliseconds=ms)).split(':')
-    return f"[{h:02s}:{m:02s}:{s[:4]:04}]"
+    s, ms = s.split('.')
+    return f"[{h:0>2}:{m:0>2}:{s:0>2}.{ms[:1]}]"
 
 
 def timestamps_in_milliseconds(tc: str) -> int:
+    """Convert a timestamp into milliseconds. TimeStamp has the
+    format HH:MM:SS"""
     h, m, s = tc.split(':')
     return (int(h) * 3600 + int(m) * 60 + int(s)) * 1000
+
 
 def createUnoService(service, ctx=None, args=None):
     if not ctx:

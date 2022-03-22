@@ -148,7 +148,6 @@ class Player(wx.Frame):
         addr = writer.get_extra_info('peername')
         # self.log(f"Received {message!r} from {addr!r}")
         # self.log(f"Send: {message!r}")
-        print(message)
         resp = self.socket_handler(message)
         writer.write(f"{resp}".encode())
         await writer.drain()
@@ -359,7 +358,7 @@ async def main(video=''):
 
 
 if __name__ == "__main__":
-    _video = '/home/bastien/Musique/Asa_desiu_irri.wav'
+    _video = ''
 
     while len(sys.argv) > 1:
         arg = sys.argv.pop(1)

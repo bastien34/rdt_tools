@@ -116,7 +116,7 @@ class KeyHandler(unohelper.Base, XKeyHandler, metaclass=Singleton):
                 send_data(pl.FORWARD)
 
             elif ev.KeyCode == KB_TIMESTAMP:
-                ts = int(send_data(pl.TIMESTAMP).decode('utf-8'))
+                ts = int(send_data(pl.TIMESTAMP))
                 self.mission.insert_timecode(milliseconds_to_timecode(ts))
 
             elif ev.KeyCode == KB_SPEED_DOWN:
@@ -130,7 +130,8 @@ class KeyHandler(unohelper.Base, XKeyHandler, metaclass=Singleton):
 
             else:
                 return False
-        except:
+        except Exception as e:
+            print(e)
             msgbox('Erreur. Le lecteur est-il ouvert?')
         return True
 

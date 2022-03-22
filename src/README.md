@@ -8,9 +8,9 @@ Provides tools to clean up a mission document.
 instead of ```<prop oor:name="URL" oor:type="xs:string">```. It will spare you time!
 
 
-## Install windows
+## On Windows Installation
 
-pip install wxasync
+    pip install wxasync
 
 Compile Player.exe using PyInstaller
 
