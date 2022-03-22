@@ -7,7 +7,7 @@ from models import Mission
 
 from utils import timestamps_in_milliseconds, milliseconds_to_timecode, msgbox
 
-import rdt_vlc as pl
+import player as pl
 
 
 KB_REWIND = 768  # F1
@@ -44,14 +44,9 @@ def send_data(code, **kwargs):
 
 class Singleton(type):
     _instances = {}
-
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:
-            print('call not in instance')
             cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-        print('./already created')
-        print(cls._instances)
-
         return cls._instances[cls]
 
     @property
@@ -129,8 +124,7 @@ class KeyHandler(unohelper.Base, XKeyHandler, metaclass=Singleton):
             else:
                 return False
         except Exception as e:
-            print(e)
-            msgbox('Erreur. Le lecteur est-il ouvert?')
+            msgbox('Erreur. Le lecteur est-il ouvert ?')
         return True
 
     @property

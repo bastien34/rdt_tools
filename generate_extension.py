@@ -17,7 +17,7 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('post_gen_project')
 
 VERSION = "0.6.0"
-EXTENSION_NAME= "rdt_utils"
+EXTENSION_NAME= "rdt_tools"
 OUTPUT = 'extension'
 
 

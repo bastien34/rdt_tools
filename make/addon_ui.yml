@@ -3,6 +3,7 @@ OfficeMenuBar:
 
   clean_text:
     title: Nettoyer le texte
+    icon: sc_underline.svg
 
   boite_a_outils:
     title: Boîte à outils
@@ -24,11 +25,11 @@ OfficeMenuBar:
 OfficeToolBar:
 
   vlc_launcher:
-    title: VLC Player
+    title: RDT Player
     context: com.sun.star.text.TextDocument
-    icon: vlc_64.png
+    icon: avaudiologo.svg
 
   clean_text:
-    title: Nettoyer
+    title: Nettoyer le texte avant rendu
     context: com.sun.star.text.TextDocument
-    icon: logo.png
+    icon: sc_underline.svg

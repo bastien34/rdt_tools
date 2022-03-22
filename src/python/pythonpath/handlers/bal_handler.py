@@ -42,7 +42,6 @@ class DialogBase:
             pass
         path = pyuno.systemPathToFileUrl(path)
         self.dlg = instance.createDialog(path)
-        self.dlg = instance.createDialog(path)
 
     def execute(self):
         return self.dlg.execute()
@@ -64,9 +63,7 @@ class BalDlg(DialogBase):
         btn.addActionListener(listener)
 
     def get_data(self) -> dict:
-        """
-        Order of triggering might be important.
-        """
+        """Order of triggering might be important."""
         return {
             # timecodes
             'remove_ms': self.dlg.getControl('remove_ms').State,

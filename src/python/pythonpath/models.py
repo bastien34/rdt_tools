@@ -89,7 +89,6 @@ class Mission:
             element = text_enum.nextElement()
             if element.supportsService("com.sun.star.text.Paragraph"):
                 string = self.get_prefixable_string(element)
-                print(element.ParaStyleName)
                 if string:
                     i += 1
                     count = str(i) if must_count else ''

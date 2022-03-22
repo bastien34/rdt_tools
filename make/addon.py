@@ -10,7 +10,7 @@ attrib = {
 }
 
 LIB = "com.rdt.comp.Utils"
-MODULE = 'rdt_utils'
+MODULE = 'rdt_tools'
 IMAGE_LOCATION = "%origin%/assets/"
 
 
