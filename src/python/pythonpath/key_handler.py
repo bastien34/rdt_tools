@@ -85,17 +85,15 @@ class KeyHandler(unohelper.Base, XKeyHandler, metaclass=Singleton):
                     self.mission.apply_answer_style()
 
                 elif ev.KeyCode == K:
-                    pass
-                    # tc = player.get_timecode(milliseconds=False)
-                    # self.mission.insert_text(f"[inaudible {tc}]")
+                    ts = milliseconds_to_timecode(int(send_data(pl.TIMESTAMP)))
+                    self.mission.insert_text(f"[inaudible {ts}]")
 
                 elif ev.KeyCode == Y:
                     self.mission.remove_line()
 
                 elif ev.KeyCode == N:
-                    pass
-                    # tc = player.get_timecode(milliseconds=False)
-                    # self.mission.insert_text(f"[incompris {tc}]")
+                    ts = milliseconds_to_timecode(int(send_data(pl.TIMESTAMP)))
+                    self.mission.insert_text(f"[incompris {ts}]")
                 else:
                     return False
 

@@ -93,10 +93,8 @@ def get_things_down(*args):
 def vlc_launcher(*args):
     mod = rdt_vlc.__file__
     python = 'python3'
-    # file = '/home/bastien/Musique/trois_heures.ogg'
     file = ''
     subprocess.Popen([python, mod, file])
-    # print(file)
     get_things_up()
 
     # get_things_up()

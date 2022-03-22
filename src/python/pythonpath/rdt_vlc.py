@@ -8,7 +8,7 @@ Date: 21-03-2022
 
 __version__ = '22.03.21'
 
-from wxasync import AsyncBind, WxAsyncApp, StartCoroutine
+from wxasync import WxAsyncApp, StartCoroutine
 import asyncio
 import json
 import datetime
