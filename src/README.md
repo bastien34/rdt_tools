@@ -7,6 +7,19 @@ Provides tools to clean up a mission document.
 - Discover of the **Addon.xcu** pitfall. In image section, write ```<prop oor:name="URL">``` 
 instead of ```<prop oor:name="URL" oor:type="xs:string">```. It will spare you time!
 
+
+## Install windows
+
+pip install wxasync
+
+Compile Player.exe using PyInstaller
+
+on windows: 
+
+   C:\Users\Bastien\Documents>python3 -m PyInstaller --onefile -i=logo.ico RDT.py --windowed
+
+the logo is located in assets/
+
 ## Tools
 
 A special class **Mission** has cleanup function in its ```__init__()``` which does:

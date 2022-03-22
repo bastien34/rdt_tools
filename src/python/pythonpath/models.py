@@ -5,7 +5,7 @@ from com.sun.star.beans import PropertyValue
 from com.sun.star.awt.FontSlant import ITALIC
 from debug import mri
 from reg_strings import CLEAN_REPLACING_STR, TIMECODE_FIX
-from utils import convert_tc_to_seconds
+from utils import timestamps_in_milliseconds
 
 
 QUESTION_STYLE = "Inter Q"
@@ -281,7 +281,7 @@ class Mission:
         selected = self.get_selection()
         match = self.is_timecode(selected)
         if match:
-            return convert_tc_to_seconds(match)
+            return match
 
     def is_timecode(self, selected: str):
         pattern = "\d\d:\d\d:\d\d"
@@ -296,7 +296,7 @@ class Mission:
             return match.group()
 
     def insert_timecode(self, timecode: str):
-        self.insert_text('[' + timecode + ']')
+        self.insert_text(timecode)
 
     def insert_text(self, expression):
         controller = self.doc.getCurrentController()

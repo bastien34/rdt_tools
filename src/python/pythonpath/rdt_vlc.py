@@ -10,12 +10,11 @@ __version__ = '22.03.21'
 
 from wxasync import AsyncBind, WxAsyncApp, StartCoroutine
 import asyncio
-
+import json
+import datetime
 
 import wx
 import vlc
-from threading import Thread
-import socket
 from os.path import basename, expanduser, isfile, join as joined
 import sys
 
@@ -27,13 +26,17 @@ HOST = '127.0.0.1'
 PORT = 8888
 
 # Vlc commands
-PLAY_PAUSE = '001'
-REWIND = '002'
-FORWARD = '003'
-SPEED_UP = '004'
-SPEED_DOWN = '005'
-TIMESTAMP = '006'
-READ_FROM_TIMESTAMP = '007'
+PLAY_PAUSE = '10'
+REWIND = '20'
+FORWARD = '30'
+SPEED_UP = '40'
+SPEED_DOWN = '50'
+SPEED_RESET = '55'
+TIMESTAMP = '60'
+READ_FROM_TIMESTAMP = '70'
+
+FORWARD_DELAY = 3000
+REWIND_DELAY = 3000
 
 TITLE = 'RDT Player'
 
@@ -66,6 +69,8 @@ class Player(wx.Frame):
 
         # The second panel holds controls
         ctrlpanel = wx.Panel(self, -1)
+        self.clock = wx.StaticText(ctrlpanel)
+        self.clock.SetLabel('HH:MM:SS')
         self.timeslider = wx.Slider(ctrlpanel, -1, 0, 0, 1000)
         self.timeslider.SetRange(0, 1000)
         self.pause = wx.Button(ctrlpanel, label="Pause")
@@ -75,13 +80,14 @@ class Player(wx.Frame):
         self.stop.Disable()
         self.mute = wx.Button(ctrlpanel, label="Mute")
         self.volslider = wx.Slider(ctrlpanel, -1, 0, 0, 100, size=(100, -1))
-
+        self.rateLabel = wx.StaticText(ctrlpanel, -1, '1.0', (50, -1))
         # Bind controls to events
         self.Bind(wx.EVT_BUTTON, self.OnPlay,   self.play)
         self.Bind(wx.EVT_BUTTON, self.OnPause,  self.pause)
         self.Bind(wx.EVT_BUTTON, self.OnStop,   self.stop)
         self.Bind(wx.EVT_BUTTON, self.OnMute,   self.mute)
         self.Bind(wx.EVT_SLIDER, self.OnVolume, self.volslider)
+        self.Bind(wx.EVT_SCROLL, self.OnTimer, self.timeslider)
 
         # Give a pretty layout to the controls
         ctrlbox = wx.BoxSizer(wx.VERTICAL)
@@ -89,7 +95,8 @@ class Player(wx.Frame):
         box2 = wx.BoxSizer(wx.HORIZONTAL)
         # box1 contains the timeslider
 
-        box1.Add(self.timeslider, 1)
+        box1.Add(self.clock, 1, flag=wx.EXPAND, border=10)
+        box1.Add(self.timeslider, 2)
         # box2 contains some buttons and the volume controls
         box2.Add(self.play, flag=wx.RIGHT, border=5)
         box2.Add(self.pause)
@@ -97,6 +104,7 @@ class Player(wx.Frame):
         box2.Add((-1, -1), 1)
         box2.Add(self.mute)
         box2.Add(self.volslider, flag=wx.TOP | wx.LEFT, border=5)
+        box2.Add(self.rateLabel, flag=wx.TOP | wx.LEFT, border=5)
         # Merge box1 and box2 to the ctrlsizer
         ctrlbox.Add(box1, flag=wx.EXPAND | wx.BOTTOM, border=10)
         ctrlbox.Add(box2, 1, wx.EXPAND)
@@ -107,14 +115,14 @@ class Player(wx.Frame):
         sizer.Add(self.videopanel, 1, flag=wx.EXPAND)
         sizer.Add(ctrlpanel, flag=wx.EXPAND | wx.BOTTOM | wx.TOP, border=10)
 
-        # log panel
-        logPan = wx.Panel(self, -1)
-        logbox = wx.BoxSizer(wx.HORIZONTAL)
-        logbox.Add((10, 100))
-        # logbox.AddStretchSpacer(1)
-        self.logctrl = wx.TextCtrl(logPan, style=wx.TE_MULTILINE)
-        logPan.SetSizer(logbox)
-        logbox.Add(self.logctrl, flag=wx.EXPAND | wx.BOTTOM, border=10)
+        # # log panel
+        # logPan = wx.Panel(self)
+        # logbox = wx.BoxSizer(wx.HORIZONTAL)
+        # logbox.Add((10, 100))
+        # # logbox.AddStretchSpacer(1)
+        # self.logctrl = wx.TextCtrl(logPan, style=wx.TE_MULTILINE)
+        # logPan.SetSizer(logbox)
+        # logbox.Add(self.logctrl, flag=wx.EXPAND | wx.BOTTOM, border=10)
 
         self.SetSizer(sizer)
         self.SetMinSize((350, 300))
@@ -131,32 +139,48 @@ class Player(wx.Frame):
         # EVT_RESULT(self, self.socket_handler)
         StartCoroutine(self.run_server, self)
 
-    def log(self, text):
-        self.logctrl.AppendText(text + "\r\n")
+    # def log(self, text):
+    #     self.logctrl.AppendText(text + "\r\n")
 
     async def handle_connection(self, reader, writer):
         data = await reader.read(100)
-        message = data.decode()
+        message = json.loads(data.decode())
         addr = writer.get_extra_info('peername')
-        self.log(f"Received {message!r} from {addr!r}")
-        self.log(f"Send: {message!r}")
-        writer.write(f"OMG: {data}".encode())
+        # self.log(f"Received {message!r} from {addr!r}")
+        # self.log(f"Send: {message!r}")
+        print(message)
+        resp = self.socket_handler(message)
+        writer.write(f"{resp}".encode())
         await writer.drain()
-        self.log("Close the connection")
+        # self.log("Close the connection")
         writer.close()
 
     async def run_server(self):
         server = await asyncio.start_server(self.handle_connection, HOST, PORT)
-
         addrs = ', '.join(str(sock.getsockname()) for sock in server.sockets)
-        self.log(f'Serving on {addrs}')
-
+        # self.log(f'Serving on {addrs}')
         async with server:
             await server.serve_forever()
 
-    def socket_handler(self, order):
+    def socket_handler(self, message, timestamp=None):
+        order = message['code']
         if order == PLAY_PAUSE:
-            self.OnPlay(None)
+            self.OnPause()
+        if order == REWIND:
+            self.OnRewind()
+        if order == FORWARD:
+            self.OnForward()
+        elif order == TIMESTAMP:
+            return self.OnTimeStamp()
+        elif order == READ_FROM_TIMESTAMP:
+            self.OnSetTimeStamp(message['timestamp'])
+        elif order == SPEED_UP:
+            self.OnRate(method=1)
+        elif order == SPEED_DOWN:
+            self.OnRate(method=-1)
+        elif order == SPEED_RESET:
+            self.OnRate()
+        return
 
     def OnExit(self, evt):
         """Closes the window.
@@ -184,12 +208,13 @@ class Player(wx.Frame):
         if isfile(video):  # Creation
             self.Media = self.Instance.media_new(str(video))
             self.player.set_media(self.Media)
+            # print(str(video))
             # Report the title of the file chosen
             title = self.player.get_title()
             # if an error was encountred while retrieving the title,
             # otherwise use filename
             self.SetTitle("%s - %s" % (title if title != -1 else 'wxVLC', basename(video)))
-
+            self.SetTitle(f"RDT - {basename(video)}")
             # set the window id where to render VLC's video output
             handle = self.videopanel.GetHandle()
             if sys.platform.startswith('linux'):  # for Linux using the X Server
@@ -203,12 +228,11 @@ class Player(wx.Frame):
             # set the volume slider to the current volume
             # self.volslider.SetValue(self.player.audio_get_volume() / 2)
 
-    def OnPlay(self, evt):
+    def OnPlay(self, evt=None):
         """Toggle the status to Play/Pause.
 
         If no file is loaded, open the dialog window.
         """
-        self.log('play')
 
         # check if there is a file to play, otherwise open a
         # wx.FileDialog to select a file
@@ -227,15 +251,17 @@ class Player(wx.Frame):
             self.pause.Enable()
             self.stop.Enable()
 
-    def OnPause(self, evt):
+    def OnPause(self, evt=None):
         """Pause the player.
         """
         if self.player.is_playing():
             self.play.Enable()
             self.pause.Disable()
-        else:
+        elif self.player.can_pause():
             self.play.Disable()
             self.pause.Enable()
+        else:
+            self.OnPlay()
         self.player.pause()
 
     def OnStop(self, evt):
@@ -254,12 +280,21 @@ class Player(wx.Frame):
         """
         # since the self.player.get_length can change while playing,
         # re-set the timeslider to the correct range.
-        length = self.player.get_length()
-        self.timeslider.SetRange(-1, length)
+        if evt.EventType == wx.EVT_TIMER.typeId:
+            length = self.player.get_length()
+            self.timeslider.SetRange(-1, length)
+            time = self.player.get_time()
+            self.timeslider.SetValue(time)
+        else:
+            time = self.timeslider.GetValue()
+            self.timeslider.SetValue(time)
+            self.player.set_time(time)
+        self.set_timer(time)
 
-        # update the time on the slider
-        time = self.player.get_time()
-        self.timeslider.SetValue(time)
+    def set_timer(self, position):
+        """Update Timer Slider control."""
+        str_pos = str(datetime.timedelta(milliseconds=position)).split('.')[0]
+        self.clock.SetLabel(str_pos)
 
     def OnMute(self, evt):
         """Mute/Unmute according to the audio button.
@@ -280,6 +315,32 @@ class Player(wx.Frame):
         if self.player.audio_set_volume(volume) == -1:
             self.errorDialog("Failed to set volume")
 
+    def OnRate(self, evt=None, method=0):
+        """Set the volume according to the volume sider.
+        """
+        rate = self.player.get_rate()
+        if method > 0:
+            new_rate = rate + 0.1
+        elif method < 0:
+            new_rate = rate - 0.1
+        else:
+            new_rate = 1
+        print("new rate: ", new_rate)
+        self.player.set_rate(new_rate)
+        self.rateLabel.SetLabel(str(round(new_rate, 1)))
+
+    def OnRewind(self, evt=None):
+        self.player.set_time(self.player.get_time() - REWIND_DELAY)
+
+    def OnForward(self, evt=None):
+        self.player.set_time(self.player.get_time() + FORWARD_DELAY)
+
+    def OnTimeStamp(self, evt=None):
+        return self.player.get_time()
+
+    def OnSetTimeStamp(self, position):
+        self.player.set_time(position)
+
     def errorDialog(self, errormessage):
         """Display a simple error dialog.
         """
@@ -288,41 +349,35 @@ class Player(wx.Frame):
         edialog.ShowModal()
 
 
-async def main():
+async def main(video=''):
+    print(sys.argv)
     app = WxAsyncApp()
-    frame = Player()
+    frame = Player(video=video)
     frame.Show()
     app.SetTopWindow(frame)
     await app.MainLoop()
 
 
-asyncio.run(main())
+if __name__ == "__main__":
+    _video = '/home/bastien/Musique/Asa_desiu_irri.wav'
 
-# if __name__ == "__main__":
-#
-#     _video = ''
-#
-#     while len(sys.argv) > 1:
-#         arg = sys.argv.pop(1)
-#         if arg.lower() in ('-v', '--version'):
-#             try:
-#                 print(vlc.libvlc_get_version())
-#             except AttributeError:
-#                 pass
-#             sys.exit(0)
-#
-#         elif arg.startswith('-'):
-#             print('usage: %s  [-v | --version]  [<video_file_name>]' % (sys.argv[0],))
-#             sys.exit(1)
-#
-#         elif arg:
-#             _video = expanduser(arg)
-#             if not isfile(_video):
-#                 print(f'{sys.argv[0]} error: no such file: {arg}')
-#                 sys.exit(1)
-#
-#     app = wx.App()
-#     player = Player(video=_video)
-#     player.Centre()
-#     player.Show()
-#     app.MainLoop()
+    while len(sys.argv) > 1:
+        arg = sys.argv.pop(1)
+        if arg.lower() in ('-v', '--version'):
+            try:
+                print(vlc.libvlc_get_version())
+            except AttributeError:
+                pass
+            sys.exit(0)
+
+        elif arg.startswith('-'):
+            print('usage: %s  [-v | --version]  [<video_file_name>]' % (sys.argv[0],))
+            sys.exit(1)
+
+        elif arg:
+            _video = expanduser(arg)
+            if not isfile(_video):
+                print(f'{sys.argv[0]} error: no such file: {arg}')
+                sys.exit(1)
+
+    asyncio.run(main(_video))

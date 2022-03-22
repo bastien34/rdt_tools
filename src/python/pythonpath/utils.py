@@ -1,6 +1,8 @@
 import os
 import pyuno
 import uno
+from datetime import timedelta
+
 
 from com.sun.star.awt.MessageBoxType import (
     MESSAGEBOX,
@@ -58,20 +60,14 @@ def get_package_location(ctx):
     return srv.getPackageLocation(IMPLEMENTATION_NAME)
 
 
-def seconds_to_timecode(value: float) -> str:
-    total_seconds = int(value)
-    ms = int((value - total_seconds) * 1000)
-    hours, seconds = total_seconds // 3600, total_seconds % 3600
-    minutes, seconds = seconds // 60, seconds % 60
-    return f"{hours:02}:{minutes:02}:{seconds:02}.{ms:02}"
+def milliseconds_to_timecode(ms: int) -> str:
+    h, m, s = str(timedelta(milliseconds=ms)).split(':')
+    return f"[{h:02s}:{m:02s}:{s[:4]:04}]"
 
 
-def convert_tc_to_seconds(tc: str) -> int:
-    tc = tc.split(':')
-    h, m, s = tuple(tc)
-    seconds = int(h) * 3600 + int(m) * 60 + int(s)
-    return int(seconds)
-
+def timestamps_in_milliseconds(tc: str) -> int:
+    h, m, s = tc.split(':')
+    return (int(h) * 3600 + int(m) * 60 + int(s)) * 1000
 
 def createUnoService(service, ctx=None, args=None):
     if not ctx:

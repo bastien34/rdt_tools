@@ -1,16 +1,23 @@
+import socket
+import json
+
 import unohelper
 from com.sun.star.awt import XKeyHandler
-from audio_controls import Player
 from models import Mission
-# from debug import mri
 
-REWIND = 768  # F1
-PLAYPAUSE = 769
-FORWARD = 770
-PUSH_TIMECODE = 771
-DECREASE_RATE = 772
-RESET_RATE = 773
-INCREASE_RATE = 774
+from utils import timestamps_in_milliseconds, milliseconds_to_timecode, msgbox
+
+import rdt_vlc as pl
+
+
+KB_REWIND = 768  # F1
+KB_PLAYPAUSE = 769
+KB_FORWARD = 770
+KB_TIMESTAMP = 771
+KB_SPEED_DOWN = 772
+KB_SPEED_UP = 774
+KB_SPEED_RESET = 773
+
 
 NVIVO = 779  # F12
 QUESTION = 778
@@ -27,6 +34,14 @@ Y = 536  # incompris
 CNTRL = 2
 
 
+def send_data(code, **kwargs):
+    json_data = json.dumps({'code': code, **kwargs})
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect((pl.HOST, pl.PORT))
+        s.send(json_data.encode('utf-8'))
+        return s.recv(1024)
+
+
 class Singleton(type):
     _instances = {}
 
@@ -34,7 +49,9 @@ class Singleton(type):
         if cls not in cls._instances:
             print('call not in instance')
             cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-        print('already created')
+        print('./already created')
+        print(cls._instances)
+
         return cls._instances[cls]
 
     @property
@@ -55,64 +72,66 @@ class KeyHandler(unohelper.Base, XKeyHandler, metaclass=Singleton):
 
     def keyPressed(self, ev):
 
-        print(ev.KeyCode)
-
         try:
-            player = Player()
-        except:
-            return False
+            if ev.Modifiers == CNTRL:
 
-        if ev.Modifiers == CNTRL:
+                if ev.KeyCode == B:
+                    self.mission.wrap_last_word_into_brackets()
 
-            if ev.KeyCode == B:
-                self.mission.wrap_last_word_into_brackets()
+                elif ev.KeyCode == Q:
+                    self.mission.apply_question_style()
 
-            elif ev.KeyCode == Q:
-                self.mission.apply_question_style()
+                elif ev.KeyCode == R:
+                    self.mission.apply_answer_style()
 
-            elif ev.KeyCode == R:
-                self.mission.apply_answer_style()
+                elif ev.KeyCode == K:
+                    pass
+                    # tc = player.get_timecode(milliseconds=False)
+                    # self.mission.insert_text(f"[inaudible {tc}]")
 
-            elif ev.KeyCode == K:
-                tc = player.get_timecode(milliseconds=False)
-                self.mission.insert_text(f"[inaudible {tc}]")
+                elif ev.KeyCode == Y:
+                    self.mission.remove_line()
 
-            elif ev.KeyCode == Y:
-                self.mission.remove_line()
+                elif ev.KeyCode == N:
+                    pass
+                    # tc = player.get_timecode(milliseconds=False)
+                    # self.mission.insert_text(f"[incompris {tc}]")
+                else:
+                    return False
 
-            elif ev.KeyCode == N:
-                tc = player.get_timecode(milliseconds=False)
-                self.mission.insert_text(f"[incompris {tc}]")
+            # Audio controls
+
+            elif ev.KeyCode == KB_PLAYPAUSE:
+                ts = self.mission.get_selected_timecode()
+                if ts:
+                    send_data(pl.READ_FROM_TIMESTAMP,
+                              timestamp=timestamps_in_milliseconds(ts))
+                else:
+                    send_data(pl.PLAY_PAUSE)
+
+            elif ev.KeyCode == KB_REWIND:
+                send_data(pl.REWIND)
+
+            elif ev.KeyCode == KB_FORWARD:
+                send_data(pl.FORWARD)
+
+            elif ev.KeyCode == KB_TIMESTAMP:
+                ts = int(send_data(pl.TIMESTAMP).decode('utf-8'))
+                self.mission.insert_timecode(milliseconds_to_timecode(ts))
+
+            elif ev.KeyCode == KB_SPEED_DOWN:
+                send_data(pl.SPEED_DOWN)
+
+            elif ev.KeyCode == KB_SPEED_RESET:
+                send_data(pl.SPEED_RESET)
+
+            elif ev.KeyCode == KB_SPEED_UP:
+                send_data(pl.SPEED_UP)
+
             else:
                 return False
-
-        # Audio controls
-
-        elif ev.KeyCode == PLAYPAUSE:
-            # player.play_pause()
-            player.play_pause(self.mission.get_selected_timecode())
-
-        elif ev.KeyCode == REWIND:
-            player.rewind()
-
-        elif ev.KeyCode == FORWARD:
-            player.forward()
-
-        elif ev.KeyCode == PUSH_TIMECODE:
-            self.mission.insert_timecode(player.get_timecode())
-
-        elif ev.KeyCode == DECREASE_RATE:
-            player.decrease_rate()
-
-        elif ev.KeyCode == RESET_RATE:
-            player.reset_rate()
-
-        elif ev.KeyCode == INCREASE_RATE:
-            player.increase_rate()
-
-        else:
-            return False
-
+        except:
+            msgbox('Erreur. Le lecteur est-il ouvert?')
         return True
 
     @property

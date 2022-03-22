@@ -3,12 +3,17 @@
 
 # debug
 # from debug import mri
-from prefix_dialogs import PrefixDialog, FolderOpenDialog
+import subprocess
+import asyncio
+
+from prefix_dialogs import PrefixDialog
 from models import Mission
-from audio_controls import open_vlc
 from key_handler import KeyHandler
 from handlers.bal_handler import BalDlg
 from utils import msgbox
+
+import rdt_vlc
+
 
 context = XSCRIPTCONTEXT
 
@@ -86,10 +91,17 @@ def get_things_down(*args):
 
 
 def vlc_launcher(*args):
+    mod = rdt_vlc.__file__
+    python = 'python3'
+    # file = '/home/bastien/Musique/trois_heures.ogg'
+    file = ''
+    subprocess.Popen([python, mod, file])
+    # print(file)
     get_things_up()
-    cmpctx = context.getComponentContext()
-    url = FolderOpenDialog(cmpctx).execute()
-    open_vlc(url)
+
+    # get_things_up()
+    # cmpctx = context.getComponentContext()
+    # url = FolderOpenDialog(cmpctx).execute()
 
 
 g_exportedScripts = (
