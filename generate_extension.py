@@ -8,7 +8,7 @@ Module to build a new extension.
 import os
 import logging
 import tempfile
-from shutil import copytree, ignore_patterns, make_archive
+from shutil import copytree, ignore_patterns, make_archive, copy
 import xml.etree.ElementTree as ET
 from make.addon import AddonUi
 
@@ -16,7 +16,7 @@ from make.addon import AddonUi
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('post_gen_project')
 
-VERSION = "0.6.0"
+VERSION = "0.6.1"
 EXTENSION_NAME= "rdt_tools"
 OUTPUT = 'extension'
 
@@ -61,6 +61,7 @@ def zip_files():
         create_tmp_src(src)
         make_archive(extension_path, 'zip', src)
         os.rename(extension_path + '.zip', extension_path)
+    copy(extension_path, "/home/bastien/Bureau")
     return 1
 
 

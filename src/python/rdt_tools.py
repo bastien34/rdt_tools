@@ -1,3 +1,4 @@
+import sys
 import subprocess
 
 from prefix_dialogs import PrefixDialog
@@ -5,9 +6,7 @@ from models import Mission
 from key_handler import KeyHandler
 from handlers.bal_handler import BalDlg
 from utils import msgbox
-
 import player
-
 
 context = XSCRIPTCONTEXT
 
@@ -85,11 +84,20 @@ def get_things_down(*args):
 
 
 def vlc_launcher(*args):
-    mod = player.__file__
-    python = 'python'
     file = ''
-    subprocess.Popen([python, mod, file])
+    mod = player.__file__
+    if sys.platform == "win32":
+        python = "python.exe"
+        subprocess.Popen([python, mod, file], shell=True)
+    else:
+        python = "python3"
+        subprocess.Popen([python, mod, file])
     get_things_up()
+
+
+def install_package():
+    from utils import install_package
+    install_package()
 
 
 g_exportedScripts = (
@@ -104,4 +112,5 @@ g_exportedScripts = (
     get_things_up,
     get_things_down,
     vlc_launcher,
+    install_package,
 )

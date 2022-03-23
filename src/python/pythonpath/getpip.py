@@ -46,33 +46,33 @@ def determine_pip_install_arguments():
     implicit_setuptools = True
     implicit_wheel = True
 
-    # Check if the user has requested us not to install setuptools
-    if "--no-setuptools" in sys.argv or os.environ.get("PIP_NO_SETUPTOOLS"):
-        args = [x for x in sys.argv[1:] if x != "--no-setuptools"]
-        implicit_setuptools = False
-    else:
-        args = sys.argv[1:]
-
-    # Check if the user has requested us not to install wheel
-    if "--no-wheel" in args or os.environ.get("PIP_NO_WHEEL"):
-        args = [x for x in args if x != "--no-wheel"]
-        implicit_wheel = False
-
-    # We only want to implicitly install setuptools and wheel if they don't
-    # already exist on the target platform.
-    if implicit_setuptools:
-        try:
-            import setuptools  # noqa
-            implicit_setuptools = False
-        except ImportError:
-            pass
-    if implicit_wheel:
-        try:
-            import wheel  # noqa
-            implicit_wheel = False
-        except ImportError:
-            pass
-
+    # # Check if the user has requested us not to install setuptools
+    # if "--no-setuptools" in sys.argv or os.environ.get("PIP_NO_SETUPTOOLS"):
+    #     args = [x for x in sys.argv[1:] if x != "--no-setuptools"]
+    #     implicit_setuptools = False
+    # else:
+    #     args = sys.argv[1:]
+    #
+    # # Check if the user has requested us not to install wheel
+    # if "--no-wheel" in args or os.environ.get("PIP_NO_WHEEL"):
+    #     args = [x for x in args if x != "--no-wheel"]
+    #     implicit_wheel = False
+    #
+    # # We only want to implicitly install setuptools and wheel if they don't
+    # # already exist on the target platform.
+    # if implicit_setuptools:
+    #     try:
+    #         import setuptools  # noqa
+    #         implicit_setuptools = False
+    #     except ImportError:
+    #         pass
+    # if implicit_wheel:
+    #     try:
+    #         import wheel  # noqa
+    #         implicit_wheel = False
+    #     except ImportError:
+    #         pass
+    args = []
     # Add any implicit installations to the end of our args
     if implicit_pip:
         args += ["pip"]

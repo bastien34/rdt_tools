@@ -1,4 +1,5 @@
 import os
+import sys
 import pyuno
 import uno
 from datetime import timedelta
@@ -113,3 +114,19 @@ def msgbox(message, title="Message", boxtype='message', buttons='ok', frame=None
     box = tk.createMessageBox(win, types[boxtype], _btns[buttons], title, message)
     return box.execute()
 
+
+def install_package():
+    if sys.platform == "win32":
+        import subprocess, os
+        python = os.path.join(
+            os.environ["ProgramFiles"], "LibreOffice", "program", "python.exe")
+        try:
+            import pip
+        except ModuleNotFoundError:
+            import getpip
+            subprocess.call([python, getpip.__file__], shell=False)
+        try:
+            import wxasync, vlc
+        except ModuleNotFoundError:
+            for module in ["wxasync", "python-vlc"]:
+                subprocess.run([python, "-m", "pip", "install", module], shell=False)
