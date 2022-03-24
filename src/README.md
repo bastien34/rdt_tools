@@ -9,20 +9,47 @@ instead of ```<prop oor:name="URL" oor:type="xs:string">```. It will spare you t
 
 ### Requires Java
 
-    https://www.java.com/en/download/manual.jsp
+https://www.java.com/en/download/manual.jsp
+
+### Requires a VLC compat with vlc.__version__ surely x32
+
+https://www.videolan.org/vlc/#download
+
+### Python packages
+
+- wxasync
+
+- python-vlc
 
 
 ## On Windows Installation
 
-    pip install wxasync
+Installation on Windows requires VLC in `C:\Program Files\VideoLAN`
 
-Compile Player.exe using PyInstaller
+Python packages & pip are automatically checked & download at first start.
+LibreOffice can be incompatible with `get-pip.py`. Check updates for both LO
+and `get-pip.py`
 
-on windows: 
+https://pip.pypa.io/en/stable/installation/
+
+Anyway the process of installing `pip` & python packages is simple. Use the
+pyhon embedded with LibreOffice. 
+
+    C:\Program Files\LibreOffice\program\python.exe get-pip.py
+
+It will install pip. Then install packages manually (if the extension failed).
+
+    python.exe -m pip install my_package
+
+
+### Compile Player.exe using PyInstaller
+
+PyInstaller provides an easy way to create an exe for windows. We don't need it 
+anymore since the extension launch the player automatically.
 
    C:\Users\Bastien\Documents>python3 -m PyInstaller --onefile -i=logo.ico RDT.py --windowed
 
-the logo is located in assets/
+The logo is located in assets/
 
 ## Tools
 
