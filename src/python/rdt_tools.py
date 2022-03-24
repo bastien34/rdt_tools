@@ -87,7 +87,10 @@ def vlc_launcher(*args):
     file = ''
     mod = player.__file__
     if sys.platform == "win32":
+        import os
         python = "python.exe"
+        pf = os.environ["ProgramFiles"]
+        python = os.path.join(pf, "LibreOffice", "program", python)
         subprocess.Popen([python, mod, file], shell=True)
     else:
         python = "python3"

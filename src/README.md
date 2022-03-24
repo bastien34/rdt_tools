@@ -7,6 +7,10 @@ Provides tools to clean up a mission document.
 - Discover of the **Addon.xcu** pitfall. In image section, write ```<prop oor:name="URL">``` 
 instead of ```<prop oor:name="URL" oor:type="xs:string">```. It will spare you time!
 
+### Requires Java
+
+    https://www.java.com/en/download/manual.jsp
+
 
 ## On Windows Installation
 
