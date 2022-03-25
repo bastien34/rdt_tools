@@ -5,8 +5,6 @@
 Author: Bastien Roques
 Date: 21-03-2022
 """
-from utils import install_package
-
 
 try:
 
@@ -325,7 +323,7 @@ try:
             elif method < 0:
                 new_rate = rate - 0.1
             else:
-                new_rate = '1.0'
+                new_rate = 1.0
             self.player.set_rate(new_rate)
             self.rateLabel.SetLabel(str(round(new_rate, 1)))
 
@@ -357,6 +355,7 @@ try:
         await app.MainLoop()
 
 except:
+    from utils import install_package
     install_package()
 
 
