@@ -126,7 +126,7 @@ def install_package():
             import getpip
             subprocess.call([python, getpip.__file__], shell=False)
         try:
-            import wxasync, vlc
+            import wxasync, vlc, requests
         except ModuleNotFoundError:
-            for module in ["wxasync", "python-vlc"]:
+            for module in ["wxasync", "python-vlc", "requests"]:
                 subprocess.run([python, "-m", "pip", "install", module], shell=False)
