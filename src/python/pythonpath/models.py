@@ -1,16 +1,13 @@
 import re
 
 from com.sun.star.awt import FontWeight
-from com.sun.star.beans import PropertyValue
-from com.sun.star.awt.FontSlant import ITALIC
-from debug import mri
 from reg_strings import CLEAN_REPLACING_STR, TIMECODE_FIX
-from utils import timestamps_in_milliseconds
 
 
-QUESTION_STYLE = "Inter Q"
-ANSWER_STYLE = "Inter R"
 TIMECODE_STYLE = 'Timecode'
+
+QUESTION_STYLE = "Question"
+VERBATIM_STYLE = "Verbatim"
 
 
 class Mission:
@@ -21,6 +18,8 @@ class Mission:
             "com.sun.star.frame.Desktop", self.ctx)
         self.doc = self.desktop.getCurrentComponent()
         self.text = self.doc.Text
+        self.question_style = QUESTION_STYLE
+        self.verbatim_style = VERBATIM_STYLE
 
     def remove_ms(self):
         self.remove_milliseconds_from_tc()
@@ -70,10 +69,15 @@ class Mission:
         self._replace_string('\s*$', '')
 
     def style_document(self):
-        # check if document has INTERQ style
+        # check if document has correct styles
+        # todo: after summer 22 remove inter Q check
         styles = self.doc.getStyleFamilies().getByName("ParagraphStyles")
-        if not styles.hasByName(QUESTION_STYLE):
+        if not styles.hasByName(VERBATIM_STYLE):
+            self.question_style = 'Inter Q'
+            self.verbatim_style = 'Inter R'
+        if not styles.hasByName('Inter Q'):
             return
+        print(self.question_style, self.verbatim_style)
         self.parse_text(self._apply_document_style)
 
     def prefix_questions_and_answers(self, p_question, p_answer, must_count=False):
@@ -111,16 +115,18 @@ class Mission:
             return string
 
     def _apply_document_style(self, element):
-        self.create_styles()
+        self.create_timecode_style()
 
         is_title = 'title' in element.ParaStyleName.lower()
+        is_line = 'line' == element.ParaStyleName
 
-        if is_title:
+        if is_title or is_line:
             return
+
         if self.is_bold_element(element):
-            element.ParaStyleName = QUESTION_STYLE
+            element.ParaStyleName = self.question_style
         else:
-            element.ParaStyleName = ANSWER_STYLE
+            element.ParaStyleName = self.verbatim_style
 
         if self.is_time_code(element):
             element.ParaStyleName = TIMECODE_STYLE
@@ -137,11 +143,11 @@ class Mission:
 
     def apply_question_style(self):
         """Access direct from libo config."""
-        self._apply_style(QUESTION_STYLE)
+        self._apply_style(self.question_style)
 
     def apply_answer_style(self):
         """Access direct from libo config."""
-        self._apply_style(ANSWER_STYLE)
+        self._apply_style(self.verbatim_style)
 
     def remove_first_line(self):
         """
@@ -198,7 +204,7 @@ class Mission:
         while text_enum.hasMoreElements():
             element = text_enum.nextElement()
             if element.supportsService("com.sun.star.text.Paragraph"):
-                if element.ParaStyleName == QUESTION_STYLE:
+                if element.ParaStyleName == self.question_style:
                     element.String = element.String.upper()
 
     def question_lower(self):
@@ -207,7 +213,7 @@ class Mission:
         while text_enum.hasMoreElements():
             element = text_enum.nextElement()
             if element.supportsService("com.sun.star.text.Paragraph"):
-                if element.ParaStyleName == QUESTION_STYLE and element.String:
+                if element.ParaStyleName == self.question_style and element.String:
                     q = f"{element.String[0:1].upper()}{element.String[1:].lower()}"
                     element.String = q
 
@@ -224,7 +230,7 @@ class Mission:
     def apply_style_to_orphan_timecode(self):
         pass
 
-    def create_styles(self):
+    def create_timecode_style(self):
         """
         If styles are not found, create them. Used only for timecode
         style, for now.
@@ -234,10 +240,9 @@ class Mission:
         par_styles = self.doc.getStyleFamilies()['ParagraphStyles']
         if not par_styles.hasByName(TIMECODE_STYLE):
             par_styles.insertByName(TIMECODE_STYLE, new_style)
-            new_style.ParentStyle = QUESTION_STYLE
+            new_style.ParentStyle = self.question_style
             new_style.CharColor = 6710932
             new_style.CharWeight = FontWeight.BOLD
-            new_style.CharHeight = 12
 
         # bold = PropertyValue('CharWeight', 0, FontWeight.BOLD, 0)
         # color = PropertyValue('CharColor', 0, 6710932, 0)
@@ -268,10 +273,10 @@ class Mission:
                     i = self._prefix(element, i)
 
     def _prefix(self, element, i):
-        if element.ParaStyleName == QUESTION_STYLE:
+        if element.ParaStyleName == self.question_style:
             element.String = f"B{i} : {element.String}"
             i += 1
-        elif element.ParaStyleName == ANSWER_STYLE:
+        elif element.ParaStyleName == self.verbatim_style:
             element.String = f"A{i} : {element.String}"
             i += 1
         return i

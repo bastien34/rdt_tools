@@ -1,6 +1,8 @@
 import sys
 import subprocess
 
+from com.sun.star.beans import UnknownPropertyException
+
 from prefix_dialogs import PrefixDialog
 from models import Mission
 from key_handler import KeyHandler
@@ -8,12 +10,13 @@ from handlers.bal_handler import BalDlg
 from utils import msgbox
 import player
 
+
 context = XSCRIPTCONTEXT
 
 
 def clean_text(*args):
     doc = context.getDocument()
-    if not doc.getDocumentProperties().Title:
+    if not get_uuid(doc):
         msgbox("Ce fichier ne semble pas être une mission.",
                title='Fichier non valide', boxtype='error')
         return
@@ -24,6 +27,15 @@ def clean_text(*args):
         for method in methods.keys():
             if hasattr(mission, method) and methods.get(method):
                 getattr(mission, method)()
+
+
+def get_uuid(document):
+    try:
+        properties = document.getDocumentProperties()
+        udp = properties.getUserDefinedProperties()
+        return udp.getPropertyValue('uuid')
+    except UnknownPropertyException:
+        return document.getDocumentProperties().Title
 
 
 def prefix_questions_and_answers(*args):
