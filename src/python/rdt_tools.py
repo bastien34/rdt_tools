@@ -10,7 +10,6 @@ from handlers.bal_handler import BalDlg
 from utils import msgbox
 import player
 
-
 context = XSCRIPTCONTEXT
 
 
@@ -97,16 +96,16 @@ def get_things_down(*args):
 
 def vlc_launcher(*args):
     file = ''
-    mod = player.__file__
+    module = player.__file__
     if sys.platform == "win32":
         import os
         python = "python.exe"
         pf = os.environ["ProgramFiles"]
         python = os.path.join(pf, "LibreOffice", "program", python)
-        subprocess.Popen([python, mod, file], shell=True)
+        subprocess.Popen([python, module, file], shell=True)
     else:
         python = "python3"
-        subprocess.Popen([python, mod, file])
+        subprocess.Popen([python, module, file])
     get_things_up()
 
 
