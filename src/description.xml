@@ -5,6 +5,12 @@
       <ns0:src lang="fr" ns1:href="description/descr-fr.txt" />
       <ns0:src lang="en" ns1:href="description/descr-en.txt" />
    </ns0:extension-description>
+   <ns0:registration>
+      <ns0:simple-license accept-by="user">
+         <ns0:license-text ns1:href="licenses/license_fr.txt" lang="de" />
+         <ns0:license-text ns1:href="licenses/license_en.txt" lang="en-US" />
+      </ns0:simple-license>
+   </ns0:registration>
    <ns0:platform value="all" />
    <ns0:icon>
       <ns0:default ns1:href="assets/logo.png" />

@@ -1,2 +1,2 @@
-Ensemble d'outils pour réaliser une mission RDT.
-Copyright (c) 2021 PalaceWebDev
+Ensemble d'outils pour aider à la réalisation d'une mission RDT.
+Copyright (c) 2021 PalaceDev
