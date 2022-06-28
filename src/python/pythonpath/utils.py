@@ -115,18 +115,23 @@ def msgbox(message, title="Message", boxtype='message', buttons='ok', frame=None
     return box.execute()
 
 
-def install_package():
+def install_packages():
+    import subprocess, os
     if sys.platform == "win32":
-        import subprocess, os
         python = os.path.join(
             os.environ["ProgramFiles"], "LibreOffice", "program", "python.exe")
+    else:
+        python = "python3"
+
+    try:
+        import pip
+    except ModuleNotFoundError:
+        import getpip
+        subprocess.call([python, getpip.__file__], shell=False)
+
+    modules_to_install = ["wxasync", "python-vlc", "requests"]
+    for module in modules_to_install:
         try:
-            import pip
+            import module
         except ModuleNotFoundError:
-            import getpip
-            subprocess.call([python, getpip.__file__], shell=False)
-        try:
-            import wxasync, vlc, requests
-        except ModuleNotFoundError:
-            for module in ["wxasync", "python-vlc", "requests"]:
-                subprocess.run([python, "-m", "pip", "install", module], shell=False)
+            subprocess.run([python, "-m", "pip", "install", module], shell=False)

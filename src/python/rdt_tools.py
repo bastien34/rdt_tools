@@ -110,8 +110,8 @@ def vlc_launcher(*args):
 
 
 def install_package():
-    from utils import install_package
-    install_package()
+    from utils import install_packages
+    install_packages()
 
 
 g_exportedScripts = (

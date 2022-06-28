@@ -22,7 +22,15 @@ https://www.videolan.org/vlc/#download
 - python-vlc
 
 
-## On Windows Installation
+## On Ubuntu
+
+Pb installing wxpython: try installing from a wheel, see:
+
+https://stackoverflow.com/questions/41432665/error-failed-building-wheel-for-wxpython-phoenix-while-installing-wx#41432965
+
+
+
+## On Windows
 
 Installation on Windows requires VLC in `C:\Program Files\VideoLAN`
 

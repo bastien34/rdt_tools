@@ -16,7 +16,7 @@ from make.addon import AddonUi
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('post_gen_project')
 
-VERSION = "0.7.2-uni"
+VERSION = "0.7.3-uni"
 EXTENSION_NAME= "rdt_tools"
 OUTPUT = 'extension'
 
@@ -61,6 +61,7 @@ def zip_files():
         create_tmp_src(src)
         make_archive(extension_path, 'zip', src)
         os.rename(extension_path + '.zip', extension_path)
+
     copy(extension_path, "/home/bastien/Bureau")
     return 1
 
