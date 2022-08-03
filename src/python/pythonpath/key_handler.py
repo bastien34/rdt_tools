@@ -7,8 +7,15 @@ from models import Mission
 
 from utils import timestamps_in_milliseconds, milliseconds_to_timecode, msgbox
 
+
+# in case of wx use
 import player as pl
 
+# to use with vlc
+import audio_controls as ac
+
+
+player = ac.Player()
 
 KB_REWIND = 768  # F1
 KB_PLAYPAUSE = 769
@@ -97,33 +104,44 @@ class KeyHandler(unohelper.Base, XKeyHandler, metaclass=Singleton):
             elif ev.KeyCode == KB_PLAYPAUSE:
                 ts = self.mission.get_selected_timecode()
                 if ts:
-                    send_data(pl.READ_FROM_TIMESTAMP,
-                              timestamp=timestamps_in_milliseconds(ts))
+                    # send_data(pl.READ_FROM_TIMESTAMP,
+                    #           timestamp=timestamps_in_milliseconds(ts))
+                    ts = timestamps_in_milliseconds(ts)
+                    player.play_pause(timecode=ts)
                 else:
-                    send_data(pl.PLAY_PAUSE)
+                    # send_data(pl.PLAY_PAUSE)
+                    player.play_pause()
 
             elif ev.KeyCode == KB_REWIND:
-                send_data(pl.REWIND)
+                # send_data(pl.REWIND)
+                player.rewind(ac.REWIND_DELAY)
 
             elif ev.KeyCode == KB_FORWARD:
-                send_data(pl.FORWARD)
+                # send_data(pl.FORWARD)
+                player.forward(ac.FORWARD_DELAY)
 
             elif ev.KeyCode == KB_TIMESTAMP:
-                ts = int(send_data(pl.TIMESTAMP))
-                self.mission.insert_timecode(milliseconds_to_timecode(ts))
+                # ts = int(send_data(pl.TIMESTAMP))
+                # self.mission.insert_timecode(milliseconds_to_timecode(ts))
+                ts = player.get_timecode()
+                self.mission.insert_timecode(ts)
 
             elif ev.KeyCode == KB_SPEED_DOWN:
-                send_data(pl.SPEED_DOWN)
+                # send_data(pl.SPEED_DOWN)
+                player.decrease_rate()
 
             elif ev.KeyCode == KB_SPEED_RESET:
-                send_data(pl.SPEED_RESET)
+                # send_data(pl.SPEED_RESET)
+                player.reset_rate()
 
             elif ev.KeyCode == KB_SPEED_UP:
-                send_data(pl.SPEED_UP)
-
+                # send_data(pl.SPEED_UP)
+                player.increase_rate()
             else:
                 return False
+
         except Exception as e:
+            print(e)
             msgbox('Erreur. Le lecteur est-il ouvert ?')
         return True
 

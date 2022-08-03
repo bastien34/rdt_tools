@@ -16,7 +16,9 @@ from make.addon import AddonUi
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('post_gen_project')
 
-VERSION = "0.7.3-uni"
+VERSION = "0.7.4"
+# use real VLC player for linux
+
 EXTENSION_NAME= "rdt_tools"
 OUTPUT = 'extension'
 

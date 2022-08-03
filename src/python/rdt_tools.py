@@ -3,8 +3,9 @@ import subprocess
 
 from com.sun.star.beans import UnknownPropertyException
 
-from prefix_dialogs import PrefixDialog
+from prefix_dialogs import PrefixDialog, FolderOpenDialog
 from models import Mission
+from audio_controls import open_vlc
 from key_handler import KeyHandler
 from handlers.bal_handler import BalDlg
 from utils import msgbox
@@ -103,9 +104,14 @@ def vlc_launcher(*args):
         pf = os.environ["ProgramFiles"]
         python = os.path.join(pf, "LibreOffice", "program", python)
         subprocess.Popen([python, module, file], shell=True)
-    else:
-        python = "python3"
-        subprocess.Popen([python, module, file])
+    # else:
+    #     python = "python3"
+    #     subprocess.Popen([python, module, file])
+        url = ''
+        # cmpctx = context.getComponentContext()
+        # url = FolderOpenDialog(cmpctx).execute()
+        # open_vlc(url)
+
     get_things_up()
 
 
