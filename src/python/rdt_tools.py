@@ -11,6 +11,7 @@ from handlers.bal_handler import BalDlg
 from utils import msgbox
 import player
 
+
 context = XSCRIPTCONTEXT
 
 
@@ -104,15 +105,18 @@ def vlc_launcher(*args):
         pf = os.environ["ProgramFiles"]
         python = os.path.join(pf, "LibreOffice", "program", python)
         subprocess.Popen([python, module, file], shell=True)
-    # else:
+    else:
     #     python = "python3"
     #     subprocess.Popen([python, module, file])
         url = ''
         # cmpctx = context.getComponentContext()
         # url = FolderOpenDialog(cmpctx).execute()
         # open_vlc(url)
-
-    get_things_up()
+        try:
+            open_vlc()
+        except:
+            pass
+        get_things_up()
 
 
 def install_package():

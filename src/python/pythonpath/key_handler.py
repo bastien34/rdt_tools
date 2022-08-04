@@ -1,10 +1,11 @@
 import socket
 import json
+from dbus.exceptions import DBusException
 
 import unohelper
 from com.sun.star.awt import XKeyHandler
-from models import Mission
 
+from models import Mission
 from utils import timestamps_in_milliseconds, milliseconds_to_timecode, msgbox
 
 
@@ -14,8 +15,6 @@ import player as pl
 # to use with vlc
 import audio_controls as ac
 
-
-player = ac.Player()
 
 KB_REWIND = 768  # F1
 KB_PLAYPAUSE = 769
@@ -39,6 +38,8 @@ Y = 536  # incompris
 
 
 CNTRL = 2
+
+player = ac.Player()
 
 
 def send_data(code, **kwargs):
@@ -73,6 +74,8 @@ class KeyHandler(unohelper.Base, XKeyHandler, metaclass=Singleton):
         pass
 
     def keyPressed(self, ev):
+
+        player.check_player()
 
         try:
             if ev.Modifiers == CNTRL:
@@ -142,7 +145,7 @@ class KeyHandler(unohelper.Base, XKeyHandler, metaclass=Singleton):
 
         except Exception as e:
             print(e)
-            msgbox('Erreur. Le lecteur est-il ouvert ?')
+            msgbox("Une erreur s'est produite")
         return True
 
     @property

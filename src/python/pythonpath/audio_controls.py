@@ -27,7 +27,6 @@ def get_proxy():
 
 class Player:
     def __init__(self):
-        self.vlc = True
 
         open_vlc()
 
@@ -61,9 +60,7 @@ class Player:
 
     @property
     def rate(self):
-        if self.vlc:
-            return self.property.Get(PLAYER_BUS, 'Rate')
-        return 0
+        return self.property.Get(PLAYER_BUS, 'Rate')
 
     @rate.setter
     def rate(self, rate: decimal.Decimal):
@@ -77,8 +74,7 @@ class Player:
         self.rate = self.rate - 0.1
 
     def reset_rate(self):
-        if self.vlc:
-            self.rate = 1.0
+        self.rate = 1.0
 
     @property
     def position(self):
@@ -105,8 +101,19 @@ class Player:
     def trackid(self):
         return str(self.metadata['mpris:trackid'])
 
+    def renew(self):
+        proxy = dbus.SessionBus().get_object(VLC_BUS, OBJECT_PATH)
+        self.interface = dbus.Interface(proxy, dbus_interface=PLAYER_BUS)
+
+    def check_player(self):
+        try:
+            self.interface.Seek(0)
+        except DBusException:
+            self.renew()
+
 
 def open_vlc(file_path=None):
+    print('open vlc')
     try:
         dbus.SessionBus().get_object(VLC_BUS, OBJECT_PATH)
         print('dbus allright')
