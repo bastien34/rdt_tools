@@ -1,34 +1,32 @@
-<ns0:description xmlns:ns0="http://openoffice.org/extensions/description/2006" xmlns:ns1="http://www.w3.org/1999/xlink" xmlns:ns2="http://libreoffice.org/extensions/description/2011">
-   <ns0:identifier value="com.rdt.comp.Utils" />
-   <ns0:version value="0.7.4" />
-   <ns0:extension-description>
-      <ns0:src lang="fr" ns1:href="description/descr-fr.txt" />
-      <ns0:src lang="en" ns1:href="description/descr-en.txt" />
-   </ns0:extension-description>
-   <ns0:registration>
-      <ns0:simple-license accept-by="user">
-         <ns0:license-text ns1:href="licenses/license_fr.txt" lang="de" />
-         <ns0:license-text ns1:href="licenses/license_en.txt" lang="en-US" />
-      </ns0:simple-license>
-   </ns0:registration>
-   <ns0:platform value="all" />
-   <ns0:icon>
-      <ns0:default ns1:href="assets/logo.png" />
-   </ns0:icon>
-   <ns0:update-information>
-      <ns0:src ns1:href="https://palaceweb.fr/extensions/rdt-tools/update.xml" />
-   </ns0:update-information>
-   <ns0:dependencies>
-      <ns2:LibreOffice-minimal-version value="3.5" ns0:name="LibreOffice 3.5 minimum, or more recent" />
-   </ns0:dependencies>
-   <ns0:display-name>
-      <ns0:name lang="fr">RDT - Outils pour remplir une mission RDT</ns0:name>
-      <ns0:name lang="en">RDT - RDT Mission Tools</ns0:name>
-   </ns0:display-name>
-   <ns0:publisher>
-      <ns0:name lang="fr" ns1:href="https://palaceweb.fr /">PalaceDev</ns0:name>
-   </ns0:publisher>
-   <ns0:release-notes>
-      <ns0:src lang="fr" ns1:href="" />
-   </ns0:release-notes>
-</ns0:description>
+<description xmlns="http://openoffice.org/extensions/description/2006" xmlns:ns1="http://www.w3.org/1999/xlink">
+   <identifier value="rdt_tools" />
+   <version value="0.7.4" />
+     <display-name>
+      <name lang="fr">RDT - Outils pour remplir une mission RDT</name>
+      <name lang="en">RDT - RDT Mission Tools</name>
+   </display-name>
+      <icon>
+      <default ns1:href="assets/logo.png" />
+   </icon>
+   <extension-description>
+      <src lang="fr" ns1:href="description/descr-fr.txt" />
+      <src lang="en" ns1:href="description/descr-en.txt" />
+   </extension-description>
+   <registration>
+      <simple-license accept-by="user">
+         <license-text ns1:href="registration/license_fr.txt" lang="de" />
+         <license-text ns1:href="registration/license_en.txt" lang="en-US" />
+      </simple-license>
+   </registration>
+
+   <update-information>
+      <src ns1:href="https://palaceweb.fr/extensions/rdt-tools/update.xml" />
+   </update-information>
+
+   <publisher>
+      <name lang="fr" ns1:href="https://palaceweb.fr /">PalaceDev</name>
+   </publisher>
+   <release-notes>
+      <src lang="fr" ns1:href="" />
+   </release-notes>
+</description>

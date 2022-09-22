@@ -9,7 +9,7 @@ attrib = {
     'oor:package': "org.openoffice.Office",
 }
 
-LIB = "com.rdt.comp.Utils"
+LIB = "com.rdt.rdt_tools"
 MODULE = 'rdt_tools'
 IMAGE_LOCATION = "%origin%/assets/"
 
@@ -17,6 +17,7 @@ IMAGE_LOCATION = "%origin%/assets/"
 def get_command_line(command):
     lib = f"vnd.sun.star.script:{MODULE}.oxt|python|{MODULE}.py$"
     return f"{lib}{command}?language=Python&location=user:uno_packages"
+
 
 AT_REPLACE = ('oor:op', 'replace')
 at_name = lambda x: ('oor:name', x)
@@ -30,7 +31,6 @@ def get_node(doc, *args):
 
 
 class AddonUi:
-
     def __init__(self, conf_path: str = 'make/addon_ui.yml'):
         self.read_addon_yaml(conf_path)
         self.doc = xml.dom.minidom.Document()
@@ -56,21 +56,25 @@ class AddonUi:
 
         node.appendChild(get_prop(self.doc, 'Title', 'RDT'))
         node.appendChild(get_prop(self.doc, 'Target', '_self'))
-        node.appendChild(get_prop(self.doc, 'ImageIdentifier'))
 
+        # Menu bar configuration
         menu_bar_conf = self.conf.get('OfficeMenuBar')
+
         submenu = node.appendChild(self.get_new_submenu_node())
         for i, (k, v) in enumerate(menu_bar_conf.items(), 1):
-            if not 'submenu' in v.keys():
+            if 'submenu' in v.keys():
+                # This is a new submenu
+                node.appendChild(self.create_subentries(v, i))
+            else:
+                # This is new section entry
                 m = MenuEntry(self.doc, k, v['title'], i)
                 submenu.appendChild(m.root)
-            else:
-                node.appendChild(self.create_subentries(v, i))
+
         return mb
 
     def build_toolbar(self, root):
         tb = get_node(self.doc, at_name('OfficeToolBar'),)
-        tb_node = get_node(self.doc, at_name(LIB), AT_REPLACE)
+        tb_node = get_node(self.doc, at_name("rdt_tools.OfficeToolBar"), AT_REPLACE)
         tb.appendChild(tb_node)
         root.appendChild(tb)
 
@@ -90,12 +94,13 @@ class AddonUi:
 
         node.appendChild(get_prop(self.doc, 'Title', entries['title']))
         for i, (k, v) in enumerate(entries.get('submenu').items(), 1):
-            if not 'submenu' in v.keys():
-                m = InnerMenuEntry(self.doc, k, v['title'], i)
+            if 'submenu' not in v.keys():
+                m = InnerMenuEntry(self.doc, k, v['title'], i, v['context'])
                 node.appendChild(m.root)
         return submenu
 
     def get_new_submenu_node(self):
+        """Return a node Submenu (which is an item of menu bar)."""
         nn = self.doc.createElement('node')
         nn.setAttribute('oor:name', 'Submenu')
         return nn
@@ -122,7 +127,8 @@ def get_prop(doc, name, value=''):
 class MenuEntry:
     def __init__(self, doc, command, title, index, context=''):
         self.index_el = get_node(doc, AT_REPLACE, at_name(f"N{index:03}"))
-        self.index_el.appendChild(get_prop(doc, 'Context', context))
+        if context:
+            self.index_el.appendChild(get_prop(doc, 'Context', context))
         self.index_el.appendChild(get_prop(doc, 'Title', title))
         self.index_el.appendChild(get_prop(doc, 'URL', get_command_line(command)))
         self.index_el.appendChild(get_prop(doc, 'Target', '_self'))
@@ -130,8 +136,8 @@ class MenuEntry:
 
 
 class InnerMenuEntry(MenuEntry):
-    def __init__(self, doc, command, title, index):
-        super().__init__(doc, command, title, index)
+    def __init__(self, doc, command, title, index, context=''):
+        super().__init__(doc, command, title, index, context)
         new_root = doc.createElement('node')
         new_root.setAttribute('oor:name', 'Submenu')
         new_root.appendChild(self.index_el)

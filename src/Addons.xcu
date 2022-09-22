@@ -2,21 +2,15 @@
 <oor:component-data xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:oor="http://openoffice.org/2001/registry" oor:name="Addons" oor:package="org.openoffice.Office">
 	<node oor:name="AddonUI">
 		<node oor:name="OfficeMenuBar">
-			<node oor:name="com.rdt.comp.Utils" oor:op="replace">
+			<node oor:name="com.rdt.rdt_tools" oor:op="replace">
 				<prop oor:type="xs:string" oor:name="Title">
 					<value xml:lang="fr">RDT</value>
 				</prop>
 				<prop oor:type="xs:string" oor:name="Target">
 					<value>_self</value>
 				</prop>
-				<prop oor:type="xs:string" oor:name="ImageIdentifier">
-					<value></value>
-				</prop>
 				<node oor:name="Submenu">
 					<node oor:op="replace" oor:name="N001">
-						<prop oor:type="xs:string" oor:name="Context">
-							<value></value>
-						</prop>
 						<prop oor:type="xs:string" oor:name="Title">
 							<value xml:lang="fr">Nettoyer le texte</value>
 						</prop>
@@ -36,7 +30,7 @@
 						<node oor:name="Submenu">
 							<node oor:op="replace" oor:name="N001">
 								<prop oor:type="xs:string" oor:name="Context">
-									<value></value>
+									<value>com.sun.star.text.TextDocument</value>
 								</prop>
 								<prop oor:type="xs:string" oor:name="Title">
 									<value xml:lang="fr">Numérotation des alineas</value>
@@ -52,7 +46,7 @@
 						<node oor:name="Submenu">
 							<node oor:op="replace" oor:name="N002">
 								<prop oor:type="xs:string" oor:name="Context">
-									<value></value>
+									<value>com.sun.star.text.TextDocument</value>
 								</prop>
 								<prop oor:type="xs:string" oor:name="Title">
 									<value xml:lang="fr">Écrire les questions en majuscules</value>
@@ -68,7 +62,7 @@
 						<node oor:name="Submenu">
 							<node oor:op="replace" oor:name="N003">
 								<prop oor:type="xs:string" oor:name="Context">
-									<value></value>
+									<value>com.sun.star.text.TextDocument</value>
 								</prop>
 								<prop oor:type="xs:string" oor:name="Title">
 									<value xml:lang="fr">Écrire les questions en minuscules</value>
@@ -84,7 +78,7 @@
 						<node oor:name="Submenu">
 							<node oor:op="replace" oor:name="N004">
 								<prop oor:type="xs:string" oor:name="Context">
-									<value></value>
+									<value>com.sun.star.text.TextDocument</value>
 								</prop>
 								<prop oor:type="xs:string" oor:name="Title">
 									<value xml:lang="fr">Préfixer les questions et les réponses</value>
@@ -102,7 +96,7 @@
 			</node>
 		</node>
 		<node oor:name="OfficeToolBar">
-			<node oor:name="com.rdt.comp.Utils" oor:op="replace">
+			<node oor:name="rdt_tools.OfficeToolBar" oor:op="replace">
 				<node oor:op="replace" oor:name="N001">
 					<prop oor:type="xs:string" oor:name="Context">
 						<value>com.sun.star.text.TextDocument</value>
@@ -134,7 +128,7 @@
 			</node>
 		</node>
 		<node oor:name="Images">
-			<node oor:name="com.rdt.comp.Utils.N001" oor:op="replace">
+			<node oor:name="com.rdt.rdt_tools.N001" oor:op="replace">
 				<prop oor:type="xs:string" oor:name="URL">
 					<value>vnd.sun.star.script:rdt_tools.oxt|python|rdt_tools.py$vlc_launcher?language=Python&amp;location=user:uno_packages</value>
 				</prop>
@@ -144,7 +138,7 @@
 					</prop>
 				</node>
 			</node>
-			<node oor:name="com.rdt.comp.Utils.N002" oor:op="replace">
+			<node oor:name="com.rdt.rdt_tools.N002" oor:op="replace">
 				<prop oor:type="xs:string" oor:name="URL">
 					<value>vnd.sun.star.script:rdt_tools.oxt|python|rdt_tools.py$clean_text?language=Python&amp;location=user:uno_packages</value>
 				</prop>

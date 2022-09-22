@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry"
+ xmlns:xs="http://www.w3.org/2001/XMLSchema"
+ oor:name="WriterWindowState"
+ oor:package="org.openoffice.Office.UI">
+    <node oor:name="UIElements">
+        <node oor:name="States">
+            <node oor:name="private:resource/toolbar/addon_rdt_tools.OfficeToolBar" oor:op="replace">
+                <prop oor:name="UIName" oor:type="xs:string">
+                    <value xml:lang="en">RDT tools</value>
+                </prop>
+                <prop oor:name="Visible" oor:type="xs:boolean">
+                    <value>true</value>
+                </prop>
+                <prop oor:name="Docked" oor:type="xs:boolean">
+                 <value>true</value>
+                </prop>
+                <!-- Specifies the docking area to which a user interface element belongs to.
+                     Only valid if 'Docked' is true.
+                     Top docking area=0, bottom=1, left=2, right=3.
+                -->
+                <prop oor:name="DockingArea" oor:type="xs:int">
+                    <value>2</value>
+                </prop>
+                <!-- Specifies the position of a docked user interface element.
+                     For top/bottom docked elements X describes a pixel position and Y the row number,
+                     left/right docked elements uses X for the column and Y for the pixel position.
+                     X and Y coordinates must be split by an comma.
+                -->
+                <prop oor:name="DockPos" oor:type="xs:string">
+                    <value>0,1</value>
+                </prop>
+            </node>
+        </node>
+    </node>
+</oor:component-data>

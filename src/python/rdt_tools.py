@@ -1,15 +1,16 @@
 import sys
+import os
 import subprocess
 
 from com.sun.star.beans import UnknownPropertyException
 
-from prefix_dialogs import PrefixDialog, FolderOpenDialog
+from prefix_dialogs import PrefixDialog
 from models import Mission
-from audio_controls import open_vlc
 from key_handler import KeyHandler
 from handlers.bal_handler import BalDlg
 from utils import msgbox
-import player
+import wx_player
+from vlc_player import start_vlc, Player
 
 
 context = XSCRIPTCONTEXT
@@ -86,55 +87,40 @@ def get_things_up(*args):
     smgr = ctx.ServiceManager
     desktop = smgr.createInstanceWithContext("com.sun.star.frame.Desktop", ctx)
     comp = desktop.getCurrentComponent()
+    try:
+        Player()
+    except:
+        start_vlc()
+    finally:
+        player = Player()
     if comp not in KeyHandler.components:
         cc = comp.getCurrentController()
-        cc.addKeyHandler(KeyHandler(ctx, comp))
+        cc.addKeyHandler(KeyHandler(ctx, comp, player))
 
 
 def get_things_down(*args):
-    ctx = context.getComponentContext()
-    Mission(ctx).remove_key_handler(ctx)
+    print('<get_things_dowm> called')
 
 
 def vlc_launcher(*args):
     file = ''
-    module = player.__file__
+    module = wx_player.__file__
     if sys.platform == "win32":
-        import os
         python = "python.exe"
         pf = os.environ["ProgramFiles"]
         python = os.path.join(pf, "LibreOffice", "program", python)
         subprocess.Popen([python, module, file], shell=True)
     else:
-    #     python = "python3"
-    #     subprocess.Popen([python, module, file])
-        url = ''
-        # cmpctx = context.getComponentContext()
-        # url = FolderOpenDialog(cmpctx).execute()
-        # open_vlc(url)
         try:
-            open_vlc()
+            get_things_up()
         except:
             pass
-        get_things_up()
+
+
+def start_nothing():
+    print('nothing at all...')
 
 
 def install_package():
     from utils import install_packages
     install_packages()
-
-
-g_exportedScripts = (
-    clean_text,
-    order_question,
-    question_upper,
-    question_lower,
-    remove_blank_line,
-    prefix_questions_and_answers,
-    remove_milliseconds_from_tc,
-    wrap_last_word_into_brackets,
-    get_things_up,
-    get_things_down,
-    vlc_launcher,
-    install_package,
-)

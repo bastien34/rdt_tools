@@ -11,15 +11,19 @@ OfficeMenuBar:
     submenu:
       order_question:
         title: Numérotation des alineas
+        context: com.sun.star.text.TextDocument
 
       question_upper:
         title: Écrire les questions en majuscules
+        context: com.sun.star.text.TextDocument
 
       question_lower:
         title: Écrire les questions en minuscules
+        context: com.sun.star.text.TextDocument
 
       prefix_questions_and_answers:
         title: Préfixer les questions et les réponses
+        context: com.sun.star.text.TextDocument
 
 
 OfficeToolBar:
