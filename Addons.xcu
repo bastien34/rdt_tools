@@ -15,7 +15,7 @@
 							<value xml:lang="fr">Nettoyer le texte</value>
 						</prop>
 						<prop oor:type="xs:string" oor:name="URL">
-							<value>vnd.sun.star.script:rdt_tools.oxt|python|rdt_tools.py$clean_text?language=Python&amp;location=user:uno_packages</value>
+							<value>com.company.rdt_toolsclean_text?language=Python&amp;location=user:uno_packages</value>
 						</prop>
 						<prop oor:type="xs:string" oor:name="Target">
 							<value>_self</value>
@@ -36,7 +36,7 @@
 									<value xml:lang="fr">Numérotation des alineas</value>
 								</prop>
 								<prop oor:type="xs:string" oor:name="URL">
-									<value>vnd.sun.star.script:rdt_tools.oxt|python|rdt_tools.py$order_question?language=Python&amp;location=user:uno_packages</value>
+									<value>com.company.rdt_toolsorder_question?language=Python&amp;location=user:uno_packages</value>
 								</prop>
 								<prop oor:type="xs:string" oor:name="Target">
 									<value>_self</value>
@@ -52,7 +52,7 @@
 									<value xml:lang="fr">Écrire les questions en majuscules</value>
 								</prop>
 								<prop oor:type="xs:string" oor:name="URL">
-									<value>vnd.sun.star.script:rdt_tools.oxt|python|rdt_tools.py$question_upper?language=Python&amp;location=user:uno_packages</value>
+									<value>com.company.rdt_toolsquestion_upper?language=Python&amp;location=user:uno_packages</value>
 								</prop>
 								<prop oor:type="xs:string" oor:name="Target">
 									<value>_self</value>
@@ -68,7 +68,7 @@
 									<value xml:lang="fr">Écrire les questions en minuscules</value>
 								</prop>
 								<prop oor:type="xs:string" oor:name="URL">
-									<value>vnd.sun.star.script:rdt_tools.oxt|python|rdt_tools.py$question_lower?language=Python&amp;location=user:uno_packages</value>
+									<value>com.company.rdt_toolsquestion_lower?language=Python&amp;location=user:uno_packages</value>
 								</prop>
 								<prop oor:type="xs:string" oor:name="Target">
 									<value>_self</value>
@@ -84,7 +84,7 @@
 									<value xml:lang="fr">Préfixer les questions et les réponses</value>
 								</prop>
 								<prop oor:type="xs:string" oor:name="URL">
-									<value>vnd.sun.star.script:rdt_tools.oxt|python|rdt_tools.py$prefix_questions_and_answers?language=Python&amp;location=user:uno_packages</value>
+									<value>com.company.rdt_toolsprefix_questions_and_answers?language=Python&amp;location=user:uno_packages</value>
 								</prop>
 								<prop oor:type="xs:string" oor:name="Target">
 									<value>_self</value>
@@ -105,7 +105,7 @@
 						<value xml:lang="fr">RDT Player</value>
 					</prop>
 					<prop oor:type="xs:string" oor:name="URL">
-						<value>vnd.sun.star.script:rdt_tools.oxt|python|rdt_tools.py$vlc_launcher?language=Python&amp;location=user:uno_packages</value>
+						<value>com.company.rdt_toolsvlc_launcher?language=Python&amp;location=user:uno_packages</value>
 					</prop>
 					<prop oor:type="xs:string" oor:name="Target">
 						<value>_self</value>
@@ -119,7 +119,7 @@
 						<value xml:lang="fr">Nettoyer le texte avant rendu</value>
 					</prop>
 					<prop oor:type="xs:string" oor:name="URL">
-						<value>vnd.sun.star.script:rdt_tools.oxt|python|rdt_tools.py$clean_text?language=Python&amp;location=user:uno_packages</value>
+						<value>com.company.rdt_toolsclean_text?language=Python&amp;location=user:uno_packages</value>
 					</prop>
 					<prop oor:type="xs:string" oor:name="Target">
 						<value>_self</value>
@@ -130,7 +130,7 @@
 		<node oor:name="Images">
 			<node oor:name="com.company.rdt_tools.N001" oor:op="replace">
 				<prop oor:type="xs:string" oor:name="URL">
-					<value>vnd.sun.star.script:rdt_tools.oxt|python|rdt_tools.py$vlc_launcher?language=Python&amp;location=user:uno_packages</value>
+					<value>com.company.rdt_toolsvlc_launcher?language=Python&amp;location=user:uno_packages</value>
 				</prop>
 				<node oor:name="UserDefinedImages">
 					<prop oor:type="xs:string" oor:name="ImageSmallURL">
@@ -140,7 +140,7 @@
 			</node>
 			<node oor:name="com.company.rdt_tools.N002" oor:op="replace">
 				<prop oor:type="xs:string" oor:name="URL">
-					<value>vnd.sun.star.script:rdt_tools.oxt|python|rdt_tools.py$clean_text?language=Python&amp;location=user:uno_packages</value>
+					<value>com.company.rdt_toolsclean_text?language=Python&amp;location=user:uno_packages</value>
 				</prop>
 				<node oor:name="UserDefinedImages">
 					<prop oor:type="xs:string" oor:name="ImageSmallURL">
