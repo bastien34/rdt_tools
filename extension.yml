@@ -4,5 +4,4 @@ extension_name: rdt_tools  # no space
 file_extension: oxt
 lib: com.company.rdt_tools
 macros_directory: python
-addons_conf: addons_conf.yml
 menu_name: RDT
