@@ -134,7 +134,7 @@
 				</prop>
 				<node oor:name="UserDefinedImages">
 					<prop oor:type="xs:string" oor:name="ImageSmallURL">
-						<value>%origin%/assets/avaudiologo.svg</value>
+						<value>%origin%/assets/vlc.svg</value>
 					</prop>
 				</node>
 			</node>

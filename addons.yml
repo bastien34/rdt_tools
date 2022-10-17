@@ -31,7 +31,7 @@ OfficeToolBar:
   vlc_launcher:
     title: RDT Player
     context: com.sun.star.text.TextDocument
-    icon: avaudiologo.svg
+    icon: vlc.svg
 
   clean_text:
     title: Nettoyer le texte avant rendu
