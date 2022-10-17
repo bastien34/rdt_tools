@@ -35,7 +35,7 @@ from com.sun.star.awt.MessageBoxResults import (
 )
 
 # todo: this should come from config !
-IMPLEMENTATION_NAME = "com.rdt.rdt_tools"
+IMPLEMENTATION_NAME = "rdt_tools"
 
 
 def path_to_url(path):

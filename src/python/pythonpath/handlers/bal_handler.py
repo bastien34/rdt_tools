@@ -49,7 +49,6 @@ class DialogBase:
 
     def get_dlg_path(self, name):
         path = get_package_location(self.component_context)
-
         return os.path.join(path, DLG_LOCATION, f"{name}.xdl")
 
 
