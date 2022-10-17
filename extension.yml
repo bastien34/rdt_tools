@@ -2,6 +2,6 @@
 version: 0.1.1
 extension_name: rdt_tools  # no space
 file_extension: oxt
-lib: com.company.rdt_tools
+lib: com.rdt.rdt_tools
 macros_directory: python
 menu_name: RDT

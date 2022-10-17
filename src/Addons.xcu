@@ -2,7 +2,7 @@
 <oor:component-data xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:oor="http://openoffice.org/2001/registry" oor:name="Addons" oor:package="org.openoffice.Office">
 	<node oor:name="AddonUI">
 		<node oor:name="OfficeMenuBar">
-			<node oor:name="com.company.rdt_tools" oor:op="replace">
+			<node oor:name="com.rdt.rdt_tools" oor:op="replace">
 				<prop oor:type="xs:string" oor:name="Title">
 					<value xml:lang="fr">RDT</value>
 				</prop>
@@ -128,7 +128,7 @@
 			</node>
 		</node>
 		<node oor:name="Images">
-			<node oor:name="com.company.rdt_tools.N001" oor:op="replace">
+			<node oor:name="com.rdt.rdt_tools.N001" oor:op="replace">
 				<prop oor:type="xs:string" oor:name="URL">
 					<value>vnd.sun.star.script:rdt_tools.oxt|python|rdt_tools.py$vlc_launcher?language=Python&amp;location=user:uno_packages</value>
 				</prop>
@@ -138,7 +138,7 @@
 					</prop>
 				</node>
 			</node>
-			<node oor:name="com.company.rdt_tools.N002" oor:op="replace">
+			<node oor:name="com.rdt.rdt_tools.N002" oor:op="replace">
 				<prop oor:type="xs:string" oor:name="URL">
 					<value>vnd.sun.star.script:rdt_tools.oxt|python|rdt_tools.py$clean_text?language=Python&amp;location=user:uno_packages</value>
 				</prop>

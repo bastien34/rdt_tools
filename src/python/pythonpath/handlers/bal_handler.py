@@ -1,5 +1,6 @@
 import unohelper
-import os, pyuno
+import os
+import pyuno
 from com.sun.star.awt import XActionListener
 
 
@@ -48,6 +49,7 @@ class DialogBase:
 
     def get_dlg_path(self, name):
         path = get_package_location(self.component_context)
+
         return os.path.join(path, DLG_LOCATION, f"{name}.xdl")
 
 
