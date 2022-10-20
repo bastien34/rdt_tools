@@ -116,11 +116,6 @@ def vlc_launcher(*args):
         except:
             pass
 
-
-def start_nothing():
-    print('nothing at all...')
-
-
 def install_package():
     from utils import install_packages
     install_packages()

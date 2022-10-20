@@ -96,8 +96,7 @@ class Player:
 
     def renew(self):
         start_vlc()
-        proxy = dbus.SessionBus().get_object(VLC_BUS, OBJECT_PATH)
-        self.interface = dbus.Interface(proxy, dbus_interface=PLAYER_BUS)
+        self.__init__()
 
     def check_player(self):
         try:
