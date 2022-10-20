@@ -1,6 +1,6 @@
 <description xmlns="http://openoffice.org/extensions/description/2006" xmlns:ns1="http://www.w3.org/1999/xlink">
    <identifier value="rdt_tools" />
-   <version value="0.1.1" />
+   <version value="0.1.2" />
    <display-name>
       <name lang="fr">RDT - Outils pour remplir une mission RDT</name>
       <name lang="en">RDT - RDT Mission Tools</name>

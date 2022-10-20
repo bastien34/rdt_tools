@@ -1,5 +1,5 @@
 ---
-version: 0.1.1
+version: 0.1.2
 extension_name: rdt_tools  # no space
 file_extension: oxt
 lib: com.rdt.rdt_tools
