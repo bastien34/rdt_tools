@@ -1,12 +1,15 @@
 import socket
 import json
-from dbus.exceptions import DBusException
+import logging
 
 import unohelper
 from com.sun.star.awt import XKeyHandler
 
 from models import Mission
 from utils import timestamps_in_milliseconds, milliseconds_to_timecode, msgbox
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger('RDT_TOOLS')
 
 
 # in case of wx use
@@ -21,8 +24,8 @@ KB_PLAYPAUSE = 769
 KB_FORWARD = 770
 KB_TIMESTAMP = 771
 KB_SPEED_DOWN = 772
-KB_SPEED_UP = 774
 KB_SPEED_RESET = 773
+KB_SPEED_UP = 774
 
 
 NVIVO = 779  # F12
@@ -73,6 +76,7 @@ class KeyHandler(unohelper.Base, XKeyHandler, metaclass=Singleton):
         pass
 
     def keyPressed(self, ev):
+        logger.debug(f"Key code pressed: {ev.KeyCode}")
         try:
             if ev.Modifiers == CNTRL:
 
